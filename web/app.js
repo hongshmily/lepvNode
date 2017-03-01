@@ -36,10 +36,10 @@ app.use("/images",  express.static(__dirname + '/public/images'));
 
 app.use('/', index);
 
-app.use('/jenkins', jenkinsRouter);
-app.use('/qacode', qaCodeRouter);
-app.use('/mongo', mongoRouter);
-app.use('/report', reportRouter);
+// app.use('/jenkins', jenkinsRouter);
+// app.use('/qacode', qaCodeRouter);
+// app.use('/mongo', mongoRouter);
+// app.use('/report', reportRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,11 +60,11 @@ app.use(function(err, req, res, next) {
 });
 
 // Connect to LepdCaller on start
-db.connect('mongodb://10.14.0.40:27017/jenkinsresults', function(err) {
-    if (err) {
-        console.log('Unable to connect to LepdCaller.');
-        process.exit(1)
-    }
-});
+// db.connect('mongodb://10.14.0.40:27017/jenkinsresults', function(err) {
+//     if (err) {
+//         console.log('Unable to connect to LepdCaller.');
+//         process.exit(1)
+//     }
+// });
 
 module.exports = app;

@@ -15,30 +15,59 @@ CpuMonitor.prototype.GetProcCpuinfo = function(server, callback) {
 CpuMonitor.prototype.GetCpuCount = function(options, callback) {
 
     var command = 'GetCpuInfo';
-    lepdCaller.callCommand(options.server, command, function(lines) {
 
-        var response = {};
+    lepdCaller.callCommand(options.server, command)
+        .then (function(lines) {
+            var response = {};
 
-        if(options.debug == true) {
-            response['rawLines'] = lines.slice();
-        }
-
-        response['data'] = {};
-        for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-
-            var line = lines[lineIndex];
-            if (line.startsWith('cpunr')) {
-                response['data']['count'] = parseInt(line.split(':')[1].trim());
-                break;
+            if(options.debug == true) {
+                response['rawLines'] = lines.slice();
             }
-        }
 
-        if (!response['data']['count']) {
-            response['error'] = 'Failed in getting processor count by  GetCpuInfo';
-        }
+            response['data'] = {};
+            for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
 
-        callback(response);
-    });
+                var line = lines[lineIndex];
+                if (line.startsWith('cpunr')) {
+                    response['data']['count'] = parseInt(line.split(':')[1].trim());
+                    break;
+                }
+            }
+
+            if (!response['data']['count']) {
+                response['error'] = 'Failed in getting processor count by  GetCpuInfo';
+            }
+
+            callback(response);
+        })
+        .catch(function(errors) {
+            console.log(errors);
+        });
+
+    // lepdCaller.callCommand(options.server, command, function(lines) {
+    //
+    //     var response = {};
+    //
+    //     if(options.debug == true) {
+    //         response['rawLines'] = lines.slice();
+    //     }
+    //
+    //     response['data'] = {};
+    //     for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    //
+    //         var line = lines[lineIndex];
+    //         if (line.startsWith('cpunr')) {
+    //             response['data']['count'] = parseInt(line.split(':')[1].trim());
+    //             break;
+    //         }
+    //     }
+    //
+    //     if (!response['data']['count']) {
+    //         response['error'] = 'Failed in getting processor count by  GetCpuInfo';
+    //     }
+    //
+    //     callback(response);
+    // });
 };
 
 module.exports = new CpuMonitor();
