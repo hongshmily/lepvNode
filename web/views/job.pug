@@ -1,0 +1,90 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        title Dragonfly | Marin Test Management System |
+        link(href='/images/dragonfly-icon.png', rel='icon')
+        // Bootstrap Core CSS
+        link(href='/css/bootstrap.min.css', rel='stylesheet')
+        // Custom CSS
+        link(href='/css/sb-admin.css', rel='stylesheet')
+        // Morris Charts CSS
+        link(href='/css/plugins/morris.css', rel='stylesheet')
+        link(href='/css/c3.min.css', rel='stylesheet')
+        link(href='/css/test-manager.css', rel='stylesheet')
+        // Custom Fonts
+        link(href='/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+        // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+        // WARNING: Respond.js doesn't work if you view the page via file://
+        //if lt IE 9
+          script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+          script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        // Morris Charts JavaScript
+        script(src='/js/plugins/morris/raphael.min.js')
+        script(src='/js/plugins/morris/morris.min.js')
+        script(src='/js/plugins/morris/morris-data.js')
+        // jQuery
+        script(src='/js/jquery.js')
+        // Bootstrap Core JavaScript
+        script(src='/js/bootstrap.min.js')
+        script(src='/js/c3.min.js')
+        script(src='/js/jobViewManager.js')
+        script(src='/js/methodViewManager.js')
+        script.
+            $( document ).ready(function() {
+                var jobViewManager = new JobViewManager('divContainer');
+                jobViewManager.load();
+            });
+    body
+        #wrapper-wide
+            // Navigation
+            nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+                // Brand and toggle get grouped for better mobile display
+                .navbar-header
+                    button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    img.logo.navbar-logo(src='/images/dragonfly-icon.png')
+                    a.navbar-brand(href='/') Dragonfly | Marin Test Management : Jenkins Job
+
+                // Top Menu Items
+                ul.nav.navbar-right.top-nav
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown')
+                            i.fa.fa-user
+                            |  Shanghai QE
+                            b.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-user
+                                    |  Profile
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-envelope
+                                    |  Inbox
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-gear
+                                    |  Settings
+                            li.divider
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-power-off
+                                    |  Log Out
+            #page-wrapper
+                #divContainer.container-fluid(buildurl=buildUrl)
+                    // Page Heading
+                    .row
+                        .col-lg-12
+                            a#aJenkinsJob.btn.btn-info(href='#', role='button')
+                    br
+                // /.container-fluid
+            // /#page-wrapper
+        // /#wrapper

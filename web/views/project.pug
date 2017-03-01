@@ -1,0 +1,102 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(content='IE=edge', http-equiv='X-UA-Compatible')
+        meta(content='width=device-width, initial-scale=1', name='viewport')
+        meta(content='', name='description')
+        meta(content='', name='author')
+        title Dragonfly | Marin Test Management System |
+        link(href='/images/dragonfly-icon.png', rel='icon')
+        // Bootstrap Core CSS
+        link(href='/css/bootstrap.min.css', rel='stylesheet')
+        // Custom CSS
+        link(href='/css/sb-admin.css', rel='stylesheet')
+        // Morris Charts CSS
+        link(href='/css/test-manager.css', rel='stylesheet')
+        // Custom Fonts
+        link(href='/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+        // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+        // WARNING: Respond.js doesn't work if you view the page via file://
+        //
+          if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+          script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        // Morris Charts JavaScript
+        // jQuery
+        script(src='/js/jquery.js')
+        // Bootstrap Core JavaScript
+        script(src='/js/bootstrap.min.js')
+        script(src='/js/testProjectManager.js')
+        script.
+            function selectProject(projectName, projectInfo) {
+                $('#selectedProjectSpan').text(projectName + '\\t\t');
+                var testProjectManage = new TestProjectManager(projectName, 'tableBody');
+                testProjectManage.load(function() {
+                    console.log("all done");
+                });
+            }
+        script.
+            $( document ).ready(function() {
+                var ulProjectElement = $('#ulProjects');
+                $.get('/qacode/testprojects', function(testProjects) {
+                    $.each(testProjects, function(projectName, projectInfo) {
+                        if (projectName.includes('-')) {
+                            var liElement = $('<li></li>');
+                            ulProjectElement.append(liElement);
+                            liElement.click(function(p) {
+                                selectProject(projectName, projectInfo);
+                            });
+                            var aLink = $('<a></a>').text(projectName);
+                            liElement.append(aLink);
+                        }
+                    });
+                });
+            });
+    body
+        #wrapper-wide
+            // Navigation
+            nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+                // Brand and toggle get grouped for better mobile display
+                .navbar-header
+                    button.navbar-toggle(data-target='.navbar-ex1-collapse', data-toggle='collapse', type='button')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    img.logo.navbar-logo(src='/images/dragonfly-icon.png')
+                    a.navbar-brand(href='/') Dragonfly | Marin Test Management
+                // Top Menu Items
+                ul.nav.navbar-right.top-nav
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                            i.fa.fa-user
+                            |  Shanghai QE
+                            b.caret
+                        div
+            #page-wrapper
+                #divContainer.container-fluid
+                    // Page Heading
+                    .row
+                        .col-lg-12
+                            .row
+                                ul.nav.navbar-left.top-nav
+                                    li.dropdown
+                                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                                            i.glyphicon.glyphicon-th-list
+                                            span#selectedProjectSpan.reserve-whitespaces Select a Test Project Here
+                                            b.caret
+                                        ul#ulProjects.dropdown-menu
+                    .(class="'row")
+.(class="'col-lg-12")
+.table-responsive
+    table.table.table-bordered.table-hover.table-striped
+        thead
+            tr
+                th Test Class
+                th Test Method
+                th Test Case
+                th Checkpoints
+                th Test Files
+                th Priority
+                th Status
+        tbody#tableBody
