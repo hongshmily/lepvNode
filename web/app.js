@@ -6,10 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var jenkinsRouter = require('./routes/jenkins');
-var qaCodeRouter = require('./routes/qacode');
-var mongoRouter = require('./routes/mongo');
-var reportRouter = require('./routes/report');
+var cpuRouter = require('./routes/cpu');
 
 var db = require('./db');
 
@@ -36,10 +33,7 @@ app.use("/images",  express.static(__dirname + '/public/images'));
 
 app.use('/', index);
 
-// app.use('/jenkins', jenkinsRouter);
-// app.use('/qacode', qaCodeRouter);
-// app.use('/mongo', mongoRouter);
-// app.use('/report', reportRouter);
+app.use('/cpu', cpuRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

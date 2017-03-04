@@ -20,7 +20,7 @@ CpuMonitor.prototype.GetCpuCount = function(options, callback) {
         .then (function(lines) {
             var response = {};
 
-            if(options.debug == true) {
+            if(options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
             }
 
