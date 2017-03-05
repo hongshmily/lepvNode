@@ -1,6 +1,0 @@
-{
-  "qa-bulk-bing-tests": {
-    "slug": "Bing Bulk",
-    "jenkinsViewUrl": "http://qa-build.marinsoftware.com/view/Shanghai%20Automation/view/Shanghai%20Bulk%20Bing%20-%20QA2/"
-  }
-}

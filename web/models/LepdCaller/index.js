@@ -46,9 +46,9 @@ LepdCaller.prototype.ping = function(server, callback) {
         .then (function(lines) {
 
             if (lines[0].includes('Hello!')) {
-                callback({data: {result: true}});
+                callback({data: {result: true}, rawLines: lines});
             } else {
-                callback({data: {result: false}});
+                callback({data: {result: false}, rawLines: lines});
             }
         })
         .catch(function(errors) {

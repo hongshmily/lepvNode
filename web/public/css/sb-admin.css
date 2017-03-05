@@ -34,7 +34,7 @@ body {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 125px;
+        padding-left: 150px;
     }
 
     #page-wrapper {
@@ -116,9 +116,9 @@ ul.alert-dropdown {
     .side-nav {
         position: fixed;
         top: 51px;
-        left: 125px;
-        width: 125px;
-        margin-left: -125px;
+        left: 150px;
+        width: 150px;
+        margin-left: -150px;
         border: none;
         border-radius: 0;
         overflow-y: auto;
@@ -129,7 +129,7 @@ ul.alert-dropdown {
     }
 
     .side-nav>li>a {
-        width: 225px;
+        width: 150px;
     }
 
     .side-nav li a:hover,
@@ -158,7 +158,7 @@ ul.alert-dropdown {
 
 .flot-chart {
     display: block;
-    height: 400px;
+    height: 280px;
 }
 
 .flot-chart-content {
@@ -211,11 +211,46 @@ ul.alert-dropdown {
 .panel-yellow {
     border-color: #f0ad4e;
 }
-
 .panel-yellow > .panel-heading {
     border-color: #f0ad4e;
     color: #fff;
     background-color: #f0ad4e;
+}
+
+.panel-orange {
+    border-color: #cc6600;
+}
+.panel-orange > .panel-heading {
+    border-color: #cc6600;
+    color: #fff;
+    background-color: #cc6600;
+}
+
+.panel-blue {
+    border-color: #0066cc;
+}
+.panel-blue > .panel-heading {
+    border-color: #0066cc;
+    color: #fff;
+    background-color: #0066cc;
+}
+
+.panel-grey {
+    border-color: #666666;
+}
+.panel-grey > .panel-heading {
+    border-color: #666666;
+    color: #fff;
+    background-color: #666666;
+}
+
+.panel-purple {
+    border-color: #ffccff;
+}
+.panel-purple > .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #ffccff;
 }
 
 .panel-yellow > a {
@@ -224,4 +259,8 @@ ul.alert-dropdown {
 
 .panel-yellow > a:hover {
     color: #df8a13;
+}
+
+.glyphicon-white {
+    color: #fff;
 }
