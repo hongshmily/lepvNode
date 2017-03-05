@@ -26,13 +26,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/css",  express.static(__dirname + '/public/css'));
 app.use("/js",  express.static(__dirname + '/public/js'));
-app.use("/data",  express.static(__dirname + '/public/data'));
+app.use("/lib",  express.static(__dirname + '/public/lib'));
 app.use("/font-awesome",  express.static(__dirname + '/public/font-awesome'));
 app.use("/fonts",  express.static(__dirname + '/public/fonts'));
 app.use("/images",  express.static(__dirname + '/public/images'));
+app.use("/html",  express.static(__dirname + '/public/html'));
+app.use("/components",  express.static(__dirname + '/public/components'));
 
 app.use('/', index);
-
 app.use('/cpu', cpuRouter);
 
 // catch 404 and forward to error handler
