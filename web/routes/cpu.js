@@ -5,7 +5,6 @@ var cpuMonitor = require('../models/CpuMonitor');
 
 var router = express.Router();
 
-
 router.get('/count/:server', function(req, res, next) {
 
     var server = req.params.server;

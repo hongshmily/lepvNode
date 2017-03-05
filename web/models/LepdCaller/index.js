@@ -37,10 +37,23 @@ LepdCaller.prototype.callCommand = function(server, command) {
             client.destroy();
         });
     });
+};
 
+LepdCaller.prototype.ping = function(server, callback) {
 
+    var command = 'SayHello';
+    this.callCommand(server, command)
+        .then (function(lines) {
 
-
+            if (lines[0].includes('Hello!')) {
+                callback({data: {result: true}});
+            } else {
+                callback({data: {result: false}});
+            }
+        })
+        .catch(function(errors) {
+            callback({data: {result: false}, error: errors});
+        });
 };
 
 module.exports = new LepdCaller();
