@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var cpuRouter = require('./routes/cpu');
+var commandRouter = require('./routes/command');
 
 var db = require('./db');
 
@@ -35,6 +36,7 @@ app.use("/components",  express.static(__dirname + '/public/components'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);
+app.use('/command', commandRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -20,21 +20,21 @@ LepdCaller.prototype.callCommand = function(server, command) {
         });
 
         client.on('data', function(dataArray) {
-            var dataJson = JSON.parse(dataArray.toString());
 
-            var resultInJson = dataJson.result;
+            try {
+                var dataJson = JSON.parse(dataArray.toString());
+                var resultInJson = dataJson.result;
 
-            if (!resultInJson.includes(thisClass.END_STRING)) {
-                reject({error: 'The result contains NO LEPD end string'})
-
-            } else {
                 resultInJson = resultInJson.replace(thisClass.END_STRING, '');
                 var resultLines = resultInJson.split(/\n/);
                 resolve(resultLines);
-            }
 
-            // kill client after server's response
-            client.destroy();
+                client.destroy();
+            }
+            catch (err) {
+                reject({error: err.message, rawResponse: dataArray.toString()});
+                client.destroy();
+            }
         });
     });
 };
@@ -53,6 +53,21 @@ LepdCaller.prototype.ping = function(server, callback) {
         })
         .catch(function(errors) {
             callback({data: {result: false}, error: errors});
+        });
+};
+
+LepdCaller.prototype.ListAllMethod = function(server, callback) {
+
+    var command = 'ListAllMethod';
+    this.callCommand(server, command)
+        .then (function(lines) {
+
+            var line = lines[0].trim();
+            var methods = line.split(' ');
+            callback({data: methods});
+        })
+        .catch(function(errors) {
+            callback({error: errors});
         });
 };
 

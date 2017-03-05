@@ -9,3 +9,7 @@ var commands = [
     'SayHello',
     'GetProcCpuinfo'
 ];
+
+lepdCaller.ListAllMethod(server, function(data) {
+    console.log(data);
+});
