@@ -23,6 +23,7 @@ CpuMonitor.prototype.GetCpuCount = function(options, callback) {
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.splice();
+                response['command'] = command;
             }
 
             response['data'] = {};
@@ -60,6 +61,7 @@ CpuMonitor.prototype.GetXXX = function(options, callback) {
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
+                response['command'] = command;
             }
 
             // method specific method here
@@ -90,6 +92,7 @@ CpuMonitor.prototype.GetCmdTop = function(options, callback) {
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
+                response['command'] = command;
             }
 
             // method specific method here
@@ -152,6 +155,7 @@ CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
+                response['command'] = command;
             }
 
             // method specific method here
@@ -165,6 +169,56 @@ CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
             response['data']['last1'] = parseFloat(loadDatas[0]);
             response['data']['last5'] = parseFloat(loadDatas[1]);
             response['data']['last15'] = parseFloat(loadDatas[2]);
+
+            callback(response);
+        })
+        .catch(function(errors) {
+            callback({error: errors});
+        });
+};
+
+CpuMonitor.prototype.GetConfig = function(options, callback) {
+
+    var thisMonitor = this;
+    var command = 'GetProcCpuinfo';
+
+    lepdCaller.callCommand(options.server, command)
+        .then (function(lines) {
+
+            var response = {};
+            response['data'] = {};
+
+            if (options.debug == true || options.debug == 'true') {
+                response['rawLines'] = lines.slice();
+                response['command'] = command;
+            }
+
+            // TODO:
+
+            callback(response);
+        })
+        .catch(function(errors) {
+            callback({error: errors});
+        });
+};
+
+CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
+
+    var thisMonitor = this;
+    var command = 'GetProcCpuinfo';
+
+    lepdCaller.callCommand(options.server, command)
+        .then (function(lines) {
+
+            var response = {};
+            response['data'] = {};
+
+            if (options.debug == true || options.debug == 'true') {
+                response['rawLines'] = lines.slice();
+                response['command'] = command;
+            }
+
+            // TODO:
 
             callback(response);
         })
