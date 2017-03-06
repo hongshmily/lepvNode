@@ -59,7 +59,7 @@ CpuMonitor.prototype.GetXXX = function(options, callback) {
             response['data'] = {};
 
             if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.splice();
+                response['rawLines'] = lines.slice();
             }
 
             // method specific method here
@@ -131,6 +131,40 @@ CpuMonitor.prototype.GetCmdTop = function(options, callback) {
 
                 response['data'].push(rowData);
             }
+
+            callback(response);
+        })
+        .catch(function(errors) {
+            callback({error: errors});
+        });
+};
+
+CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
+
+    var thisMonitor = this;
+    var command = 'GetProcLoadavg';
+
+    lepdCaller.callCommand(options.server, command)
+        .then (function(lines) {
+
+            var response = {};
+            response['data'] = {};
+
+            if (options.debug == true || options.debug == 'true') {
+                response['rawLines'] = lines.slice();
+            }
+
+            // method specific method here
+            var loadDatas = lines[0].split(" ");
+
+            // # '0.00 0.01 0.05 1/103 24750
+            // # 'avg system load of 1 minute ago, 5 minutes ago, 15 minutes ago,
+            // # the fourth is A/B, A is the number of running processes
+            // # B is the total process count.
+            // # last number, like 24750 is the ID of the most recently running process.
+            response['data']['last1'] = parseFloat(loadDatas[0]);
+            response['data']['last5'] = parseFloat(loadDatas[1]);
+            response['data']['last15'] = parseFloat(loadDatas[2]);
 
             callback(response);
         })
