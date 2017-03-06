@@ -14,6 +14,8 @@ LepdCaller.prototype.callCommand = function(server, command) {
     return new Promise(function(resolve, reject){
 
         var client = new net.Socket();
+        var charsReceived = [];
+        var dataJson = null; //JSON.parse(charsReceived.toString());
 
         client.connect(thisClass.port, server, function() {
             client.write('{"method": "' + command + '"}');
@@ -21,8 +23,17 @@ LepdCaller.prototype.callCommand = function(server, command) {
 
         client.on('data', function(dataArray) {
 
+            // http://stackoverflow.com/questions/17312242/node-js-net-library-getting-complete-data-from-data-event#comment25133735_17313295
+            // You shouldn't do anything with the data you recieve, until you receive the end event. The end callback means that all data chunks
+            // have been sent through the stream to your callbacks. If data comes in more than one chunk, you need to create a variable within
+            // your function closure to store this data to. Most programs can work just fine ignoring this fact, because data usually comes
+            // across in one chunk. But sometimes it doesn't. It doesn't even necessarily depend on the amount of data.
+            // If you're in a situation where this is happening,
+
             try {
-                var dataJson = JSON.parse(dataArray.toString());
+                charsReceived = charsReceived.concat(dataArray);
+                dataJson = JSON.parse(charsReceived.toString());
+
                 var resultInJson = dataJson.result;
 
                 resultInJson = resultInJson.replace(thisClass.END_STRING, '');
@@ -30,12 +41,16 @@ LepdCaller.prototype.callCommand = function(server, command) {
                 resolve(resultLines);
 
                 client.destroy();
+
+            } catch( err ) {
+                if (err.message != 'Unexpected end of JSON input') {
+                    reject({error: err.message, rawResponse: dataArray.toString()});
+                    client.destroy();
+                }
             }
-            catch (err) {
-                reject({error: err.message, rawResponse: dataArray.toString()});
-                client.destroy();
-            }
+
         });
+
     });
 };
 
