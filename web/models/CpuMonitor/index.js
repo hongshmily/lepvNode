@@ -194,6 +194,29 @@ CpuMonitor.prototype.GetConfig = function(options, callback) {
             }
 
             // TODO:
+            response['data']['processors'] = {};
+
+            var processorId = null;
+            while(lines.length > 0) {
+                var line = lines.shift().trim();
+
+                if (line == '') {
+                    continue;
+                }
+
+                if (line.match(/processor\s?:\s?\d/)) {
+                    var reg = line.match(/processor\s?:\s?(\d+)/);
+                    processorId = reg[1].trim();
+
+                    response['data']['processors'][processorId] = {};
+                    continue;
+                }
+
+                var keyValuePair = line.split(':');
+                if (keyValuePair.length == 2) {
+                    response['data']['processors'][processorId][keyValuePair[0].trim()] = keyValuePair[1].trim();
+                }
+            }
 
             callback(response);
         })
