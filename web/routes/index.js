@@ -18,16 +18,12 @@ router.get('/ping/:server', function(req, res, next) {
     var server = req.params.server;
 
     lepdCaller.ping(server, function(response) {
-        res.json(response);
-    });
-});
+        try {
+            res.json(response);
+        } catch (err) {
+            console.log(err);
+        }
 
-router.get('/ping/:server', function(req, res, next) {
-
-    var server = req.params.server;
-
-    lepdCaller.ping(server, function(response) {
-        res.json(response);
     });
 });
 

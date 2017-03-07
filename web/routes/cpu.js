@@ -30,6 +30,7 @@ router.get('/top/:server', function(req, res, next) {
 router.get('/avgload/:server', function(req, res, next) {
 
     var server = req.params.server;
+
     var debug = req.query.debug;
     var id = req.query.id;
 

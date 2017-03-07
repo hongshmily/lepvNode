@@ -33,6 +33,7 @@ app.use("/fonts",  express.static(__dirname + '/public/fonts'));
 app.use("/images",  express.static(__dirname + '/public/images'));
 app.use("/html",  express.static(__dirname + '/public/html'));
 app.use("/components",  express.static(__dirname + '/public/components'));
+app.use("/whhg-font",  express.static(__dirname + '/public/whhg-font'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);
@@ -56,10 +57,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Connect to LepdCaller on start
-// db.connect('mongodb://10.14.0.40:27017/jenkinsresults', function(err) {
+// Connect to LEP Mongo db on start
+// db.connect('mongodb://localhost:27017/lep', function(err) {
 //     if (err) {
-//         console.log('Unable to connect to LepdCaller.');
+//         console.log('Unable to connect to LEP Mongo DB.');
 //         process.exit(1)
 //     }
 // });

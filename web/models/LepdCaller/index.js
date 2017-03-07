@@ -17,6 +17,10 @@ LepdCaller.prototype.callCommand = function(server, command) {
         var charsReceived = [];
         var dataJson = null; //JSON.parse(charsReceived.toString());
 
+        if(!server) {
+            reject({error: 'server not specified!'});
+        }
+
         client.connect(thisClass.port, server, function() {
             client.write('{"method": "' + command + '"}');
         });
@@ -40,7 +44,12 @@ LepdCaller.prototype.callCommand = function(server, command) {
                 var resultLines = resultInJson.split(/\n/);
                 resolve(resultLines);
 
-                client.destroy();
+                try {
+                    client.destroy();
+                } catch (err) {
+                    console.log(err);
+                }
+
 
             } catch( err ) {
                 if (err.message != 'Unexpected end of JSON input') {
@@ -61,13 +70,13 @@ LepdCaller.prototype.ping = function(server, callback) {
         .then (function(lines) {
 
             if (lines[0].includes('Hello!')) {
-                callback({data: {result: true}, rawLines: lines});
+                callback({data: {connected: true}, rawLines: lines});
             } else {
-                callback({data: {result: false}, rawLines: lines});
+                callback({data: {connected: false}, rawLines: lines});
             }
         })
         .catch(function(errors) {
-            callback({data: {result: false}, error: errors});
+            callback({data: {connected: false}, error: errors});
         });
 };
 

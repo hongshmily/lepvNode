@@ -193,7 +193,6 @@ CpuMonitor.prototype.GetConfig = function(options, callback) {
                 response['command'] = command;
             }
 
-            // TODO:
             response['data']['processors'] = {};
 
             var processorId = null;

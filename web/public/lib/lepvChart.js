@@ -282,15 +282,33 @@ LepvChart.prototype.refresh = function() {
 
   //this.controlElements.configLink.on("click", $.proxy(this.onConfig, this));
   var thisChart = this;
-  var url = thisChart.dataUrlPrefix + thisChart.server + "/" + thisChart.requestId;
-  
+  var url = thisChart.dataUrlPrefix + thisChart.server; // + "?id=" + thisChart.requestId;
+
+  // $.get(url).done(
+  //     function(data, status) {
+  //         if (thisChart.isChartPaused) {
+  //             return;
+  //         }
+  //
+  //         thisChart.responseId = data['requestId'];
+  //
+  //         thisChart.updateChartData(data['data']);
+  //     }
+  // ).fail(
+  //     function(data, status) {
+  //         console.log(data);
+  //         console.log(status);
+  //     }
+  // );
+
+
   $.get(url, function(responseData, status) {
     if (this.isChartPaused) {
       return;
     }
 
     thisChart.responseId = responseData['requestId'];
-    
+
     thisChart.updateChartData(responseData['data']);
   });
 };

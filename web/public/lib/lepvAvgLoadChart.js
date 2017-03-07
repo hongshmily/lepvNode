@@ -15,7 +15,7 @@ var LepvAvgLoadChart = function(divName) {
     this.maxDataCount = 150;
     this.refreshInterval = 2;
 
-    this.dataUrlPrefix = "/status/avgload/";
+    this.dataUrlPrefix = "cpu/avgload/";
 
     this.chartData['last1'] = ['Last minute'];
     this.chartData['last5'] = ['Last 5 minutes'];
@@ -38,8 +38,8 @@ LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 LepvAvgLoadChart.prototype.initialize = function() {
 
     var thisChart = this;
-    $.get('/processorcount/' + thisChart.server, function(responseData, status) {
-        thisChart.cpuCoreCount = responseData.count;
+    $.get('cpu/count/' + thisChart.server, function(responseData, status) {
+        thisChart.cpuCoreCount = responseData.data.count;
 
         thisChart.yellowAlertValue = 0.7 * thisChart.cpuCoreCount;
         thisChart.redAlertValue = 0.9 * thisChart.cpuCoreCount;
@@ -111,15 +111,19 @@ LepvAvgLoadChart.prototype.updateChartData = function(data) {
     // max values are the max values of each group of data, it determines the max of y axis.
     this.maxValues.push(Math.max.apply(Math,[data['last1'], data['last5'], data['last15'], this.cpuCoreCount]));
 
+    if (this.chart) {
+        this.chart.axis.max(Math.max.apply(Math, this.maxValues) + 0.1);
+        this.chart.load({
+            columns: [this.timeData,
+                this.chartData['last1'],
+                this.chartData['last5'],
+                this.chartData['last15']],
+            keys: {
+                value: ['']
+            }
+        });
+    } else {
+        console.log('Avarage Load chart not initialized');
+    }
 
-    this.chart.axis.max(Math.max.apply(Math, this.maxValues) + 0.1);
-    this.chart.load({
-        columns: [this.timeData,
-            this.chartData['last1'],
-            this.chartData['last5'],
-            this.chartData['last15']],
-        keys: {
-            value: ['']
-        }
-    });
 };
