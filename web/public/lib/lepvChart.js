@@ -212,7 +212,7 @@ LepvChart.prototype.createControlElements = function() {
 
 LepvChart.prototype.start = function(serverToMonitor) {
   if (!serverToMonitor) {
-    console.log("Please specify the server to monitor for " + this.chartDivName);
+    console.log("Please specify the server to cpuMonitor for " + this.chartDivName);
     return;
   }
   if (serverToMonitor == this.server) {

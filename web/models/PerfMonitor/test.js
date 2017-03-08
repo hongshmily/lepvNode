@@ -2,11 +2,11 @@
  * Created by mxu on 12/30/16.
  */
 
-var monitor = require('./index');
+var perfMonitor = require('./index');
 var util = require('../Utility');
 
 var server = 'www.linuxxueyuan.com';
 
-monitor.GetCmdPerfCpuclock({server: server, debug: true}, function(resultData) {
+perfMonitor.GetCmdPerfCpuclock({server: server, debug: true}, function(resultData) {
     util.printJson(resultData);
 });
