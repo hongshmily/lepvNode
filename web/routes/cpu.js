@@ -11,9 +11,13 @@ router.get('/count/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    cpuMonitor.GetCpuCount({server: server, debug: debug}, function(response) {
-        res.json(response);
-    });
+    if (!server) {
+        res.json({error: 'server not specified'});
+    } else {
+        cpuMonitor.GetCpuCount({server: server, debug: debug}, function(response) {
+            res.json(response);
+        });
+    }
 });
 
 router.get('/top/:server', function(req, res, next) {

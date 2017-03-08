@@ -11,6 +11,10 @@ LepdCaller.prototype.callCommand = function(server, command) {
 
     var thisClass = this;
 
+    if (!server) {
+        var s = '';
+    }
+
     return new Promise(function(resolve, reject){
 
         var client = new net.Socket();

@@ -29,13 +29,13 @@ var LepvAvgLoadChart = function(divName) {
     this.maxValues = [1];
 
     this.updateChartHeader();
-    this.initialize();
+    // this.initialize();
 };
 
 LepvAvgLoadChart.prototype = Object.create(LepvChart.prototype);
 LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 
-LepvAvgLoadChart.prototype.initialize = function() {
+LepvAvgLoadChart.prototype.initialize = function(callback) {
 
     var thisChart = this;
     $.get('cpu/count/' + thisChart.server, function(responseData, status) {
@@ -90,6 +90,11 @@ LepvAvgLoadChart.prototype.initialize = function() {
                 }
             }
         });
+
+        thisChart.initialized = true;
+        if (callback) {
+            callback();
+        }
     });
 };
 

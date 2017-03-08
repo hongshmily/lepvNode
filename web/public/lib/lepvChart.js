@@ -31,6 +31,9 @@ var LepvChart = function(divName) {
   this.requestId = null;
   this.responseId = null;
   this.maxRequestIdGap = 2;
+
+  // flag for whether the chart is initialized or not.
+  this.initialized = false;
   
   this.executionConfig = 'release';
   
@@ -219,9 +222,10 @@ LepvChart.prototype.start = function(serverToMonitor) {
   this.server = serverToMonitor;
   this.requestId = 0;
   this.responseId = 0;
-  
-  this.initialize();
-  this.refresh();
+
+  // initialize, and then refresh.
+  this.initialize(this.refresh);
+  // this.refresh();
 
   var thisChart = this;
   this.intervalId = setInterval(function () {
@@ -229,7 +233,7 @@ LepvChart.prototype.start = function(serverToMonitor) {
   }, this.refreshInterval * 1000);
 };
 
-LepvChart.prototype.initialize = function(server) {
+LepvChart.prototype.initialize = function() {
   console.log("initialize() method needs to be overwritten by sub-classes!")
 };
 
@@ -263,7 +267,12 @@ LepvChart.prototype.updateChartData = function(responseData) {
 };
 
 LepvChart.prototype.refresh = function() {
-  
+
+  if (!this.initialized) {
+    console.log("Chart not initialized yet");
+    return;
+  }
+
   if (!this.proactive) {
     // this is NOT a "proactive" chart, it does not make http requests to feed data.
     return;
@@ -284,32 +293,32 @@ LepvChart.prototype.refresh = function() {
   var thisChart = this;
   var url = thisChart.dataUrlPrefix + thisChart.server; // + "?id=" + thisChart.requestId;
 
-  // $.get(url).done(
-  //     function(data, status) {
-  //         if (thisChart.isChartPaused) {
-  //             return;
-  //         }
+  $.get(url).done(
+      function(data, status) {
+          if (thisChart.isChartPaused) {
+              return;
+          }
+
+          thisChart.responseId = data['requestId'];
+
+          thisChart.updateChartData(data['data']);
+      }
+  ).fail(
+      function(data, status) {
+          console.log(data);
+          console.log(status);
+      }
+  );
+
+
+  // $.get(url, function(responseData, status) {
+  //   if (this.isChartPaused) {
+  //     return;
+  //   }
   //
-  //         thisChart.responseId = data['requestId'];
+  //   thisChart.responseId = responseData['requestId'];
   //
-  //         thisChart.updateChartData(data['data']);
-  //     }
-  // ).fail(
-  //     function(data, status) {
-  //         console.log(data);
-  //         console.log(status);
-  //     }
-  // );
-
-
-  $.get(url, function(responseData, status) {
-    if (this.isChartPaused) {
-      return;
-    }
-
-    thisChart.responseId = responseData['requestId'];
-
-    thisChart.updateChartData(responseData['data']);
-  });
+  //   thisChart.updateChartData(responseData['data']);
+  // });
 };
 
