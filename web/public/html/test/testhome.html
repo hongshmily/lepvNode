@@ -14,46 +14,25 @@
     <title>LEPV - LEP Visualizer & Analyzer</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static "lepv/css/bootstrap.min.css" %}" rel="stylesheet">
-    <link href="{% static "lepv/whhg-font/css/whhg.css" %}" rel="stylesheet">
-    <link href="{% static "lepv/css/bootstrap-language.min.css" %}" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="/whhg-font/css/whhg.css" rel="stylesheet">-->
+    <link href="/css/bootstrap-language.min.css" rel="stylesheet">
 
-    <link href="{% static "lepv/css/sb-admin.css" %}" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet">
 
-    <link href="{% static "lepv/css/plugins/morris.css" %}" rel="stylesheet">
+    <link href="/css/plugins/morris.css" rel="stylesheet">
 
-    <link href="{% static "lepv/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
-    <script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
-    <script src="{% static "lepv/lib/js.cookie.js" %}"></script>
-    <script src="{% static "lepv/js/jquery-ui.min.js" %}"></script>
-    
-    <link href="{% static "lepv/js/jquery-ui.min.css" %}" rel="stylesheet" type="text/css">
-    <link href="{% static "lepv/css/language/languages.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="/js/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/language/languages.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTable -->
-    <link href="{% static "bower_components/datatables/media/css/jquery.dataTables.min.css" %} " rel="stylesheet">
-    <script src="{% static "bower_components/datatables/media/js/jquery.dataTables.min.js" %}"></script>
+    <link href="/components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <!-- Load d3.js and c3.js -->
-    <link href="{% static "bower_components/c3/c3.min.css" %}" rel="stylesheet" type="text/css">
-    <script src="{% static "bower_components/c3/d3.min.js" %}" charset="utf-8"></script>
-    <script src="{% static "bower_components/c3/c3.min.js" %}"></script>
+    <link href="/components/c3/c3.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-
-    <script src="{% static "lepv/js/lepv.js" %}"></script>
-    <script src="{% static "lepv/js/timer.jquery.min.js" %}"></script>
-    
-    <link href="{% static "lepv/css/lepv.css" %}" rel="stylesheet" type="text/css">
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="/css/lepv.css" rel="stylesheet" type="text/css">
     
     <script>
         function log(resultTextArea, line) {
@@ -175,6 +154,30 @@
         <div class="container-fluid">
 
             <div class="row">
+                <a href="/test/api">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">API</div>
+                                        <div>API Tests</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-footer">
+                                <span class="pull-left">Go</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
                 <a href="/test/sanity">
                     <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
@@ -199,7 +202,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="/test/lepdperformance">
+                <a href="/test/performance">
                     <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">

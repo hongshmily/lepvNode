@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var cpuRouter = require('./routes/cpu');
 var commandRouter = require('./routes/command');
+var testerRouter = require('./routes/test');
 
 var db = require('./db');
 
@@ -38,6 +39,7 @@ app.use("/whhg-font",  express.static(__dirname + '/public/whhg-font'));
 app.use('/', index);
 app.use('/cpu', cpuRouter);
 app.use('/command', commandRouter);
+app.use('/test', testerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -13,6 +13,11 @@ router.get('/', function(req, res) {
     res.sendFile(htmlFile);
 });
 
+router.get('/test', function(req, res) {
+    var htmlFile = path.join(__dirname + '/../public/html/test/testhome.html');
+    res.sendFile(htmlFile);
+});
+
 router.get('/ping/:server', function(req, res, next) {
 
     var server = req.params.server;
