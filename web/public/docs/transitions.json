@@ -1,0 +1,121 @@
+[
+  {
+    "command": "GetProcCpuinfo",
+    "oldUrl": "/status/cpu/[server]",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/status/cpu/www.linuxxueyuan.com/",
+    "oldMethod": "CpuMonitor.getStatus",
+    "newUrl": "/cpu/status/[server]",
+    "newMethod": "CpuMonitor.GetProcCpuinfo",
+    "status": "placeholder in place, TODO"
+  },
+
+  {
+    "command": "GetCmdMpstat",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/cpustat/www.linuxxueyuan.com/",
+    "oldUrl": "/cpustat/[server]",
+    "oldMethod": "CpuMonitor.getStat",
+    "newUrl": "/cpu/stat/[server]",
+    "newMethod": "CpuMonitor.GetCmdMpstat",
+    "status": "placeholder in place, TODO"
+  },
+
+  {
+    "command": "GetCmdTop",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/cputop/www.linuxxueyuan.com/",
+    "oldUrl": "/cputop/[server]",
+    "oldMethod": "CpuMonitor.getTopOutput",
+    "newUrl": "/cpu/top/[server]",
+    "newMethod": "CpuMonitor.GetCmdTop",
+    "status": "Done"
+  },
+
+  {
+    "command": "GetCmdPerfCpuclock",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/perfcpu/www.linuxxueyuan.com/",
+    "oldUrl": "/perfcpu/[server]",
+    "oldMethod": "PerfMonitor.getPerfCpuClock",
+    "newUrl": "/perf/cpuclock/[server]",
+    "newMethod": "PerfMonitor.GetCmdPerfCpuclock",
+    "status": "placeholder in place, TODO"
+  },
+
+  {
+    "command": "GetCmdProcrank",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/procrank/www.linuxxueyuan.com/",
+    "oldUrl": "/procrank/[server]",
+    "oldMethod": "MemoryMonitor.getProcrank",
+    "newUrl": "/mem/procrank/[server]",
+    "newMethod": "MemoryMonitor.GetCmdProcrank",
+    "status": "Placeholder in place"
+  },
+
+
+  {
+    "command": "GetCmdIotop",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/status/io/www.linuxxueyuan.com/",
+    "oldUrl": "/status/iotop/[server]",
+    "oldMethod": "IOMonitor.getIoTopData",
+    "newUrl": "/io/top/[server]",
+    "newMethod": "IOMonitor.GetCmdIotop",
+    "status": "Placeholder in place"
+  },
+
+  {
+    "command": "GetProcMeminfo",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/status/memory/www.linuxxueyuan.com/",
+    "oldUrl": "/status/memory/[server]",
+    "oldMethod": "MemoryMonitor.getStatus",
+    "newUrl": "/mem/status/[server]",
+    "newMethod": "MemoryMonitor.GetProcMeminfo",
+    "status": "Placeholder in place"
+  },
+
+  {
+    "command": "GetCmdIostat",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/status/io/www.linuxxueyuan.com",
+    "oldUrl": "/status/io/[server]",
+    "oldMethod": "IOMonitor.getStatus",
+    "newUrl": "/io/status/[server]",
+    "newMethod": "IOMonitor.GetCmdIostat",
+    "status": "Placeholder in place"
+  },
+
+  {
+    "command": "GetProcLoadavg",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/status/avgload/www.linuxxueyuan.com/",
+    "oldUrl": "/status/avgload/[server]",
+    "oldMethod": "CPUMonitor.getAverageLoad",
+    "newUrl": "/cpu/avgload/[server]",
+    "newMethod": "CpuMonitor.GetProcLoadavg",
+    "status": "Done"
+  },
+
+  {
+    "command": "GetProcCpuinfo",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/capacity/cpu/www.linuxxueyuan.com/",
+    "oldUrl": "/capacity/cpu/[server]",
+    "oldMethod": "CPUMonitor.getCapacity",
+    "newUrl": "/cpu/config/[server]",
+    "newMethod": "CpuMonitor.GetProcCpuinfo",
+    "status": "Placeholder in place"
+  },
+
+  {
+    "command": "GetProcMeminfo",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/capacity/memory/www.linuxxueyuan.com/",
+    "oldUrl": "/capacity/memory/[server]",
+    "oldMethod": "MemoryMonitor.getCapacity",
+    "newUrl": "/mem/config/[server]",
+    "newMethod": "MemoryMonitor.GetProcMeminfo",
+    "status": "Placeholder in place"
+  },
+
+  {
+    "command": "GetCmdDf",
+    "sampleUrl": "http://www.linuxxueyuan.com:8889/capacity/io/www.linuxxueyuan.com/",
+    "oldUrl": "/capacity/io/[server]",
+    "oldMethod": "MemoryMonitor.getCapacity",
+    "newUrl": "/io/config/[server]",
+    "newMethod": "IOMonitor.GetCmdDf"
+  }
+]

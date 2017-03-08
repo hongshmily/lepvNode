@@ -267,11 +267,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-cpu-processor"></i> CPU TOP -[GetCmdTop]
-                                {% else %}
-                                <i class="icon-cpu-processor"></i> CPU TOP
-                                {% endif %}
+                                CPU TOP
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -558,22 +554,6 @@
         }
         
         function loadAverageLoadChart(server) {
-
-//            $.get('/cpu/avgload/www.linuxxueyuan.com', function(response, status) {
-//                console.log(response);
-//            });
-//
-//            $.get('cpu/avgload/www.linuxxueyuan.com', function(response, status) {
-//                console.log(response);
-//            });
-//
-//            $.get('cpu/avgload/www.linuxxueyuan.com?id=1', function(response, status) {
-//                console.log(response);
-//            });
-//
-//            $.get('/cpu/avgload/www.linuxxueyuan.com?id=1&debug=true', function(response, status) {
-//                console.log(response);
-//            });
 
             var avgLoadChart = new LepvAvgLoadChart('div-system-load');
             avgLoadChart.start(server);
