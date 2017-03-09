@@ -18,7 +18,7 @@ LepdCaller.prototype.mockCallCommand = function(mockData) {
 
             mockData = mockData.replace(thisClass.END_STRING, '');
 
-            var resultLines = mockData.split(/\\n/);
+            var resultLines = mockData.split(/\\n|\n/);
             resolve(resultLines);
 
 
@@ -67,7 +67,7 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
                 var resultInJson = dataJson.result;
 
                 resultInJson = resultInJson.replace(thisClass.END_STRING, '');
-                var resultLines = resultInJson.split(/\n/);
+                var resultLines = resultInJson.split(/\n|\\n/);
                 resolve(resultLines);
 
                 try {

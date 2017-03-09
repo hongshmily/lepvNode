@@ -81,7 +81,7 @@ CpuMonitor.prototype.GetCmdTop = function(options, callback) {
 
             var headerColumns = headerLine.trim().split(/\s+/);
 
-            for (var rowIndex = 0; rowIndex < maxDataCount; rowIndex++) {
+            for (var rowIndex = 0; rowIndex < maxDataCount && rowIndex < lines.length; rowIndex++) {
                 var columnValues = lines[rowIndex].trim().split(/\s+/);
 
                 var rowData = {};
