@@ -18,6 +18,7 @@
     "underscore": "*",
     "walk": "*",
     "mongodb": "*",
-    "text-encoding": "*"
+    "text-encoding": "*",
+    "jswiremock": "*"
   }
 }

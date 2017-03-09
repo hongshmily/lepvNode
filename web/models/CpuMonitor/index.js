@@ -9,7 +9,7 @@ CpuMonitor.prototype.GetCpuCount = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetCpuInfo';
 
-    lepdCaller.callCommand(options.server, command)
+    lepdCaller.callCommand(options.server, command, options.mockData)
         .then (function(lines) {
             var response = {};
 
@@ -45,11 +45,16 @@ CpuMonitor.prototype.GetCmdTop = function(options, callback) {
     var command = 'GetCmdTop';
 
     var maxDataCount = 25;
-    if (options.maxCount) {
+    if (options && options.maxCount) {
         maxDataCount = options.maxCount;
     }
 
-    lepdCaller.callCommand(options.server, command)
+    var server = null;
+    if (options && options.server) {
+        server = options.server;
+    }
+
+    lepdCaller.callCommand(server, command, options.mockData)
         .then (function(lines) {
 
             var response = {};
@@ -194,7 +199,7 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetProcCpuinfo';
 
-    lepdCaller.callCommand(options.server, command)
+    lepdCaller.callCommand(options.server, command, options.mockData)
         .then (function(lines) {
 
             var response = {};

@@ -5,21 +5,43 @@ var LepdCaller = function() {
 
     this.END_STRING = 'lepdendstring';
     this.port = 12307;
+
 };
 
-LepdCaller.prototype.callCommand = function(server, command) {
+LepdCaller.prototype.mockCallCommand = function(mockData) {
 
     var thisClass = this;
 
-    if (!server) {
-        var s = '';
+    return new Promise(function(resolve, reject){
+
+        try {
+
+            mockData = mockData.replace(thisClass.END_STRING, '');
+
+            var resultLines = mockData.split(/\\n/);
+            resolve(resultLines);
+
+
+        } catch( err ) {
+            reject({error: err.message, rawResponse: mockData});
+        }
+
+    });
+};
+
+LepdCaller.prototype.callCommand = function(server, command, mockData) {
+
+    var thisClass = this;
+
+    if (mockData) {
+        return this.mockCallCommand(mockData);
     }
 
     return new Promise(function(resolve, reject){
 
         var client = new net.Socket();
         var charsReceived = [];
-        var dataJson = null; //JSON.parse(charsReceived.toString());
+        var dataJson = null;
 
         if(!server) {
             reject({error: 'server not specified!'});
