@@ -219,6 +219,18 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
         });
 };
 
+// the output of this command is like below:
+//
+// "07:40:44 all 0.00 0.00 0.50 0.00 0.00 0.50 0.00 0.00 0.00 99.00",
+// "07:40:44 0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00",
+// "07:40:44 1 0.00 0.00 0.00 0.00 0.00 0.99 0.00 0.00 0.00 99.01",
+// "",
+// "Average: CPU %usr %nice %sys %iowait %irq %soft %steal %guest %gnice %idle",
+// "Average: all 0.00 0.00 0.50 0.00 0.00 0.50 0.00 0.00 0.00 99.00",
+// "Average: 0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00",
+// "Average: 1 0.00 0.00 0.00 0.00 0.00 0.99 0.00 0.00 0.00 99.01"
+//
+// we parse the "Average lines".
 CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
 
     var thisMonitor = this;
@@ -236,6 +248,33 @@ CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
             }
 
             // TODO:
+            var headerLine = '';
+            var line = lines.shift();
+            while( lines.length > 0 && !line.match(/Average:\s+CPU/)) {
+                line = lines.shift()
+            }
+
+            if (lines.length == 0) {
+                response['error'] = 'Failed to locate a header line beginning with "Average: CPU..."';
+                callback(response);
+            }
+
+            var headerColumns = line.replace(/\s?Average:\s+/, '').trim().split(/\s+/);
+            while(lines.length > 0) {
+                line = lines.shift();
+
+                if (line.match(/\s?Average:\s+/)) {
+                    var lineValues = line.replace(/\s?Average:\s+/, '').trim().split(/\s+/);
+
+                    var cpuName = lineValues[0];
+
+                    response['data'][cpuName] = {};
+
+                    for (var columnIndex = 1; columnIndex < lineValues.length; columnIndex++) {
+                        response['data'][cpuName][headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
+                    }
+                }
+            }
 
             callback(response);
         })
