@@ -147,7 +147,7 @@ CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
         });
 };
 
-CpuMonitor.prototype.GetConfig = function(options, callback) {
+CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
 
     var thisMonitor = this;
     var command = 'GetProcCpuinfo';
@@ -186,31 +186,6 @@ CpuMonitor.prototype.GetConfig = function(options, callback) {
                     response['data']['processors'][processorId][keyValuePair[0].trim()] = keyValuePair[1].trim();
                 }
             }
-
-            callback(response);
-        })
-        .catch(function(errors) {
-            callback({error: errors});
-        });
-};
-
-CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
-
-    var thisMonitor = this;
-    var command = 'GetProcCpuinfo';
-
-    lepdCaller.callCommand(options.server, command, options.mockData)
-        .then (function(lines) {
-
-            var response = {};
-            response['data'] = {};
-
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.slice();
-                response['command'] = command;
-            }
-
-            // TODO:
 
             callback(response);
         })

@@ -43,13 +43,13 @@ router.get('/avgload/:server', function(req, res, next) {
     });
 });
 
-router.get('/config/:server', function(req, res, next) {
+router.get('/capacity/:server', function(req, res, next) {
 
     var server = req.params.server;
     var debug = req.query.debug;
     var id = req.query.id;
 
-    cpuMonitor.GetConfig({server: server, debug: debug}, function(response) {
+    cpuMonitor.GetProcCpuinfo({server: server, debug: debug}, function(response) {
         res.json(response);
     });
 });
@@ -60,7 +60,7 @@ router.get('/status/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    cpuMonitor.GetProcCpuinfo({server: server, debug: debug}, function(response) {
+    cpuMonitor.GetCmdMpstat({server: server, debug: debug}, function(response) {
         res.json(response);
     });
 });

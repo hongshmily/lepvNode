@@ -39,6 +39,6 @@ var server = 'www.linuxxueyuan.com';
 //     util.printJson(resultData);
 // });
 //
-cpuMonitor.GetCmdMpstat({server: server, debug: true}, function(resultData) {
+cpuMonitor.GetProcCpuinfo({server: server, debug: true}, function(resultData) {
     util.printJson(resultData);
 });

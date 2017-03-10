@@ -1,11 +1,11 @@
 [
   {
-    "command": "GetProcCpuinfo",
+    "command": "GetCmdMpstat",
     "oldUrl": "/status/cpu/[server]",
     "sampleUrl": "http://www.linuxxueyuan.com:8889/status/cpu/www.linuxxueyuan.com/",
     "oldMethod": "CpuMonitor.getStatus",
     "newUrl": "/cpu/status/[server]",
-    "newMethod": "CpuMonitor.GetProcCpuinfo",
+    "newMethod": "CpuMonitor.GetCmdMpstat",
     "status": "placeholder in place, TODO"
   },
 
