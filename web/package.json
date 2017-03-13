@@ -19,6 +19,8 @@
     "walk": "*",
     "mongodb": "*",
     "text-encoding": "*",
-    "jswiremock": "*"
+    "jswiremock": "*",
+    "swagger-node-express": "*",
+    "minimist": "*"
   }
 }

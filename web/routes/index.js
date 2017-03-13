@@ -18,6 +18,12 @@ router.get('/test', function(req, res) {
     res.sendFile(htmlFile);
 });
 
+router.get('/swagger', function(req, res, next) {
+
+    var htmlFile = path.join(__dirname + '/../public/components/swagger/index.html');
+    res.sendFile(htmlFile);
+});
+
 router.get('/ping/:server', function(req, res, next) {
 
     var server = req.params.server;

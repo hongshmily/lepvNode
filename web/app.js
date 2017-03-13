@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var argv = require('minimist')(process.argv.slice(2));
+
 var index = require('./routes/index');
 var cpuRouter = require('./routes/cpu');
 var commandRouter = require('./routes/command');
@@ -35,11 +37,13 @@ app.use("/images",  express.static(__dirname + '/public/images'));
 app.use("/html",  express.static(__dirname + '/public/html'));
 app.use("/components",  express.static(__dirname + '/public/components'));
 app.use("/whhg-font",  express.static(__dirname + '/public/whhg-font'));
+app.use("/swagger",  express.static(__dirname + '/public/components/swagger'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);
 app.use('/command', commandRouter);
 app.use('/test', testerRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
