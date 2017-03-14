@@ -20,7 +20,7 @@ router.get('/test', function(req, res) {
 
 router.get('/swagger', function(req, res, next) {
 
-    var htmlFile = path.join(__dirname + '/../public/components/swagger/index.html');
+    var htmlFile = path.join(__dirname + '/../public/html/swagger.html');
     res.sendFile(htmlFile);
 });
 

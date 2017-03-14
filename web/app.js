@@ -38,6 +38,7 @@ app.use("/html",  express.static(__dirname + '/public/html'));
 app.use("/components",  express.static(__dirname + '/public/components'));
 app.use("/whhg-font",  express.static(__dirname + '/public/whhg-font'));
 app.use("/swagger",  express.static(__dirname + '/public/components/swagger'));
+app.use("/docs",  express.static(__dirname + '/public/docs'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);

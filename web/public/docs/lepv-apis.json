@@ -2,9 +2,9 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Sample spec",
-    "description": "Sample spec for Swagger",
-    "termsOfService": "http://swagger.io/terms/"
+    "title": "LEPV APIs",
+    "description": "API spec for LEPV",
+    "termsOfService": "http://www.linuxep.com"
   },
   "basePath": "/",
   "tags" : [
@@ -13,7 +13,7 @@
     }
   ],
   "schemes": [
-    "https"
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -22,10 +22,10 @@
     "application/json"
   ],
   "paths": {
-    "/path/to/method": {
+    "/cpu/status": {
       "post": {
         "tags": ["Tag1"],
-        "description": "what this API does",
+        "description": "Get the latest status of CPU",
         "operationId": "for the URL",
         "produces": [
           "application/json"
