@@ -6,16 +6,16 @@ info:
   description: LEPV Rest API powered by Node
   version: "0.0.1"
 # the domain of the service
-host: www.localhost.com:8889
+host: localhost:8889
 # array of all schemes that your API supports
 schemes:
-  - https
+  - http
 # will be prefixed to all paths
 basePath: /
 produces:
   - application/json
 paths:
-  /cpu/status:
+  /cpu/status/{server}:
     get:
       summary: Get CPU status
       description: |
@@ -25,11 +25,12 @@ paths:
 
       parameters:
         - name: server
-          in: query
+          in: path
           description: the IP or domain of the server to be monitored
           required: true
           type: string
           format: string
+          default: www.linuxxueyuan.com
         - name: reqid
           in: query
           description: the id of the request
@@ -42,6 +43,7 @@ paths:
           required: false
           type: boolean
           format: boolean
+          default: true
       tags:
         - cpu
       responses:
