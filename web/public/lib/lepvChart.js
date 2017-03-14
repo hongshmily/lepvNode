@@ -225,7 +225,6 @@ LepvChart.prototype.start = function(serverToMonitor) {
 
   // initialize, and then refresh.
   this.initialize(this.refresh);
-  // this.refresh();
 
   var thisChart = this;
   this.intervalId = setInterval(function () {

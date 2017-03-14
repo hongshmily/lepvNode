@@ -205,7 +205,7 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
 // "Average: 0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00",
 // "Average: 1 0.00 0.00 0.00 0.00 0.00 0.99 0.00 0.00 0.00 99.01"
 //
-// we parse the "Average lines".
+// we parse the "Average" lines.
 CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
 
     var thisMonitor = this;
