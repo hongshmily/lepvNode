@@ -1,0 +1,71 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: LEPV Rest API
+  description: LEPV Rest API powered by Node
+  version: "0.0.1"
+# the domain of the service
+host: www.localhost.com:8889
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /
+produces:
+  - application/json
+paths:
+  /cpu/status:
+    get:
+      summary: Get CPU status
+      description: |
+        - The cpu/status endpoint returns information about the cpu of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdMpstat".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/status/cpu/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: query
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+      tags:
+        - cpu
+      responses:
+        "200":
+          description: haha
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Product'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Average Load:
+    type: object
+    properties:
+      last1:
+        type: float
+        description: average load of the system in last minute
+      last5:
+        type: float
+        description: average load of the system in last 5 minutes
+      last15:
+        type: string
+        description: average load of the system in last 15 minutes
+
