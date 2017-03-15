@@ -65,7 +65,9 @@ LepvCpuCharts.prototype.updateChartData = function(data) {
     
     $.each( data, function( coreName, coreStatData ) {
         idleStatData[coreName] = coreStatData.idle;
-        userGroupStatData[coreName] = coreStatData.user + coreStatData.system + coreStatData.nice;
+        userGroupStatData[coreName] = (coreStatData.user || coreStatData.usr)
+            + (coreStatData.system || coreStatData.sys)
+            + coreStatData.nice;
         irqGroupStatData[coreName] = coreStatData.irq + coreStatData.soft;
     });
     
