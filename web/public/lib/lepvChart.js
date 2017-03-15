@@ -224,7 +224,8 @@ LepvChart.prototype.start = function(serverToMonitor) {
   this.responseId = 0;
 
   // initialize, and then refresh.
-  this.initialize(this.refresh);
+  this.initialize();
+  this.refresh();
 
   var thisChart = this;
   this.intervalId = setInterval(function () {
@@ -268,7 +269,7 @@ LepvChart.prototype.updateChartData = function(responseData) {
 LepvChart.prototype.refresh = function() {
 
   if (!this.initialized) {
-    console.log("Chart not initialized yet");
+    console.log("Chart not initialized yet, refresh will start after initialization");
     return;
   }
 
@@ -293,14 +294,14 @@ LepvChart.prototype.refresh = function() {
   var url = thisChart.dataUrlPrefix + thisChart.server; // + "?id=" + thisChart.requestId;
 
   $.get(url).done(
-      function(data, status) {
+      function(response, status) {
           if (thisChart.isChartPaused) {
               return;
           }
 
-          thisChart.responseId = data['requestId'];
+          thisChart.responseId = response['requestId'];
 
-          thisChart.updateChartData(data['data']);
+          thisChart.updateChartData(response['data']);
       }
   ).fail(
       function(data, status) {

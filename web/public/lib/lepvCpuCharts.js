@@ -36,12 +36,18 @@ LepvCpuCharts.prototype.initializeControlElements = function() {
 
 LepvCpuCharts.prototype.initialize = function() {
 
+    if (!this.server) {
+        // console.log('server not specified for average load chart');
+        return;
+    }
     this.gaugeChart.initialize();
     
     this.donutChart.initialize();
     this.idleChart.initialize();
     this.userGroupChart.initialize();
     this.irqGroupChart.initialize();
+
+    this.initialized = true;
 };
 
 LepvCpuCharts.prototype.updateChartData = function(data) {

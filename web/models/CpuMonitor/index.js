@@ -246,7 +246,7 @@ CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
                     response['data'][cpuName] = {};
 
                     for (var columnIndex = 1; columnIndex < lineValues.length; columnIndex++) {
-                        response['data'][cpuName][headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
+                        response['data'][cpuName][headerColumns[columnIndex].replace('%', '')] = parseFloat(lineValues[columnIndex]);
                     }
                 }
             }
