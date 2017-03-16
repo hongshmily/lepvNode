@@ -47,6 +47,8 @@ LepvGaugeChart.prototype.initialize = function() {
             height: 100
         }
     });
+
+    this.initialized = true;
 };
 
 LepvGaugeChart.prototype.updateChartData = function(data) {

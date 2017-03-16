@@ -205,7 +205,7 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
 // "Average: 0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 100.00",
 // "Average: 1 0.00 0.00 0.00 0.00 0.00 0.99 0.00 0.00 0.00 99.01"
 //
-// we parse the "Average lines".
+// we parse the "Average" lines.
 CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
 
     var thisMonitor = this;
@@ -246,7 +246,7 @@ CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
                     response['data'][cpuName] = {};
 
                     for (var columnIndex = 1; columnIndex < lineValues.length; columnIndex++) {
-                        response['data'][cpuName][headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
+                        response['data'][cpuName][headerColumns[columnIndex].replace('%', '')] = parseFloat(lineValues[columnIndex]);
                     }
                 }
             }

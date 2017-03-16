@@ -26,7 +26,7 @@ LepvCpuLineChart.prototype = Object.create(LepvChart.prototype);
 LepvCpuLineChart.prototype.constructor = LepvCpuLineChart;
 
 LepvCpuLineChart.prototype.initialize = function() {
-    
+
     this.chart = c3.generate({
         bindto: '#' + this.chartDivName,
         data: {
@@ -67,9 +67,15 @@ LepvCpuLineChart.prototype.initialize = function() {
             }
         }
     });
+
+    this.initialized = true;
 };
 
 LepvCpuLineChart.prototype.updateChartData = function(data) {
+
+    if (!this.chart) {
+        return;
+    }
 
     var thisChart = this;
     if ( !( 'CPU-0' in this.chartData) ) {

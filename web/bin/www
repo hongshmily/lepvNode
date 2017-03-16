@@ -8,6 +8,16 @@ var app = require('../app');
 var debug = require('debug')('myapp:server');
 var http = require('http');
 
+var swagger = require('swagger-node-express').createNew(app);
+swagger.setApiInfo({
+    title: "example API",
+    description: "API to do something, manage something...",
+    termsOfServiceUrl: "",
+    contact: "shinyxxn@hotmail.com",
+    license: "",
+    licenseUrl: ""
+});
+
 /**
  * Get port from environment and store in Express.
  */
@@ -18,6 +28,9 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
+
+swagger.configureSwaggerPaths('', 'api-docs', '');
+swagger.configure('http://localhost:' + port, '1.0.0');
 
 console.log("website is running at: localhost:" + port);
 var server = http.createServer(app);

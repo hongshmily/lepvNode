@@ -57,22 +57,23 @@ LepvCpuDonutChart.prototype.initialize = function() {
             position: 'right'
         }
     });
+
+    this.initialized = true;
 };
 
 LepvCpuDonutChart.prototype.updateChartData = function(overallData) {
+
+    if (!this.chart) {
+        return;
+    }
+
+    var columnsForChart = [];
+    for (var columnName in overallData) {
+        columnsForChart.push([columnName, overallData[columnName]]);
+    }
+
     this.chart.load({
-        columns: [
-            ['user', overallData.user],
-            ['nice', overallData.nice],
-            ['system', overallData.system],
-            ['idle', overallData.idle],
-            ['iowait', overallData.iowait],
-            ['irq', overallData.irq],
-            ['softirq', overallData.soft],
-            ['steal', overallData.steal],
-            ['guest', overallData.guest],
-            ['guestnice', overallData.gnice]
-        ],
+        columns: columnsForChart,
         keys: {
             value: ['']
         }

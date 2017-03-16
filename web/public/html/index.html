@@ -169,11 +169,9 @@
                         <div id="div-cpu-stat-overall-container" class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="icon-cpu-processor"></i>
-                                {% if config == 'debug' %}
-                                <span class="spanTitle">{{ languages.cpuStatRatioChartTitle }} - [GetCmdMpstat] </span>
-                                {% else %}
-                                <span class="spanTitle" fullTitle="{{ languages.cpuStatRatioChartTitleFull }}" shortTitle="{{ languages.cpuStatRatioChartTitle }}">{{ languages.cpuStatRatioChartTitle }}</span>
-                                {% endif %}
+                                <span class="spanTitle"
+                                      fullTitle="CPU Stat; 各种上下文占据的时间"
+                                      shortTitle="CPU Stat">CPU Stat</span>
 
                             </div>
                             <!-- /.panel-heading -->
@@ -192,7 +190,9 @@
                         <div id="div-cpu-stat-idle-container" class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="icon-cpu-processor"></i>
-                                <span class="spanTitle">{{ languages.cpuIdleGroupChartTitle }}</span>
+                                <span class="spanTitle"
+                                      fullTitle="CPU Stat: Idle; 系统空闲占据的时间比例，如果是多核，可由此观察CPU的负载均衡"
+                                      shortTitle="CPU Stat: Idle">CPU Stat: Idle</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -211,7 +211,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="icon-cpu-processor"></i>
-                                <span class="spanTitle">{{ languages.cpuUserGroupChartTitle }}</span>
+                                <span class="spanTitle"
+                                      fullTitle="CPU Stat: User+Sys+Nice; 进程上下文占据的时间比例，如果是多核，可由此观察CPU的负载均衡"
+                                      shortTitle="CPU Stat: User+Sys+Nice">CPU Stat: User+Sys+Nice</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -230,7 +232,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="icon-cpu-processor"></i>
-                                <span class="spanTitle">{{ languages.cpuIrqGroupChartTitle }}</span>
+                                <span class="spanTitle"
+                                      fullTitle="CPU Stat: IRQ + SoftIRQ; 中断/软中断占据的时间比例，如果是多核，可由此观察中断/软中断的负载均衡"
+                                      shortTitle="CPU Stat: IRQ + SoftIRQ">CPU Stat: IRQ + SoftIRQ</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -249,7 +253,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="icon-cpu-processor"></i>
-                                Average Load
+                                <span class="spanTitle"
+                                      fullTitle="Average Load: CPU的平均负载; 当达到0.7*核数时，负载较重; 当达到1.0*核数时，CPU是性能瓶颈"
+                                      shortTitle="Average Load">Average Load</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -267,7 +273,9 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                CPU TOP
+                                <span class="spanTitle"
+                                      fullTitle="Average Load: CPU的平均负载; 当达到0.7*核数时，负载较重; 当达到1.0*核数时，CPU是性能瓶颈"
+                                      shortTitle="Average Load">Average Load</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -289,11 +297,10 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-ram"></i> {{ languages.ramChartTitle }} -[GetProcMeminfo]
-                                {% else %}
-                                <i class="icon-ram"></i> {{ languages.ramChartTitle }}
-                                {% endif %}
+                                <i class="icon-ram"></i>
+                                <span class="spanTitle"
+                                      fullTitle="消耗的内存、Page Cahe(Buffers, Cached)和空闲的内存"
+                                      shortTitle="消耗的内存、Page Cahe(Buffers, Cached)和空闲的内存">消耗的内存、Page Cahe(Buffers, Cached)和空闲的内存</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -311,11 +318,10 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-ram"></i> {{ languages.memoryConsumptionChartTitle }} -[GetCmdProcrank]
-                                {% else %}
-                                <i class="icon-ram"></i> {{ languages.memoryConsumptionChartTitle }}
-                                {% endif %}
+                                <i class="icon-ram"></i>
+                                <span class="spanTitle"
+                                      fullTitle="内存消耗（单位: MB)"
+                                      shortTitle="内存消耗（单位: MB)">内存消耗（单位: MB)</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -337,12 +343,12 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-ram"></i> {{ languages.memoryPssAgainstTotalChartTitle }} -[GetCmdProcrank]
-                                {% else %}
-                                <i class="icon-ram"></i> {{ languages.memoryPssAgainstTotalChartTitle }}
-                                {% endif %}
+                                <i class="icon-ram"></i>
+                                <span class="spanTitle"
+                                      fullTitle="应用程序耗费内存占总内存比例"
+                                      shortTitle="应用程序耗费内存占总内存比例">应用程序耗费内存占总内存比例</span>
                             </div>
+
                             <div class="panel-body">
                                 <div id="div-memory-free-pss-stat">
                                 </div>
@@ -353,12 +359,12 @@
                     <div class="col-lg-8">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-ram"></i> {{ languages.memoryPssDonutChartTitle }} -[GetCmdProcrank]
-                                {% else %}
-                                <i class="icon-ram"></i> {{ languages.memoryPssDonutChartTitle }}
-                                {% endif %}
+                                <i class="icon-ram"></i>
+                                <span class="spanTitle"
+                                      fullTitle="应用程序内存消耗比例分布(基于PSS)"
+                                      shortTitle="应用程序内存消耗比例分布(基于PSS)">应用程序内存消耗比例分布(基于PSS)</span>
                             </div>
+
                             <div class="panel-body">
                                 <div id="div-memory-pss-stat"></div>
                             </div>
@@ -370,12 +376,12 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-syncalt"></i> {{ languages.ioChartTitle }} -[GetCmdIostat]
-                                {% else %}
-                                <i class="icon-syncalt"></i> {{ languages.ioChartTitle }}
-                                {% endif %}
+                                <i class="icon-syncalt"></i>
+                                <span class="spanTitle"
+                                      fullTitle="I/O吞吐量"
+                                      shortTitle="I/O吞吐量">I/O吞吐量</span>
                             </div>
+
                             <div class="panel-body">
                                 <div class="flot-chart">
                                     <div id="div-io-stat" class="flot-chart-content"></div>
@@ -388,12 +394,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
+
                             <div class="panel-heading">
-                                {% if config == 'debug' %}
-                                <i class="icon-syncalt"></i> I/O Top Table -[GetCmdIotop]
-                                {% else %}
-                                <i class="icon-syncalt"></i> I/O Top Table
-                                {% endif %}
+                                <i class="icon-syncalt"></i>
+                                <span class="spanTitle"
+                                      fullTitle="I/O Top Table"
+                                      shortTitle="I/O Top Table">I/O Top Table</span>
                             </div>
                             <div class="panel-body">
                                 <div>
@@ -414,11 +420,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="glyphicon glyphicon-tasks"></i>
-                                {% if config == 'debug' %}
-                                <span class="spanTitle">{{ languages.perfTableTitle }}</span> -[GetCmdPerfCpuclock]
-                                {% else %}
-                                <span class="spanTitle" fullTitle="{{ languages.perfTableTitleFull }}" shortTitle="{{ languages.perfTableTitle }}">{{ languages.perfTableTitle }}</span>
-                                {% endif %}
+                                <span class="spanTitle"
+                                      fullTitle="基于Symbol的时间分布 (perf top)"
+                                      shortTitle="基于Symbol的时间分布">基于Symbol的时间分布</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -606,6 +610,7 @@
         $('#labelBanner').text(bannerLabel);
 
         loadAverageLoadChart(server);
+        loadCpuCharts(server);
 
         $('[data-toggle="tooltip"]').tooltip();
 

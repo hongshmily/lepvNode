@@ -29,13 +29,18 @@ var LepvAvgLoadChart = function(divName) {
     this.maxValues = [1];
 
     this.updateChartHeader();
-    // this.initialize();
+    this.initialize();
 };
 
 LepvAvgLoadChart.prototype = Object.create(LepvChart.prototype);
 LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 
 LepvAvgLoadChart.prototype.initialize = function(callback) {
+
+    if (!this.server) {
+        // console.log('server not specified for average load chart');
+        return;
+    }
 
     var thisChart = this;
     $.get('cpu/count/' + thisChart.server, function(responseData, status) {
@@ -99,6 +104,10 @@ LepvAvgLoadChart.prototype.initialize = function(callback) {
 };
 
 LepvAvgLoadChart.prototype.updateChartData = function(data) {
+
+    if (!(this.initialized)) {
+        return;
+    }
 
     if (this.chartData['last1'].length > this.maxDataCount) {
         this.timeData.splice(1, 1);
