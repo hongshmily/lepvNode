@@ -54,7 +54,6 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
             }
 
             // Done by Ting
-            var line = lines.shift();
             while( lines.length > 0 && !line.match(/Device:\s+rrqm/)) {
                 line = lines.shift()
             }
@@ -67,8 +66,9 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
             var headerColumns = line.trim().split(/\s+/);
             while (lines.length > 0) {
                 line = lines.shift();
-                if (line == "")
+                if (line == "") {
                     continue
+                }
 
                 var lineValues = line.trim().split(/\s+/);
 
