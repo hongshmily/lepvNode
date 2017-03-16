@@ -194,6 +194,12 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
         });
 };
 
+CpuMonitor.prototype.GetCapacity = function(options, callback) {
+
+    // TODO:
+    this.GetProcCpuinfo(options, callback);
+};
+
 // the output of this command is like below:
 //
 // "07:40:44 all 0.00 0.00 0.50 0.00 0.00 0.50 0.00 0.00 0.00 99.00",

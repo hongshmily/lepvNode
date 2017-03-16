@@ -9,6 +9,10 @@ var argv = require('minimist')(process.argv.slice(2));
 
 var index = require('./routes/index');
 var cpuRouter = require('./routes/cpu');
+var memoryRouter = require('./routes/memory');
+var ioRouter = require('./routes/io');
+var perfRouter = require('./routes/perf');
+
 var commandRouter = require('./routes/command');
 var testerRouter = require('./routes/test');
 
@@ -42,6 +46,10 @@ app.use("/docs",  express.static(__dirname + '/public/docs'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);
+app.use('/memory', memoryRouter);
+app.use('/io', ioRouter);
+app.use('/perf', perfRouter);
+
 app.use('/command', commandRouter);
 app.use('/test', testerRouter);
 

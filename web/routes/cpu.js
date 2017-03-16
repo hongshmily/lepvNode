@@ -1,5 +1,4 @@
 var express = require('express');
-var request = require('request');
 
 var cpuMonitor = require('../models/CpuMonitor');
 
