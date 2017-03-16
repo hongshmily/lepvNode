@@ -7,14 +7,14 @@ var util = require('../Utility');
 
 var server = 'www.linuxxueyuan.com';
 
-ioMonitor.GetCmdDf({server: server, debug: true}, function(resultData) {
-    util.printJson(resultData);
-});
+// ioMonitor.GetCmdDf({server: server, debug: true}, function(resultData) {
+//     util.printJson(resultData);
+// });
 
 ioMonitor.GetCmdIostat({server: server, debug: true}, function(resultData) {
     util.printJson(resultData);
 });
-
-ioMonitor.GetCmdIotop({server: server, debug: true}, function(resultData) {
-    util.printJson(resultData);
-});
+//
+// ioMonitor.GetCmdIotop({server: server, debug: true}, function(resultData) {
+//     util.printJson(resultData);
+// });

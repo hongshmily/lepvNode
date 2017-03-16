@@ -53,7 +53,7 @@ router.get('/capacity/:server', function(req, res, next) {
     });
 });
 
-router.get('/stat/:server', function(req, res, next) {
+router.get('/status/:server', function(req, res, next) {
 
     var server = req.params.server;
     var debug = req.query.debug;
