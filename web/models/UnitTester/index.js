@@ -1,14 +1,25 @@
 
 const assert = require('assert');
+const fs = require('fs')
+
 
 var UnitTester = function() {
 };
 
-UnitTester.prototype.testMethod = function(functor, testDatas, callback) {
+UnitTester.prototype.testMethod = function(functor, testDataFile, callback) {
 
-    testDatas.samples.forEach(function(testData) {
+    fs.readFile(testDataFile, 'utf8', function (err,testDataContent) {
+        if (err) {
+            return console.log(err);
+        }
 
-        functor({mockData: testData.result, debug: true}, callback);
+        var testDatas = JSON.parse(testDataContent);
+
+        testDatas.samples.forEach(function(testData) {
+
+            functor({mockData: testData.result, debug: true}, callback);
+
+        });
     });
 };
 

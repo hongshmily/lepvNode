@@ -2,18 +2,16 @@
  * Created by mxu on 12/30/16.
  */
 
-var fs = require("fs");
 var cpuMonitor = require('../index');
 var util = require('../../Utility');
 var unitTester = require('../../UnitTester');
 
+const path = require('path');
+
 var testDataFilePath = './GetCmdTop.json';
 
-
-var testDataContent = fs.readFileSync(testDataFilePath);
-var testDatas = JSON.parse(testDataContent);
-
-unitTester.testMethod(cpuMonitor.GetCmdTop, testDatas, function(testResult) {
+testDataFilePath = path.resolve(testDataFilePath);
+unitTester.testMethod(cpuMonitor.GetCmdTop, testDataFilePath, function(testResult) {
 
     util.printJson(testResult);
 });

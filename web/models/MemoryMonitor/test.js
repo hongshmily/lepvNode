@@ -11,6 +11,6 @@ memoryMonitor.GetCmdProcrank({server: server, debug: true}, function(resultData)
     util.printJson(resultData);
 });
 
-memoryMonitor.GetProcMeminfo({server: server, debug: true}, function(resultData) {
-    util.printJson(resultData);
-});
+// memoryMonitor.GetProcMeminfo({server: server, debug: true}, function(resultData) {
+//     util.printJson(resultData);
+// });
