@@ -99,6 +99,132 @@ paths:
           description: LEPD or LEPV error
           schema:
             $ref: '#/definitions/Error'
+  /cpu/count/{server}:
+    get:
+      summary: Get CPU count
+      description: |
+        - The cpu/status endpoint returns cpu count the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCpuInfo".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/??/cpu/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - CPU
+      responses:
+        "200":
+          description: CPU count
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/CPU Count'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /cpu/top/{server}:
+    get:
+      summary: Get the Top status sorted by cpu ratio
+      description: |
+        - The cpu/top endpoint returns the top status of each process (sorted by it cpu ratio) the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdTop".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/cputop/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - CPU
+      responses:
+        "200":
+          description: Status of the Top, organized a list Top status (for each process), the properties include %ranking, %PID, %USER, %PRI, %NI, %VSZ, %RSS, %S, %%CPU, %%MEM, %TIME, %CMD
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Top Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /cpu/capacity/{server}:
+    get:
+      summary: Get CPU capability
+      description: |
+        - The cpu/status endpoint returns information about the cpu capability of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetProcCpuinfo".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/cpu/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - CPU
+      responses:
+        "200":
+          description: Capability of the CPU, organized by the processor ID like "0", "1".
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/CPU Capability'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /io/status/{server}:
     get:
       summary: Get IO status
@@ -269,7 +395,7 @@ paths:
             $ref: '#/definitions/Error'
   /perf/cpuclock/{server}:
     get:
-      summary: Get Perf status
+      summary: Get the Perf status sorted by cpu clock
       description: |
         - The perf/cpuclock endpoint returns Perf status of the system being monitored by LEPD.
         - It talks to LEPD command of "GetCmdPerfCpuclock".
