@@ -39,4 +39,4 @@ GetCpuInfoCommander.prototype.parse = function(lines) {
     return parsedData;
 };
 
-module.exports = GetCpuInfoCommander;
+module.exports = new GetCpuInfoCommander();
