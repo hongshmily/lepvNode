@@ -183,6 +183,48 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /memory/status/{server}:
+    get:
+      summary: Get Memory status
+      description: |
+        - The cpu/status endpoint returns information about the memory of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetProcMeminfo".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/status/memory/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Memory
+      responses:
+        "200":
+          description: Status of the Memory, the properties for each processor include %free, %buffers, %name, %ratio, %total, %cached, %used, %unit
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Memory Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Average Load:
     type: object
