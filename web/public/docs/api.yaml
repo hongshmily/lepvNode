@@ -132,7 +132,7 @@ paths:
         - IO
       responses:
         "200":
-          description: Status of the IO, organized by the processor ID like "sda", the properties for each processor include %wkbs, %rkbs, %ratio
+          description: Status of the IO, organized by the disk device name like "sda", the properties for each disk device include %wkbs, %rkbs, %ratio
           schema:
             type: json
             items:
@@ -216,7 +216,7 @@ paths:
         - Memory
       responses:
         "200":
-          description: Status of the Memory, the properties for each processor include %free, %buffers, %name, %ratio, %total, %cached, %used, %unit
+          description: Status of the Memory, the properties include %free, %buffers, %name, %ratio, %total, %cached, %used, %unit
           schema:
             type: json
             items:
@@ -258,7 +258,7 @@ paths:
         - Memory
       responses:
         "200":
-          description: Capability of the Memory, the properties for each processor include %capacity, %summary, %name, %unit
+          description: Capability of the Memory, the properties include %capacity, %summary, %name, %unit
           schema:
             type: json
             items:
