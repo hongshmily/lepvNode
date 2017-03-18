@@ -99,6 +99,216 @@ paths:
           description: LEPD or LEPV error
           schema:
             $ref: '#/definitions/Error'
+  /io/status/{server}:
+    get:
+      summary: Get IO status
+      description: |
+        - The io/status endpoint returns information about the io of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdIostat".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/status/io/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - IO
+      responses:
+        "200":
+          description: Status of the IO, organized by the disk device name like "sda", the properties for each disk device include %wkbs, %rkbs, %ratio
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/IO Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /memory/procrank/{server}:
+    get:
+      summary: Get the information of each process ranked by the memory usage
+      description: |
+        - The memory/procrank endpoint returns information about each process (ranked by the memory usage) of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdProcrank".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/procrank/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Memory
+      responses:
+        "200":
+          description: Memory usage of the each process, organized by the process ID like "0", "1", the properties for each processor include %uss, %pid, %vss, %cmdline, %rss, %pss
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Process Memory Rank'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /memory/status/{server}:
+    get:
+      summary: Get Memory status
+      description: |
+        - The cpu/status endpoint returns information about the memory of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetProcMeminfo".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/status/memory/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Memory
+      responses:
+        "200":
+          description: Status of the Memory, the properties include %free, %buffers, %name, %ratio, %total, %cached, %used, %unit
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Memory Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /memory/capacity/{server}:
+    get:
+      summary: Get Memory capability
+      description: |
+        - The cpu/status endpoint returns capability about the memory of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetProcMeminfo".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/memory/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Memory
+      responses:
+        "200":
+          description: Capability of the Memory, the properties include %capacity, %summary, %name, %unit
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Memory Capability'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /perf/cpuclock/{server}:
+    get:
+      summary: Get Perf status
+      description: |
+        - The perf/cpuclock endpoint returns Perf status of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdPerfCpuclock".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/perfcpu/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Perf
+      responses:
+        "200":
+          description: Status of the Perf, organized a list Perf status (for each process), the properties for each process include %Overhead, %Symbol, %Shared Object, %Command
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Perf Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Average Load:
     type: object
