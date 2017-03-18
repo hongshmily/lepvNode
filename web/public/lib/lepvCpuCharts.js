@@ -13,7 +13,7 @@ var LepvCpuCharts = function(chartDivNames) {
     this.proactive = true;
     this.maxRequestIdGap = 2;
 
-    this.dataUrlPrefix = "/cpu/stat/";
+    this.dataUrlPrefix = "/cpu/status/";
 
     this.donutChart = new LepvCpuDonutChart(chartDivNames.donutChartDivName);
     

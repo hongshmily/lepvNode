@@ -30,7 +30,7 @@ var LepvProcrankTable = function(divName, tableDivName, pssPieDivName, freeVsPss
 LepvProcrankTable.prototype = Object.create(LepvChart.prototype);
 LepvProcrankTable.prototype.constructor = LepvProcrankTable;
 
-LepvProcrankTable.prototype.initialize = function() {
+LepvProcrankTable.prototype.initialize = function(callback) {
 
     this.table = $(this.tableDivName).DataTable( {
         destroy: true,
@@ -47,6 +47,11 @@ LepvProcrankTable.prototype.initialize = function() {
         ],
         order: [[ 4, "desc" ]]
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvProcrankTable.prototype.updateChartData = function(data) {

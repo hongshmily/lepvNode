@@ -274,8 +274,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <span class="spanTitle"
-                                      fullTitle="Average Load: CPU的平均负载; 当达到0.7*核数时，负载较重; 当达到1.0*核数时，CPU是性能瓶颈"
-                                      shortTitle="Average Load">Average Load</span>
+                                      fullTitle="CPU TOP"
+                                      shortTitle="CPU TOP">CPU TOP</span>
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -609,8 +609,16 @@
         bannerLabel += "Watching " + server;
         $('#labelBanner').text(bannerLabel);
 
-        loadAverageLoadChart(server);
-        loadCpuCharts(server);
+//        loadCpuCharts(server);
+//        loadCapacityData(server);
+//        loadCpuTopTable(server);
+
+        loadIoChart(server);
+//        loadIoTopTable(server);
+//        loadMemoryChart(server);
+//        loadAverageLoadChart(server);
+//        loadPerfCpuTable(server);
+//        loadProcrankCharts(server);
 
         $('[data-toggle="tooltip"]').tooltip();
 

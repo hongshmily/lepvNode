@@ -24,7 +24,7 @@ var LepvProcrankFreeVsPieChart = function(divName) {
 LepvProcrankFreeVsPieChart.prototype = Object.create(LepvChart.prototype);
 LepvProcrankFreeVsPieChart.prototype.constructor = LepvProcrankFreeVsPieChart;
 
-LepvProcrankFreeVsPieChart.prototype.initialize = function() {
+LepvProcrankFreeVsPieChart.prototype.initialize = function(callback) {
 
     this.chart = c3.generate({
         bindto: '#' + this.chartDivName,
@@ -40,6 +40,11 @@ LepvProcrankFreeVsPieChart.prototype.initialize = function() {
             position: 'bottom'
         }
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvProcrankFreeVsPieChart.prototype.updateChartData = function(sumData) {

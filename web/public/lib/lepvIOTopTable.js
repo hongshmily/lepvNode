@@ -16,7 +16,7 @@ var LepvIOTopTable = function(divName, tableDivName) {
     this.maxDataCount = 150;
     this.refreshInterval = 2;
 
-    this.dataUrlPrefix = "/status/iotop/";
+    this.dataUrlPrefix = "/io/top/";
 
     this.updateChartHeader();
     this.initialize();
@@ -25,7 +25,7 @@ var LepvIOTopTable = function(divName, tableDivName) {
 LepvIOTopTable.prototype = Object.create(LepvChart.prototype);
 LepvIOTopTable.prototype.constructor = LepvIOTopTable;
 
-LepvIOTopTable.prototype.initialize = function() {
+LepvIOTopTable.prototype.initialize = function(callback) {
 
     this.table = $(this.tableDivName).DataTable( {
         destroy: true,
@@ -68,6 +68,11 @@ LepvIOTopTable.prototype.initialize = function() {
         ],
         order: [[4, "desc"], [5, "desc"]]
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvIOTopTable.prototype.updateChartData = function(data) {
