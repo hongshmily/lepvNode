@@ -141,6 +141,48 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /memory/procrank/{server}:
+    get:
+      summary: Get the information of each process ranked by the memory usage
+      description: |
+        - The memory/procrank endpoint returns information about each process (ranked by the memory usage) of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdProcrank".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/procrank/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Memory
+      responses:
+        "200":
+          description: Memory usage of the each process, organized by the process ID like "0", "1", the properties for each processor include %uss, %pid, %vss, %cmdline, %rss, %pss
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Process Memory Rank'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Average Load:
     type: object
