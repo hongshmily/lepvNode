@@ -54,6 +54,7 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
             }
 
             // Done by Ting
+            var line = lines.shift();
             while( lines.length > 0 && !line.match(/Device:\s+rrqm/)) {
                 line = lines.shift()
             }
