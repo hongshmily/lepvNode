@@ -174,7 +174,7 @@ paths:
         - CPU
       responses:
         "200":
-          description: The Top status
+          description: Status of the Top, organized a list Top status (for each process), the properties include %ranking, %PID, %USER, %PRI, %NI, %VSZ, %RSS, %S, %%CPU, %%MEM, %TIME, %CMD
           schema:
             type: json
             items:
