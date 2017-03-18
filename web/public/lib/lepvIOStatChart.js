@@ -15,7 +15,7 @@ var LepvIOStatChart = function(divName, gaugeDivName) {
     this.maxDataCount = 150;
     this.refreshInterval = 2;
 
-    this.dataUrlPrefix = "/status/io/";
+    this.dataUrlPrefix = "/io/status/";
 
     this.updateChartHeader();
     this.initialize();
@@ -29,7 +29,7 @@ var LepvIOStatChart = function(divName, gaugeDivName) {
 LepvIOStatChart.prototype = Object.create(LepvChart.prototype);
 LepvIOStatChart.prototype.constructor = LepvIOStatChart;
 
-LepvIOStatChart.prototype.initialize = function() {
+LepvIOStatChart.prototype.initialize = function(callback) {
     
     this.chart = c3.generate({
         bindto: '#' + this.chartDivName,
@@ -69,6 +69,11 @@ LepvIOStatChart.prototype.initialize = function() {
             }
         }
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvIOStatChart.prototype.updateChartData = function(data) {

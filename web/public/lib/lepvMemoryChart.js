@@ -29,7 +29,7 @@ var LepvMemoryChart = function(divName, gaugeDivName) {
 LepvMemoryChart.prototype = Object.create(LepvChart.prototype);
 LepvMemoryChart.prototype.constructor = LepvMemoryChart;
 
-LepvMemoryChart.prototype.initialize = function() {
+LepvMemoryChart.prototype.initialize = function(callback) {
     
     this.chartData['Free'] = ['Free'];
     this.chartData['Cached'] = ['Cached'];
@@ -100,6 +100,11 @@ LepvMemoryChart.prototype.initialize = function() {
             }
         }
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvMemoryChart.prototype.updateChartData = function(data) {

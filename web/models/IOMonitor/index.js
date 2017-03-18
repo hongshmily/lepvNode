@@ -44,6 +44,7 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
 
     var response = {};
     response['data'] = {};
+    response['data']['disks'] = {};
 
     lepdCaller.callCommand(options.server, command)
         .then (function(lines) {
@@ -79,10 +80,10 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
 
                 var deviceName = lineValues[0];
 
-                response['data'][deviceName] = {};
-                response['data'][deviceName]['rkbs'] = parseFloat(lineValues[5]);
-                response['data'][deviceName]['wkbs'] = parseFloat(lineValues[6]);
-                response['data'][deviceName]['ratio'] = parseFloat(lineValues[lineValues.length-1]);
+                response['data']['disks'][deviceName] = {};
+                response['data']['disks'][deviceName]['rkbs'] = parseFloat(lineValues[5]);
+                response['data']['disks'][deviceName]['wkbs'] = parseFloat(lineValues[6]);
+                response['data']['disks'][deviceName]['ratio'] = parseFloat(lineValues[lineValues.length-1]);
             }
 
             callback(response);

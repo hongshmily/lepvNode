@@ -26,7 +26,7 @@ var LepvPerfCpuTable = function(divName, tableDivName) {
 LepvPerfCpuTable.prototype = Object.create(LepvChart.prototype);
 LepvPerfCpuTable.prototype.constructor = LepvPerfCpuTable;
 
-LepvPerfCpuTable.prototype.initialize = function() {
+LepvPerfCpuTable.prototype.initialize = function(callback) {
 
     if (!this.tableDivName) {
         console.log("The table div name was not specified for " + this.chartDivName);
@@ -58,6 +58,11 @@ LepvPerfCpuTable.prototype.initialize = function() {
         ],
         order: [[ 1, "desc" ]]
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvPerfCpuTable.prototype.updateChartData = function(data) {

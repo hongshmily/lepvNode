@@ -24,7 +24,7 @@ var LepvProcrankPssPieChart = function(divName) {
 LepvProcrankPssPieChart.prototype = Object.create(LepvChart.prototype);
 LepvProcrankPssPieChart.prototype.constructor = LepvProcrankPssPieChart;
 
-LepvProcrankPssPieChart.prototype.initialize = function() {
+LepvProcrankPssPieChart.prototype.initialize = function(callback) {
 
     this.chart = c3.generate({
         bindto: '#' + this.chartDivName,
@@ -40,6 +40,11 @@ LepvProcrankPssPieChart.prototype.initialize = function() {
             position: 'right'
         }
     });
+
+    this.initialized = true;
+    if (callback) {
+        callback();
+    }
 };
 
 LepvProcrankPssPieChart.prototype.updateChartData = function(pssData) {

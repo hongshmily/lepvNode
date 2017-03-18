@@ -609,8 +609,16 @@
         bannerLabel += "Watching " + server;
         $('#labelBanner').text(bannerLabel);
 
-        loadAverageLoadChart(server);
-        loadCpuCharts(server);
+//        loadCpuCharts(server);
+//        loadCapacityData(server);
+//        loadCpuTopTable(server);
+
+        loadIoChart(server);
+//        loadIoTopTable(server);
+//        loadMemoryChart(server);
+//        loadAverageLoadChart(server);
+//        loadPerfCpuTable(server);
+//        loadProcrankCharts(server);
 
         $('[data-toggle="tooltip"]').tooltip();
 
