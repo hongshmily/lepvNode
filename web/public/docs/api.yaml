@@ -309,6 +309,48 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /io/capacity/{server}:
+    get:
+      summary: Get IO capability
+      description: |
+        - The io/status endpoint returns IO capability of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdDf".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/io/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - IO
+      responses:
+        "200":
+          description: Capability of the IO, organized by the disk device name like "sda", the properties for each disk device include %size, %used, %free
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/IO Capability'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /memory/procrank/{server}:
     get:
       summary: Get the information of each process ranked by the memory usage
