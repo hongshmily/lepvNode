@@ -99,6 +99,48 @@ paths:
           description: LEPD or LEPV error
           schema:
             $ref: '#/definitions/Error'
+  /io/status/{server}:
+    get:
+      summary: Get IO status
+      description: |
+        - The io/status endpoint returns information about the io of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdMpstat".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/status/io/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - IO
+      responses:
+        "200":
+          description: Status of the IO, organized by the processor ID like "sda", the properties for each processor include %wkbs, %rkbs, %ratio
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/IO Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Average Load:
     type: object
