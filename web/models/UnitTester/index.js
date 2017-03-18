@@ -17,13 +17,18 @@ UnitTester.prototype.run = function(commander, testDataFile, callback) {
 
         async.forEach(testCases, function (testCase, callback){
 
-            commander.run({debug: true, mockData: testCase.lepdResult}, function(response) {
-                testCase['data'] = response.data;
-                testCase['rawLines'] = response.rawLines;
+            if (testCase.lepdResult) {
+                commander.run({debug: true, mockData: testCase.lepdResult}, function(response) {
+                    testCase['data'] = response.data;
+                    testCase['rawLines'] = response.rawLines;
 
-                // this callback() is required for async to work properly.
+                    // this callback() is required for async to work properly.
+                    callback();
+                });
+            } else {
+                testCase['error'] = 'lepdResult not provided!';
                 callback();
-            });
+            }
 
         }, function(err) {
             // callback when all the cases are done.
