@@ -225,6 +225,48 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /io/top/{server}:
+    get:
+      summary: Get the IO Top status
+      description: |
+        - The cpu/status endpoint returns information about the io top status of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetCmdIotop".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/status/io/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - IO
+      responses:
+        "200":
+          description: Status of the IO Top, organized by the process index like "1", "2", the properties for each process include %TID, %PRIO, %USER, %READ, %WRITE, %SWAPIN, %IO, %COMMAND
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/IO Top Status'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /io/status/{server}:
     get:
       summary: Get IO status
