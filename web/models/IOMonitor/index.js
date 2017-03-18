@@ -96,27 +96,8 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
 
 IOMonitor.prototype.GetCmdDf = function(options, callback) {
 
-    var thisMonitor = this;
-    var command = 'GetCmdDf';
-
-    var response = {};
-    response['data'] = {};
-    lepdCaller.callCommand(options.server, command)
-        .then (function(lines) {
-
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.slice();
-                response['command'] = command;
-            }
-
-            // TODO:
-
-            callback(response);
-        })
-        .catch(function(error) {
-            response['error'] = error.message;
-            callback(response);
-        });
+    const commander = require('./GetCmdDf');
+    commander.run(options, callback);
 };
 
 
