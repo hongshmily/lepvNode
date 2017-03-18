@@ -6,80 +6,26 @@ var MemoryMonitor = function() {
 
 MemoryMonitor.prototype.GetCmdProcrank = function(options, callback) {
 
-    var thisMonitor = this;
-    var command = 'GetCmdProcrank';
+    const commander = require('./GetCmdProcrank');
+    commander.run(options, callback);
 
-    var response = {};
-    response['data'] = {};
-    lepdCaller.callCommand(options.server, command)
-        .then (function(lines) {
-
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.slice();
-                response['command'] = command;
-            }
-
-            // TODO:
-            // Get capacity specific data and return it
-
-            callback(response);
-        })
-        .catch(function(errors) {
-            response['error'] = errors.message;
-            callback(response);
-        });
 };
 
 MemoryMonitor.prototype.GetProcMeminfo = function(options, callback) {
 
-    var thisMonitor = this;
-    var command = 'GetProcMeminfo';
+    const commander = require('./GetProcMeminfo');
+    commander.run(options, callback);
 
-    var response = {};
-    response['data'] = {};
-    lepdCaller.callCommand(options.server, command)
-        .then (function(lines) {
-
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.slice();
-                response['command'] = command;
-            }
-
-            // TODO:
-            // Get capacity specific data and return it
-
-            callback(response);
-        })
-        .catch(function(errors) {
-            response['error'] = errors.message;
-            callback(response);
-        });
 };
 
 MemoryMonitor.prototype.GetCapacity = function(options, callback) {
 
-    var thisMonitor = this;
-    var command = 'GetProcMeminfo';
+    this.GetProcMeminfo(options, function(response) {
 
-    var response = {};
-    response['data'] = {};
-    lepdCaller.callCommand(options.server, command)
-        .then (function(lines) {
+        // extract the data of interest.
 
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.slice();
-                response['command'] = command;
-            }
-
-            // TODO:
-            // Get capacity specific data and return it
-
-            callback(response);
-        })
-        .catch(function(errors) {
-            response['error'] = errors.message;
-            callback(response);
-        });
+        callback(response);
+    });
 };
 
 

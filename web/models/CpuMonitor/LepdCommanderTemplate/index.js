@@ -1,5 +1,4 @@
 
-// const path = require('path');
 const LepvCommandProto = require('../../LepvCommandProto');
 
 var XXXLepdCommandNameXXXCommander = function() {
@@ -13,7 +12,6 @@ XXXLepdCommandNameXXXCommander.prototype.parse = function(lines) {
 
     var parsedData = {};
     parsedData['parsed'] = {};
-    parsedData['parsed']['data'] = [];
 
     try {
 
