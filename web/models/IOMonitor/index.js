@@ -71,7 +71,7 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
             var headerColumns = line.trim().split(/\s+/);
             while (lines.length > 0) {
                 line = lines.shift();
-                if (line == "") {
+                if (line.trim() == "") {
                     continue
                 }
 
@@ -80,10 +80,9 @@ IOMonitor.prototype.GetCmdIostat = function(options, callback) {
                 var deviceName = lineValues[0];
 
                 response['data'][deviceName] = {};
-
-                for (var columnIndex = 1; columnIndex < lineValues.length; columnIndex++) {
-                    response['data'][deviceName][headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
-                }
+                response['data'][deviceName]['rkbs'] = parseFloat(lineValues[5]);
+                response['data'][deviceName]['wkbs'] = parseFloat(lineValues[6]);
+                response['data'][deviceName]['ratio'] = parseFloat(lineValues[lineValues.length-1]);
             }
 
             callback(response);
