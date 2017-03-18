@@ -39,8 +39,18 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
 
 CpuMonitor.prototype.GetCapacity = function(options, callback) {
 
-    // TODO:
-    this.GetProcCpuinfo(options, callback);
+    this.GetProcCpuinfo(options, function(response) {
+
+        // need to way to tell the following properties:
+        // architecture: ARM or X86
+        // model
+        // summary
+        // bogomips
+
+
+        callback(response);
+
+    })
 };
 
 CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
