@@ -13,7 +13,7 @@ router.get('/count/:server', function(req, res, next) {
     if (!server) {
         res.json({error: 'server not specified'});
     } else {
-        cpuMonitor.GetCpuCount({server: server, debug: debug}, function(response) {
+        cpuMonitor.getProcessorCount({server: server, debug: debug}, function(response) {
             res.json(response);
         });
     }

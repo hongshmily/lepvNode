@@ -11,7 +11,7 @@ const path = require('path');
 var testDataFilePath = './GetCmdTop.json';
 
 testDataFilePath = path.resolve(testDataFilePath);
-unitTester.testMethod(cpuMonitor.GetCmdTop, testDataFilePath, function(testResult) {
+unitTester.test(cpuMonitor.GetCmdTop, testDataFilePath, function(testResult) {
 
     util.printJson(testResult);
 });
