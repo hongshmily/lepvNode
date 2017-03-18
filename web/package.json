@@ -21,6 +21,7 @@
     "text-encoding": "*",
     "jswiremock": "*",
     "swagger-node-express": "*",
-    "minimist": "*"
+    "minimist": "*",
+    "async": "*"
   }
 }

@@ -5,6 +5,6 @@ var util = require('../Utility');
 var unitTester = require('./index');
 
 
-unitTester.testMethod(functor, testDFile, function(resultData) {
+unitTester.test(functor, testDFile, function(resultData) {
     util.printJson(resultData);
 });

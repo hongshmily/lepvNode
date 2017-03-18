@@ -8,7 +8,7 @@ var unitTester = require('../UnitTester');
 
 var server = 'www.linuxxueyuan.com';
 
-// unitTester.testMethod(cpuMonitor.GetProcCpuinfo, './tests/GetProcCpuinfo.json', function(results) {
+// unitTester.test(cpuMonitor.GetProcCpuinfo, './tests/GetProcCpuinfo.json', function(results) {
 //
 // });
 //
@@ -19,9 +19,9 @@ var server = 'www.linuxxueyuan.com';
 // });
 
 
-// cpuMonitor.GetCpuCount({server: server, debug: true}, function(resultData) {
-//     util.printJson(resultData);
-// });
+cpuMonitor.getProcessorCount({server: server, debug: true}, function(resultData) {
+    util.printJson(resultData);
+});
 //
 // cpuMonitor.GetProcCpuinfo({server: server, debug: true}, function(resultData) {
 //     util.printJson(resultData);
@@ -39,6 +39,6 @@ var server = 'www.linuxxueyuan.com';
 //     util.printJson(resultData);
 // });
 //
-cpuMonitor.GetCmdMpstat({server: server, debug: true}, function(resultData) {
-    util.printJson(resultData);
-});
+// cpuMonitor.GetCmdMpstat({server: server, debug: true}, function(resultData) {
+//     util.printJson(resultData);
+// });

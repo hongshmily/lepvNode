@@ -1,43 +1,25 @@
 
-var lepdCaller = require('../LepdCaller');
+const lepdCaller = require('../LepdCaller');
 
-var CpuMonitor = function() {
+const GetCpuInfoCommander = require('./GetCpuInfo');
+
+const CpuMonitor = function() {
 };
 
-CpuMonitor.prototype.GetCpuCount = function(options, callback) {
+CpuMonitor.prototype.getProcessorCount = function(options, callback) {
 
-    var thisMonitor = this;
-    var command = 'GetCpuInfo';
+    const getCpuInfoCommander = new GetCpuInfoCommander();
+    getCpuInfoCommander.run(options, function(response) {
 
-    var response = {};
-    response['data'] = {};
-    lepdCaller.callCommand(options.server, command, options.mockData)
-        .then (function(lines) {
+        if ('cpunr' in response.data) {
+            response['data']['count'] = response['data']['cpunr'];
+        } else {
+            response['error'] = 'Failed to locate "cpunr" in the response';
+        }
 
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.splice();
-                response['command'] = command;
-            }
+        callback(response);
 
-            for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-
-                var line = lines[lineIndex];
-                if (line.startsWith('cpunr')) {
-                    response['data']['count'] = parseInt(line.split(':')[1].trim());
-                    break;
-                }
-            }
-
-            if (!response['data']['count']) {
-                response['error'] = 'Failed in getting processor count by GetCpuInfo';
-            }
-
-            callback(response);
-        })
-        .catch(function(error) {
-            response['error'] = error.message;
-            callback(response);
-        });
+    });
 };
 
 CpuMonitor.prototype.GetCmdTop = function(options, callback) {
