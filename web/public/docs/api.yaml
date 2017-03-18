@@ -185,9 +185,9 @@ paths:
             $ref: '#/definitions/Error'
   /cpu/capacity/{server}:
     get:
-      summary: Get CPU capability
+      summary: Get CPU capacity
       description: |
-        - The cpu/status endpoint returns information about the cpu capability of the system being monitored by LEPD.
+        - The cpu/status endpoint returns information about the cpu capacity of the system being monitored by LEPD.
         - It talks to LEPD command of "GetProcCpuinfo".
         - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/cpu/www.linuxxueyuan.com/
 
@@ -216,11 +216,11 @@ paths:
         - CPU
       responses:
         "200":
-          description: Capability of the CPU, organized by the processor ID like "0", "1".
+          description: Capacity of the CPU, organized by the processor ID like "0", "1".
           schema:
             type: json
             items:
-              $ref: '#/definitions/CPU Capability'
+              $ref: '#/definitions/CPU Capacity'
         "default":
           description: Unexpected error
           schema:
@@ -311,9 +311,9 @@ paths:
             $ref: '#/definitions/Error'
   /io/capacity/{server}:
     get:
-      summary: Get IO capability
+      summary: Get IO capacity
       description: |
-        - The io/status endpoint returns IO capability of the system being monitored by LEPD.
+        - The io/status endpoint returns IO capacity of the system being monitored by LEPD.
         - It talks to LEPD command of "GetCmdDf".
         - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/io/www.linuxxueyuan.com/
 
@@ -342,11 +342,11 @@ paths:
         - IO
       responses:
         "200":
-          description: Capability of the IO, organized by the disk device name like "sda", the properties for each disk device include %size, %used, %free
+          description: Capacity of the IO, organized by the disk device name like "sda", the properties for each disk device include %size, %used, %free
           schema:
             type: json
             items:
-              $ref: '#/definitions/IO Capability'
+              $ref: '#/definitions/IO Capacity'
         "default":
           description: Unexpected error
           schema:
@@ -437,9 +437,9 @@ paths:
             $ref: '#/definitions/Error'
   /memory/capacity/{server}:
     get:
-      summary: Get Memory capability
+      summary: Get Memory capacity
       description: |
-        - The cpu/status endpoint returns capability about the memory of the system being monitored by LEPD.
+        - The cpu/status endpoint returns capacity about the memory of the system being monitored by LEPD.
         - It talks to LEPD command of "GetProcMeminfo".
         - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/memory/www.linuxxueyuan.com/
 
@@ -468,11 +468,11 @@ paths:
         - Memory
       responses:
         "200":
-          description: Capability of the Memory, the properties include %capacity, %summary, %name, %unit
+          description: Capacity of the Memory, the properties include %capacity, %summary, %name, %unit
           schema:
             type: json
             items:
-              $ref: '#/definitions/Memory Capability'
+              $ref: '#/definitions/Memory Capacity'
         "default":
           description: Unexpected error
           schema:
