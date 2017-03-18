@@ -9,16 +9,16 @@ CpuMonitor.prototype.GetCpuCount = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetCpuInfo';
 
+    var response = {};
+    response['data'] = {};
     lepdCaller.callCommand(options.server, command, options.mockData)
         .then (function(lines) {
-            var response = {};
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.splice();
                 response['command'] = command;
             }
 
-            response['data'] = {};
             for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
 
                 var line = lines[lineIndex];
@@ -34,8 +34,9 @@ CpuMonitor.prototype.GetCpuCount = function(options, callback) {
 
             callback(response);
         })
-        .catch(function(errors) {
-            callback({error: errors});
+        .catch(function(error) {
+            response['error'] = error.message;
+            callback(response);
         });
 };
 
@@ -54,11 +55,10 @@ CpuMonitor.prototype.GetCmdTop = function(options, callback) {
         server = options.server;
     }
 
+    var response = {};
+    response['data'] = [];
     lepdCaller.callCommand(server, command, options.mockData)
         .then (function(lines) {
-
-            var response = {};
-            response['data'] = [];
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
@@ -107,8 +107,9 @@ CpuMonitor.prototype.GetCmdTop = function(options, callback) {
 
             callback(response);
         })
-        .catch(function(errors) {
-            callback({error: errors});
+        .catch(function(error) {
+            response['error'] = error.message;
+            callback(response);
         });
 };
 
@@ -117,11 +118,10 @@ CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetProcLoadavg';
 
+    var response = {};
+    response['data'] = {};
     lepdCaller.callCommand(options.server, command)
         .then (function(lines) {
-
-            var response = {};
-            response['data'] = {};
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
@@ -142,8 +142,9 @@ CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
 
             callback(response);
         })
-        .catch(function(errors) {
-            callback({error: errors});
+        .catch(function(error) {
+            response['error'] = error.message;
+            callback(response);
         });
 };
 
@@ -152,11 +153,10 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetProcCpuinfo';
 
+    var response = {};
+    response['data'] = {};
     lepdCaller.callCommand(options.server, command)
         .then (function(lines) {
-
-            var response = {};
-            response['data'] = {};
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
@@ -189,8 +189,9 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
 
             callback(response);
         })
-        .catch(function(errors) {
-            callback({error: errors});
+        .catch(function(error) {
+            response['error'] = error.message;
+            callback(response);
         });
 };
 
@@ -217,11 +218,10 @@ CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetCmdMpstat';
 
+    var response = {};
+    response['data'] = {};
     lepdCaller.callCommand(options.server, command)
         .then (function(lines) {
-
-            var response = {};
-            response['data'] = {};
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
@@ -259,8 +259,9 @@ CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
 
             callback(response);
         })
-        .catch(function(errors) {
-            callback({error: errors});
+        .catch(function(error) {
+            response['error'] = error.message;
+            callback(response);
         });
 };
 

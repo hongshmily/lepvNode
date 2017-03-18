@@ -9,11 +9,10 @@ PerfMonitor.prototype.GetCmdPerfCpuclock = function(options, callback) {
     var thisMonitor = this;
     var command = 'GetCmdPerfCpuclock';
 
+    var response = {};
+    response['data'] = {};
     lepdCaller.callCommand(options.server, command)
         .then (function(lines) {
-
-            var response = {};
-            response['data'] = {};
 
             if (options.debug == true || options.debug == 'true') {
                 response['rawLines'] = lines.slice();
@@ -24,8 +23,9 @@ PerfMonitor.prototype.GetCmdPerfCpuclock = function(options, callback) {
 
             callback(response);
         })
-        .catch(function(errors) {
-            callback({error: errors});
+        .catch(function(error) {
+            response['error'] = error.message;
+            callback(response);
         });
 };
 

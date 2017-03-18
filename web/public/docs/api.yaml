@@ -57,48 +57,6 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /cpu/stat/{server}:
-    get:
-      summary: Get CPU stat
-      description: |
-        - The cpu/stat endpoint returns information about the cpu of the system being monitored by LEPD.
-        - It talks to LEPD command of "GetCmdMpstat".
-        - It deprecates the old url of http://www.linuxxueyuan.com:8889/cpustat/www.linuxxueyuan.com/
-
-      parameters:
-        - name: server
-          in: path
-          description: the IP or domain of the server to be monitored
-          required: true
-          type: string
-          format: string
-          default: www.linuxxueyuan.com
-        - name: reqid
-          in: query
-          description: the id of the request
-          required: false
-          type: number
-          format: double
-        - name: debug
-          in: query
-          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
-          required: false
-          type: boolean
-          format: boolean
-          default: true
-      tags:
-        - CPU
-      responses:
-        "200":
-          description: Status of the CPU, organized by the processor ID like "0", "1", "all", the properties for each processor include %usr, %nice, %sys, %iowait, %irq, %soft, % steal, %guest, %gnice, %idle
-          schema:
-            type: json
-            items:
-              $ref: '#/definitions/CPU Status'
-        "default":
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
   /cpu/avgload/{server}:
     get:
       summary: Get CPU average load
