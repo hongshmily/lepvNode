@@ -183,6 +183,48 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /cpu/capacity/{server}:
+    get:
+      summary: Get CPU capability
+      description: |
+        - The cpu/status endpoint returns information about the cpu capability of the system being monitored by LEPD.
+        - It talks to LEPD command of "GetProcCpuinfo".
+        - It deprecates the old url of http://www.linuxxueyuan.com:8889/capacity/cpu/www.linuxxueyuan.com/
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to be monitored
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: reqid
+          in: query
+          description: the id of the request
+          required: false
+          type: number
+          format: double
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - CPU
+      responses:
+        "200":
+          description: Capability of the CPU, organized by the processor ID like "0", "1".
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/CPU Capability'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /io/status/{server}:
     get:
       summary: Get IO status
