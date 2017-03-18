@@ -4,7 +4,6 @@ const fs = require('fs');
 const async = require('async');
 
 var UnitTester = function() {
-    this.unittestFilePath = '';
 };
 
 UnitTester.prototype.run = function(commander, testDataFile, callback) {
@@ -33,11 +32,5 @@ UnitTester.prototype.run = function(commander, testDataFile, callback) {
 
     });
 };
-
-UnitTester.prototype.testTestFilePath = function(absoluteFilePath) {
-
-    this.unittestFilePath = absoluteFilePath;
-};
-
 
 module.exports = new UnitTester();
