@@ -34,7 +34,7 @@ LepvCommandProto.prototype.run = function(options, callback) {
             callback(response);
         })
         .catch(function(error) {
-            response['error'] = error.message;
+            response['error'] = error.message || error.error;
             callback(response);
         });
 };
