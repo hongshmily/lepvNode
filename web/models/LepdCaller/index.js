@@ -83,7 +83,7 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
                 if (err.message != 'Unexpected end of JSON input') {
                     console.log("Continue to wait for data... " + err);
                 } else {
-                    console.log("Failed to parse response" + err);
+                    console.log("The data received is invalid " + err);
                     reject({error: err.message, rawResponse: dataArray.toString()});
                     client.destroy();
                 }
