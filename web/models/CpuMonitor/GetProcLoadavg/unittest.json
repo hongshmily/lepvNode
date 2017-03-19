@@ -1,7 +1,15 @@
 {
-  "description": "XXXLepdCommandNameXXX, this command YYY description of the command YYY",
+  "description": "GetProcLoadavg",
 
   "cases": [
+
+    {
+      "kernel": "",
+      "os": "linux",
+      "cpu": "x86",
+      "note": "data from www.linuxxueyuan.com",
+      "lepdResult":	"0.18 0.19 0.12 1/77 11132\nlepdendstring"
+    }
 
   ]
 }

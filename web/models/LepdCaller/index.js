@@ -69,7 +69,8 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
                 const lastCharsReceived = dataArray.slice(-4).join('-');
                 if (/34-10-125[-10]?/.test(lastCharsReceived)) {
 
-                    console.log("Data received " + charsReceived.toString());
+                    // console.log("Data received :");
+                    // console.log(charsReceived.toString());
                     const resultInJson = JSON.parse(charsReceived.toString()).result.replace(thisClass.END_STRING, '');
 
                     resultLines = resultInJson.split(/\n|\\n/);
@@ -95,11 +96,11 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
         });
         client.on('close', function() {
             resolve(resultLines);
-            console.log("Connection closed to " + server + " with command: " + command);
+            // console.log("Connection closed to " + server + " with command: " + command);
         });
         client.on('error', function(err) {
             reject({error: err.message});
-            console.log("Connection error: " + err + " for server " + server+ " with command: " + command);
+            // console.log("Connection error: " + err + " for server " + server+ " with command: " + command);
         });
     });
 };
