@@ -5,7 +5,7 @@
 var commander = require('./index');
 var util = require('../../Utility');
 
-var server = 'www.linuxxueyuan.com';
+var server = 'www.linuxep.com';
 const options = {server: server, debug: true};
 
 commander.run(options, function(response) {

@@ -1,7 +1,7 @@
 
-var net = require('net');
+const net = require('net');
 
-var LepdCaller = function() {
+const LepdCaller = function() {
 
     this.END_STRING = 'lepdendstring';
     this.port = 12307;
@@ -9,15 +9,13 @@ var LepdCaller = function() {
 
 LepdCaller.prototype.mockCallCommand = function(mockData) {
 
-    var thisClass = this;
+    const thisClass = this;
 
     return new Promise(function(resolve, reject){
 
         try {
 
-            mockData = mockData.replace(thisClass.END_STRING, '');
-
-            var resultLines = mockData.split(/\\n|\n/);
+            const resultLines = mockData.replace(thisClass.END_STRING, '').split(/\\n|\n/);
             resolve(resultLines);
 
 
@@ -30,7 +28,7 @@ LepdCaller.prototype.mockCallCommand = function(mockData) {
 
 LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
-    var thisClass = this;
+    const thisClass = this;
 
     if (mockData) {
         return this.mockCallCommand(mockData);
@@ -38,7 +36,7 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
     return new Promise(function(resolve, reject){
 
-        var client = new net.Socket();
+        const client = new net.Socket();
         var charsReceived = [];
         var resultLines;
 
@@ -59,16 +57,20 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
             // across in one chunk. But sometimes it doesn't. It doesn't even necessarily depend on the amount of data.
             // If you're in a situation where this is happening,
 
+            // what happens for large array in JS
+            // http://stackoverflow.com/questions/1374126/how-to-extend-an-existing-javascript-array-with-another-array-without-creating
+
             try {
-                charsReceived = charsReceived.concat(dataArray);
+
+                Array.prototype.push.apply(charsReceived, dataArray);
 
                 // the string should end with '"\n}', whose ASCII codes are "34, 10, 125"
-                if (charsReceived[0][charsReceived[0].length - 1] === 125          // }
-                    && charsReceived[0][charsReceived[0].length - 2] === 10        // newline
-                    && charsReceived[0][charsReceived[0].length - 3] === 34) {     // "
+                // BUT, sometimes there is an additional "\n" after }, so it ends with "34, 10, 125, 10"
+                const lastCharsReceived = dataArray.slice(-4).join('-');
+                if (/34-10-125[-10]?/.test(lastCharsReceived)) {
 
-                    // console.log("Data received " + charsReceived.toString());
-                    var resultInJson = JSON.parse(charsReceived.toString()).result.replace(thisClass.END_STRING, '');
+                    console.log("Data received " + charsReceived.toString());
+                    const resultInJson = JSON.parse(charsReceived.toString()).result.replace(thisClass.END_STRING, '');
 
                     resultLines = resultInJson.split(/\n|\\n/);
 
@@ -78,7 +80,6 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
                     } catch (err) {
                         console.log(err);
                     }
-
                 }
 
             } catch( err ) {
@@ -105,7 +106,7 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
 LepdCaller.prototype.ping = function(server, callback) {
 
-    var command = 'SayHello';
+    const command = 'SayHello';
     this.callCommand(server, command)
         .then (function(lines) {
 
@@ -122,7 +123,7 @@ LepdCaller.prototype.ping = function(server, callback) {
 
 LepdCaller.prototype.ListAllMethod = function(server, callback) {
 
-    var command = 'ListAllMethod';
+    const command = 'ListAllMethod';
     this.callCommand(server, command)
         .then (function(lines) {
 
