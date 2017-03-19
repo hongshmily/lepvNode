@@ -41,6 +41,7 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
         var client = new net.Socket();
         var charsReceived = [];
+        var resultLines;
         var dataJson = null;
 
         if(!server) {
@@ -62,14 +63,16 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
             try {
                 charsReceived = charsReceived.concat(dataArray);
+                // console.log("Data received " + charsReceived.toString());
                 dataJson = JSON.parse(charsReceived.toString());
+
 
                 var resultInJson = dataJson.result;
 
                 resultInJson = resultInJson.replace(thisClass.END_STRING, '');
-                var resultLines = resultInJson.split(/\n|\\n/);
-                resolve(resultLines);
+                resultLines = resultInJson.split(/\n|\\n/);
 
+                // Close the connection, or the connection will never be closed
                 try {
                     client.destroy();
                 } catch (err) {
@@ -79,13 +82,23 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
             } catch( err ) {
                 if (err.message != 'Unexpected end of JSON input') {
+                    console.log("Continue to wait for data... " + err);
+                } else {
+                    console.log("Failed to parse response" + err);
                     reject({error: err.message, rawResponse: dataArray.toString()});
                     client.destroy();
                 }
             }
 
         });
-
+        client.on('close', function() {
+            resolve(resultLines);
+            console.log("Connection closed to " + server + " with command: " + command);
+        });
+        client.on('error', function(err) {
+            reject({error: err.message});
+            console.log("Connection error: " + err + " for server " + server+ " with command: " + command);
+        });
     });
 };
 
