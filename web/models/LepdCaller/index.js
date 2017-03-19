@@ -69,7 +69,6 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
                 const lastCharsReceived = dataArray.slice(-4).join('-');
                 if (/34-10-125[-10]?/.test(lastCharsReceived)) {
 
-                    console.log("Data received " + charsReceived.toString());
                     const resultInJson = JSON.parse(charsReceived.toString()).result.replace(thisClass.END_STRING, '');
 
                     resultLines = resultInJson.split(/\n|\\n/);
@@ -84,7 +83,8 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
             } catch( err ) {
                 if (err.message != 'Unexpected end of JSON input') {
-                    console.log("Continue to wait for data... " + err);
+                    console.log("The data received is invalid " + err);
+                    console.log("Data received " + charsReceived.toString());
                 } else {
                     console.log("The data received is invalid " + err);
                     reject({error: err.message, rawResponse: dataArray.toString()});
