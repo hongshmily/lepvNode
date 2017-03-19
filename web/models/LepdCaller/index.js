@@ -62,7 +62,7 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
             try {
 
-                Array.prototype.push.apply(charsReceived, dataArray);
+                charsReceived = charsReceived.concat(dataArray);
 
                 // the string should end with '"\n}', whose ASCII codes are "34, 10, 125"
                 // BUT, sometimes there is an additional "\n" after }, so it ends with "34, 10, 125, 10"
