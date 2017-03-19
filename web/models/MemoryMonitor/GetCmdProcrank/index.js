@@ -54,9 +54,12 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
         }
 
         var headerColumns = line.trim().split(/\s+/);
-        var lineIndex = 0
-        while(lines.length > 0) {
-            line = lines.shift();
+
+        for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+            line = lines[lineIndex].trim();
+            if (line.trim() == '') {
+                continue
+            }
             if (line.match( /\s*-+\s*-+\s*-+\s*/)) {
                 break;
             }
@@ -68,7 +71,6 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
                 parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
             }
             parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = lineValues[columnIndex];
-            lineIndex += 1
         }
     } catch( exception ) {
         parsedData['error'] = exception.message;
