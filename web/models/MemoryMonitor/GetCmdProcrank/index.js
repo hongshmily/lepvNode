@@ -57,13 +57,13 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
 
         for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             line = lines[lineIndex].trim();
-            if (line.trim() == '') {
+            if (line == '') {
                 continue
             }
             if (line.match( /\s*-+\s*-+\s*-+\s*/)) {
                 break;
             }
-            var lineValues = line.trim().split(/\s+/);
+            var lineValues = line.split(/\s+/);
 
             parsedData.parsed['procranks'][lineIndex] = {};
 
