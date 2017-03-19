@@ -38,12 +38,12 @@ GetCmdIostatCommander.prototype.parse = function(lines) {
 
         var headerColumns = line.trim().split(/\s+/);
         while (lines.length > 0) {
-            line = lines.shift();
-            if (line.trim() == "") {
+            line = lines.shift().trim();
+            if (line == "") {
                 continue
             }
 
-            var lineValues = line.trim().split(/\s+/);
+            var lineValues = line.split(/\s+/);
 
             var deviceName = lineValues[0];
 
