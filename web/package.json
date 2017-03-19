@@ -22,6 +22,7 @@
     "jswiremock": "*",
     "swagger-node-express": "*",
     "minimist": "*",
-    "async": "*"
+    "async": "*",
+    "deep-diff": "*"
   }
 }
