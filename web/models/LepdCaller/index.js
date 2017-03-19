@@ -5,7 +5,6 @@ var LepdCaller = function() {
 
     this.END_STRING = 'lepdendstring';
     this.port = 12307;
-
 };
 
 LepdCaller.prototype.mockCallCommand = function(mockData) {
@@ -42,7 +41,6 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
         var client = new net.Socket();
         var charsReceived = [];
         var resultLines;
-        var dataJson = null;
 
         if(!server) {
             reject({error: 'server not specified!'});
@@ -63,20 +61,24 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
 
             try {
                 charsReceived = charsReceived.concat(dataArray);
-                // console.log("Data received " + charsReceived.toString());
-                dataJson = JSON.parse(charsReceived.toString());
 
+                // the string should end with '"\n}', whose ASCII codes are "34, 10, 125"
+                if (charsReceived[0][charsReceived[0].length - 1] === 125          // }
+                    && charsReceived[0][charsReceived[0].length - 2] === 10        // newline
+                    && charsReceived[0][charsReceived[0].length - 3] === 34) {     // "
 
-                var resultInJson = dataJson.result;
+                    // console.log("Data received " + charsReceived.toString());
+                    var resultInJson = JSON.parse(charsReceived.toString()).result.replace(thisClass.END_STRING, '');
 
-                resultInJson = resultInJson.replace(thisClass.END_STRING, '');
-                resultLines = resultInJson.split(/\n|\\n/);
+                    resultLines = resultInJson.split(/\n|\\n/);
 
-                // Close the connection, or the connection will never be closed
-                try {
-                    client.destroy();
-                } catch (err) {
-                    console.log(err);
+                    // Close the connection, or the connection will never be closed
+                    try {
+                        client.destroy();
+                    } catch (err) {
+                        console.log(err);
+                    }
+
                 }
 
             } catch( err ) {
