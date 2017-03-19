@@ -79,7 +79,6 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
                     console.log(err);
                 }
 
-
             } catch( err ) {
                 if (err.message != 'Unexpected end of JSON input') {
                     console.log("Continue to wait for data... " + err);
