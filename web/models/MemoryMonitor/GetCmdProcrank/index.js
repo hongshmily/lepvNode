@@ -40,9 +40,14 @@ GetCmdProcrankCommander.prototype.constructor = GetCmdProcrankCommander;
 //     ""
 GetCmdProcrankCommander.prototype.parse = function(lines) {
 
-    var parsedData = {};
-    parsedData['parsed'] = {};
-    parsedData.parsed['procranks'] = {};
+    var parsedData = {
+        parsed: {
+            procranks: {
+            },
+            sum: {
+            }
+        }
+    };
 
     try {
         // Done by Ting
@@ -55,23 +60,70 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
 
         var headerColumns = line.trim().split(/\s+/);
 
+        var summaryDelimitorLineIndex;
         for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             line = lines[lineIndex].trim();
             if (line == '') {
                 continue
             }
             if (line.match( /\s*-+\s*-+\s*-+\s*/)) {
+                summaryDelimitorLineIndex = lineIndex;
                 break;
             }
-            var lineValues = line.split(/\s+/);
+            var headers = line.split(/\s+/);
 
             parsedData.parsed['procranks'][lineIndex] = {};
 
-            for (var columnIndex = 0; columnIndex < lineValues.length-1; columnIndex++) {
-                parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
+            for (var columnIndex = 0; columnIndex < headers.length-1; columnIndex++) {
+                parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = parseFloat(headers[columnIndex]);
             }
-            parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = lineValues[columnIndex];
+            parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = headers[columnIndex];
         }
+
+        // now parse the summary info
+        for (var lineIndex = summaryDelimitorLineIndex; lineIndex < lines.length; lineIndex++) {
+            line = lines[lineIndex].trim();
+            if (line == '') {
+                continue
+            }
+
+            // "                          107243K  106752K  TOTAL",
+            if (/\s+TOTAL/.test(line)) {
+
+                const summaryInfos = line.trim().split(/\s+/);
+
+                var sumValue = summaryInfos[0];
+                parsedData.parsed.sum['pssTotal'] = sumValue.substr(0, sumValue.length - 1);
+                parsedData.parsed.sum['pssTotalUnit'] = sumValue.slice(-1);
+
+                sumValue = summaryInfos[1];
+                parsedData.parsed.sum['ussTotal'] = sumValue.substr(0, sumValue.length-1);
+                parsedData.parsed.sum['ussTotalUnit'] = sumValue.slice(-1);
+
+                continue;
+            }
+
+            //RAM: 243644K total, 30772K free, 27140K buffers, 31752K cached, 336K shmem, 38544K slab
+            if (/\s?RAM/.test(line)) {
+
+                const sums = line.replace('RAM:', '').trim().split(',');
+
+                for (var i = 0; i < sums.length; i++ ) {
+                    const sumProperty = sums[i].trim().split(/\s+/);
+
+                    const sumPropertyKey = sumProperty[1].trim();
+                    const sumPropertyValueUnit = sumProperty[0].trim().slice(-1);
+                    const sumPropertyValue = sumProperty[0].trim().substr(0, sumProperty[0].trim().length - 1);
+
+                    parsedData.parsed.sum[sumPropertyKey] = sumPropertyValue;
+                    parsedData.parsed.sum[sumPropertyKey + "Unit"] = sumPropertyValueUnit;
+
+                }
+            }
+
+        }
+
+
     } catch( exception ) {
         parsedData['error'] = exception.message;
     }
