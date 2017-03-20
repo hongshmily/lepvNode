@@ -42,10 +42,8 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
 
     var parsedData = {
         parsed: {
-            procranks: {
-            },
-            sum: {
-            }
+            procranks: [],
+            sum: {}
         }
     };
 
@@ -70,14 +68,21 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
                 summaryDelimitorLineIndex = lineIndex;
                 break;
             }
-            var headers = line.split(/\s+/);
 
-            parsedData.parsed['procranks'][lineIndex] = {};
+            var lineValues = line.split(/\s+/);
 
-            for (var columnIndex = 0; columnIndex < headers.length-1; columnIndex++) {
-                parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = parseFloat(headers[columnIndex]);
+            var procRankData = {};
+            procRankData['rowIndex'] = lineIndex;
+
+            for (var columnIndex = 0; columnIndex < lineValues.length - 1; columnIndex++) {
+                procRankData[headerColumns[columnIndex]] = parseFloat(lineValues[columnIndex]);
             }
-            parsedData.parsed['procranks'][lineIndex][headerColumns[columnIndex]] = headers[columnIndex];
+
+            // last column is the "cmdline", which may contain whitespaces thus requires special handling
+            procRankData[headerColumns[lineValues.length - 1]] = lineValues.slice(headerColumns.length - 1).join(' ');
+
+
+            parsedData.parsed['procranks'].push(procRankData);
         }
 
         // now parse the summary info
@@ -120,9 +125,7 @@ GetCmdProcrankCommander.prototype.parse = function(lines) {
 
                 }
             }
-
         }
-
 
     } catch( exception ) {
         parsedData['error'] = exception.message;
