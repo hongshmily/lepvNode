@@ -87,7 +87,7 @@ var CapacityLoader = (function(){
 
         // calculate the ratio of each type.
         $.each( componentDivMap, function( component, divName ) {
-            var url = "/capacity/" + component + "/" + server;
+            var url = "/" + component + "/capacity/" + server;
 
             $(divName).empty();
             

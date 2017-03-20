@@ -13,7 +13,7 @@ GetCmdTopCommander.prototype.parse = function(lines, maxDataCount) {
 
     var parsedData = {};
     parsedData['parsed'] = {};
-    parsedData['parsed']['data'] = [];
+    parsedData['parsed']['rows'] = [];
 
     maxDataCount = maxDataCount || 25;
 
@@ -32,6 +32,8 @@ GetCmdTopCommander.prototype.parse = function(lines, maxDataCount) {
         } else {
             parsedData['parsed']['os'] = 'unrecognized';
         }
+
+        parsedData['parsed']['headerline'] = headerLine.trim();
 
         var headerColumns = headerLine.trim().split(/\s+/);
 
@@ -55,7 +57,7 @@ GetCmdTopCommander.prototype.parse = function(lines, maxDataCount) {
             console.log(lines[rowIndex]);
             console.log(rowData);
 
-            parsedData['parsed']['data'].push(rowData);
+            parsedData['parsed']['rows'].push(rowData);
         }
 
     } catch( exception ) {

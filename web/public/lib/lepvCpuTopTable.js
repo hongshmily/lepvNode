@@ -32,6 +32,8 @@ LepvCpuTopTable.prototype.initialize = function() {
         console.log("The table div name was not specified for " + this.chartDivName);
         return;
     }
+
+    this.initialized = true;
 };
 
 LepvCpuTopTable.prototype.updateChartData = function(data) {
@@ -46,7 +48,7 @@ LepvCpuTopTable.prototype.updateChartData = function(data) {
 
     var headerColumns = data.headerline.split(/\s+/);
 
-    var topData = data.top;
+    var topData = data.rows;
     if (topData) {
         $.each( topData, function( lineIndex, dataItem ) {
 
