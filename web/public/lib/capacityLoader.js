@@ -50,8 +50,8 @@ var CapacityLoader = (function(){
         }
         liElement1.append(imgElement);
         
-        var liElement2 =  $("<li></li>").addClass('list-group-item').text('Model: ' + data['model']);
-        var liElement3 =  $("<li></li>").addClass('list-group-item').text("bogoMIPS: " + data['bogomips']);
+        var liElement2 =  $("<li></li>").addClass('list-group-item').text('Model: ' + (data['model'] || ''));
+        var liElement3 =  $("<li></li>").addClass('list-group-item').text("bogoMIPS: " + (data['bogomips'] || ''));
         ulElement.append(liElement1, liElement2, liElement3);
 
         $(divName).append(ulElement);
@@ -62,8 +62,8 @@ var CapacityLoader = (function(){
         $(divName).empty();
 
         var ulElement = $("<ul></ul>").addClass('list-group');
-        var liElement1 =  $("<li></li>").addClass('list-group-item').text('磁盘总容量: ' + data['diskTotal']);
-        var liElement2 =  $("<li></li>").addClass('list-group-item').text('空闲磁盘空间: ' + data['diskUsed']);
+        var liElement1 =  $("<li></li>").addClass('list-group-item').text('磁盘总容量: ' + (data['diskTotal'] || ''));
+        var liElement2 =  $("<li></li>").addClass('list-group-item').text('空闲磁盘空间: ' + (data['diskUsed'] || ''));
         ulElement.append(liElement1, liElement2);
 
         $(divName).append(ulElement);
