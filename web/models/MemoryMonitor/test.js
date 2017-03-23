@@ -7,7 +7,7 @@ var util = require('../Utility');
 
 var server = 'www.linuxxueyuan.com';
 
-memoryMonitor.GetCmdProcrank({server: server, debug: true}, function(resultData) {
+memoryMonitor.GetCapacity({server: server, debug: true}, function(resultData) {
     util.printJson(resultData);
 });
 

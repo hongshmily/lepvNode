@@ -15,7 +15,7 @@ GetProcMeminfoCommander.prototype.parse = function(lines) {
 
     try {
         // Done by Ting
-        var results = {}
+        var results = {};
         for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             var line = lines[lineIndex];
             var linePairs = line.trim().split(/:\s+/);
@@ -28,15 +28,18 @@ GetProcMeminfoCommander.prototype.parse = function(lines) {
         }
         parsedData.parsed['name'] = 'memory';
         parsedData.parsed['unit'] = 'MB';
-        parsedData.parsed['total'] = (parseInt(results['MemTotal']) / 1024).toFixed(1)
-        parsedData.parsed['free'] = (parseInt(results['MemFree']) / 1024).toFixed(1)
-        parsedData.parsed['buffers'] = (parseInt(results['Buffers']) / 1024).toFixed(1)
-        parsedData.parsed['cached'] = (parseInt(results['Cached']) / 1024).toFixed(1)
-        parsedData.parsed['used'] = parsedData.parsed['total'] - parsedData.parsed['free'] - parsedData.parsed['buffers'] - parsedData.parsed['cached']
+        parsedData.parsed['total'] = (parseInt(results['MemTotal']) / 1024).toFixed(1);
+        parsedData.parsed['free'] = (parseInt(results['MemFree']) / 1024).toFixed(1);
+        parsedData.parsed['buffers'] = (parseInt(results['Buffers']) / 1024).toFixed(1);
+        parsedData.parsed['cached'] = (parseInt(results['Cached']) / 1024).toFixed(1);
 
-        var usedRatio = (parsedData.parsed['used'] / parsedData.parsed['total']) * 100
-        usedRatio = usedRatio.toFixed(2)
-        parsedData.parsed["ratio"] = usedRatio
+        const memUsed = parsedData.parsed['total'] - parsedData.parsed['free'] - parsedData.parsed['buffers'] - parsedData.parsed['cached'];
+        parsedData.parsed['used'] = memUsed.toFixed(2);
+
+        const usedRatio = (parsedData.parsed['used'] / parsedData.parsed['total']) * 100;
+        parsedData.parsed["ratio"] = usedRatio.toFixed(2);
+
+        parsedData.parsed['summary'] = parsedData.parsed['total'] + ' ' + parsedData.parsed['unit'] + " in total";
     } catch( exception ) {
         parsedData['error'] = exception.message;
     }

@@ -25,8 +25,6 @@ var CapacityLoader = (function(){
     }
 
     function loadMemoryCapacityInfo(data, divName) {
-        Cookies.set('memory.total.' + server, data['capacity']);
-        Cookies.set('memory.unit.' + server, data['unit']);
 
         $(divName).empty();
 
@@ -39,8 +37,6 @@ var CapacityLoader = (function(){
     
     function loadCpuCapacityInfo(data, divName) {
 
-        Cookies.set('cpu.cores.' + server, data['coresCount']);
-
         $(divName).empty();
 
         var ulElement = $("<ul></ul>").addClass('list-group');
@@ -48,9 +44,9 @@ var CapacityLoader = (function(){
         
         var imgElement = $("<img></img>").addClass("logo-icon");
         if (data['architecture'] == "ARM") {
-            imgElement.attr("src", "/static/images/arm.jpg");
+            imgElement.attr("src", "/images/arm.jpg");
         } else {
-            imgElement.attr("src", "/static/images/x86.png");
+            imgElement.attr("src", "/images/x86.png");
         }
         liElement1.append(imgElement);
         

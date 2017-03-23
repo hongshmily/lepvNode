@@ -24,6 +24,7 @@ MemoryMonitor.prototype.GetCapacity = function(options, callback) {
 
         // extract the data of interest.
 
+
         callback(response);
     });
 };

@@ -20,5 +20,16 @@ IOMonitor.prototype.GetCmdDf = function(options, callback) {
     commander.run(options, callback);
 };
 
+IOMonitor.prototype.GetCapacity = function(options, callback) {
+
+    this.GetCmdDf(options, function(response) {
+
+
+
+        callback(response);
+
+    });
+};
+
 
 module.exports = new IOMonitor();

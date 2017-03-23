@@ -33,7 +33,7 @@ router.get('/capacity/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    monitor.GetCmdDf({server: server, debug: debug}, function(response) {
+    monitor.GetCapacity({server: server, debug: debug}, function(response) {
         res.json(response);
     });
 });

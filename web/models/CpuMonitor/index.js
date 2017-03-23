@@ -41,12 +41,12 @@ CpuMonitor.prototype.GetCapacity = function(options, callback) {
 
     this.GetProcCpuinfo(options, function(response) {
 
+        // TODO:
         // need to way to tell the following properties:
         // architecture: ARM or X86
         // model
         // summary
         // bogomips
-
 
         callback(response);
 

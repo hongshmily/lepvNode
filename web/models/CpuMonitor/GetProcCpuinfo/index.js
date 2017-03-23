@@ -16,6 +16,7 @@ GetProCpuinfoCommander.prototype.parse = function(lines) {
     try {
 
         parsedData.parsed['processors'] = {};
+        parsedData.parsed['count'] = 0;
 
         var processorId = null;
         while(lines.length > 0) {
@@ -30,6 +31,7 @@ GetProCpuinfoCommander.prototype.parse = function(lines) {
                 processorId = reg[1].trim();
 
                 parsedData.parsed['processors'][processorId] = {};
+                parsedData.parsed.count += parsedData.parsed.count;
                 continue;
             }
 
@@ -39,6 +41,7 @@ GetProCpuinfoCommander.prototype.parse = function(lines) {
             }
         }
 
+        parsedData.parsed['summary'] = parsedData.parsed.count + " processors";
 
     } catch( exception ) {
         parsedData['error'] = exception.message;
