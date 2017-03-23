@@ -23,6 +23,7 @@
     "swagger-node-express": "*",
     "minimist": "*",
     "async": "*",
-    "deep-diff": "*"
+    "deep-diff": "*",
+    "bower": "*"
   }
 }

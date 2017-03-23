@@ -32,6 +32,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
+
 app.use("/css",  express.static(__dirname + '/public/css'));
 app.use("/js",  express.static(__dirname + '/public/js'));
 app.use("/lib",  express.static(__dirname + '/public/lib'));
@@ -43,6 +45,8 @@ app.use("/components",  express.static(__dirname + '/public/components'));
 app.use("/whhg-font",  express.static(__dirname + '/public/whhg-font'));
 app.use("/swagger",  express.static(__dirname + '/public/components/swagger'));
 app.use("/docs",  express.static(__dirname + '/public/docs'));
+
+app.use("/bower",  express.static(__dirname + '/bower_components'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);
