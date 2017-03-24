@@ -528,6 +528,8 @@
     <script src="/lib/lepvCpuDonutChart.js"></script>
     <script src="/lib/lepvCpuLineChart.js"></script>
     <script src="/lib/lepvCpuCharts.js"></script>
+
+    <script src="/lib/cpuCapacityLoader.js"></script>
     
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -582,6 +584,11 @@
         }
         
         function loadCapacityData(server) {
+
+//            const cpuCapacityLoader = new CpuCapacityLoader('div-cpu-capacity-summary');
+//            cpuCapacityLoader.start(server);
+
+
             CapacityLoader.setComponent('memory', 'div-memory-summary');
             CapacityLoader.setComponent('cpu', 'div-cpu-summary');
             CapacityLoader.setComponent('io', 'div-io-summary');
