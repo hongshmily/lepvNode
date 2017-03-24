@@ -1,12 +1,13 @@
 #!/bin/bash  
 
-echo "running container:"
+echo "running containers:"
 docker ps
+echo ""
 
-echo "stop and remove existing Dragonfly container"
-docker rm -f dragonfly
+echo "stop and remove existing LEPV container"
+docker rm -f lepv
 
-echo "Run Dragonfly in container"
-echo "QA_CODE_ROOT=" $QA_CODE_ROOT
+echo ""
+echo "Run LEPV in container: http://localhost:8889"
 
-docker run --name dragonfly -p 9900:9900 -v ~/dragonfly/dragonfly:/var/dragonfly -v ~/dragonfly/qa:/var/qa -it node /var/dragonfly/web/run.sh
+docker run -t -p 8889:8889 linuxep/lepv
