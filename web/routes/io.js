@@ -1,7 +1,7 @@
 
 var express = require('express');
 
-var monitor = require('../models/IOMonitor');
+var monitor = require('../modules/IOMonitor');
 
 var router = express.Router();
 
