@@ -24,6 +24,7 @@
     "minimist": "*",
     "async": "*",
     "deep-diff": "*",
-    "bower": "*"
+    "bower": "*",
+    "mongoose": "*"
   }
 }

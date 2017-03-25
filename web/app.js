@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose   = require('mongoose');
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -76,12 +77,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Connect to LEP Mongo db on start
-// db.connect('mongodb://localhost:27017/lep', function(err) {
-//     if (err) {
-//         console.log('Unable to connect to LEP Mongo DB.');
-//         process.exit(1)
-//     }
-// });
+mongoose.connect('mongodb://localhost:28018/lepv');
+console.log("Connected to Mongo");
+
 
 module.exports = app;
