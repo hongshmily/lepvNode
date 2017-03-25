@@ -4,6 +4,8 @@ echo "running containers:"
 docker ps
 echo ""
 
+mkdir -p ~/mongodata
+
 echo ""
 echo "Run LEPV Mongo in container with port 28018"
 
