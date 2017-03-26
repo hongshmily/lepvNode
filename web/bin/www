@@ -37,15 +37,18 @@ var server = http.createServer(app);
 
 // socket.io initialization
 // var io = require("socket.io")(server.listener);
-var io = require('socket.io').listen(server);
-io.on("connection", function (socket) {
-    // we've got a client connection
-    socket.emit("newProfile", {user: "nodesource", text: "Hello, world!"});
-});
+var socketIOEventer = require('../modules/SocketIOEventer');
+socketIOEventer.setup(server);
 
-io.on("fetch", function (fetchParams) {
-    console.log(fetchParams);
-});
+// var io = require('socket.io').listen(server);
+// io.on("connection", function (socket) {
+//     // we've got a client connection
+//     socket.emit("newProfile", {user: "nodesource", text: "Hello, world!"});
+// });
+//
+// io.on("fetch", function (fetchParams) {
+//     console.log(fetchParams);
+// });
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -27,7 +27,7 @@
     <link href="/whhg-font/css/whhg.css" rel="stylesheet">
 
     <link href="/js/jquery-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/language/languages.min.css" rel="stylesheet" type="text/css">
+    <!--<link href="/css/language/languages.min.css" rel="stylesheet" type="text/css">-->
 
     <!-- DataTable -->
     <link href="/components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -547,44 +547,44 @@
     </script>
     
     <script>
-        function loadIoChart(server) {
+        function loadIoChart(server, socket) {
             var ioChart = new LepvIOStatChart('div-io-stat', 'div-io-gauge');
-            ioChart.start(server);
+            ioChart.start(server, socket);
         }
         
-        function loadIoTopTable(server) {
+        function loadIoTopTable(server, socket) {
             var ioTopTable = new LepvIOTopTable('div-io-top', 'io-top-table');
-            ioTopTable.start(server);
+            ioTopTable.start(server, socket);
         }
 
-        function loadMemoryChart(server) {
+        function loadMemoryChart(server, socket) {
             var memChart = new LepvMemoryChart('div-memory-chart', 'div-memory-gauge');
-            memChart.start(server);
+            memChart.start(server, socket);
         }
         
-        function loadAverageLoadChart(server) {
+        function loadAverageLoadChart(server, socket) {
 
             var avgLoadChart = new LepvAvgLoadChart('div-system-load');
-            avgLoadChart.start(server);
+            avgLoadChart.start(server, socket);
         }
         
-        function loadPerfCpuTable(server) {
+        function loadPerfCpuTable(server, socket) {
             var perfCpuTable = new LepvPerfCpuTable('div-perf-cpu', 'perf-cpu-table');
-            perfCpuTable.start(server);
+            perfCpuTable.start(server, socket);
         }
         
-        function loadCpuTopTable(server) {
+        function loadCpuTopTable(server, socket) {
             var cpuTopTable = new LepvCpuTopTable('div-cpu-top', 'cpu-top-table');
-            cpuTopTable.start(server);
+            cpuTopTable.start(server, socket);
         }
         
-        function loadProcrankCharts(server) {
+        function loadProcrankCharts(server, socket) {
             var procrankTable = new LepvProcrankTable('div-memory-stat',
                     'memory-stat-table', 'div-memory-pss-stat', 'div-memory-free-pss-stat');
-            procrankTable.start(server);
+            procrankTable.start(server, socket);
         }
         
-        function loadCapacityData(server) {
+        function loadCapacityData(server, socket) {
 
 //            const cpuCapacityLoader = new CpuCapacityLoader('div-cpu-capacity-summary');
 //            cpuCapacityLoader.start(server);
@@ -594,10 +594,11 @@
             CapacityLoader.setComponent('cpu', 'div-cpu-summary');
             CapacityLoader.setComponent('io', 'div-io-summary');
             CapacityLoader.setRunConfig( '{{config}}' );
-            CapacityLoader.start(server);
+
+            CapacityLoader.start(server, socket);
         }
         
-        function loadCpuCharts(server) {
+        function loadCpuCharts(server, socket) {
             var cpuCharts = new LepvCpuCharts({
                 'donutChartDivName': 'div-cpu-stat-overall',
                 'gaugeDivName': 'div-cpu-gauge',
@@ -605,7 +606,7 @@
                 'userGroupDivName': 'div-cpu-stat-userGroup',
                 'irqGroupDivName': 'div-cpu-stat-irqGroup'
             });
-            cpuCharts.start(server);
+            cpuCharts.start(server, socket);
         }
         
         
@@ -619,16 +620,19 @@
         bannerLabel += "Watching " + server;
         $('#labelBanner').text(bannerLabel);
 
-        loadCpuCharts(server);
-        loadCapacityData(server);
-        loadCpuTopTable(server);
+        const lepvServerUrl = window.location.origin;  // something like 'http://localhost:8889'
+        const socket = io.connect(lepvServerUrl);
 
-        loadIoChart(server);
-        loadIoTopTable(server);
-        loadMemoryChart(server);
-        loadAverageLoadChart(server);
-        loadPerfCpuTable(server);
-        loadProcrankCharts(server);
+//        loadCpuCharts(server, socket);
+//        loadCapacityData(server, socket);
+//        loadCpuTopTable(server, socket);
+//
+//        loadIoChart(server, socket);
+//        loadIoTopTable(server, socket);
+//        loadMemoryChart(server, socket);
+//        loadAverageLoadChart(server, socket);
+        loadPerfCpuTable(server, socket);
+//        loadProcrankCharts(server, socket);
 
         $('[data-toggle="tooltip"]').tooltip();
 
