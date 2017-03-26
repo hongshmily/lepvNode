@@ -300,9 +300,9 @@ LepvChart.prototype.refresh = function() {
   if (this.chartTitle === 'Perf Table' ) {
 
     // use perf table as a start to use socket.io
-      this.socket.emit(this.socketMessageToSend, {server: thisChart.server, id: thisChart.requestId});
+      this.socket.emit(thisChart.socketMessageToSend, {server: thisChart.server, id: thisChart.requestId});
 
-      this.socket.on(this.socketEventToListen, function(response) {
+      this.socket.on(thisChart.socketEventToListen, function(response) {
 
           if (thisChart.isChartPaused) {
               return;
