@@ -17,7 +17,6 @@
     "request": "*",
     "underscore": "*",
     "walk": "*",
-    "mongodb": "*",
     "text-encoding": "*",
     "jswiremock": "*",
     "swagger-node-express": "*",
@@ -25,6 +24,7 @@
     "async": "*",
     "deep-diff": "*",
     "bower": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "socket.io": "*"
   }
 }
