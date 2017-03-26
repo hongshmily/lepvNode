@@ -5,6 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const properties = require('./properties.json');
+
+var db = require('./db');
+
 var argv = require('minimist')(process.argv.slice(2));
 
 var index = require('./routes/index');
@@ -32,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'node_components')));
+
 app.use("/css",  express.static(__dirname + '/public/css'));
 app.use("/js",  express.static(__dirname + '/public/js'));
 app.use("/lib",  express.static(__dirname + '/public/lib'));
@@ -43,6 +50,9 @@ app.use("/components",  express.static(__dirname + '/public/components'));
 app.use("/whhg-font",  express.static(__dirname + '/public/whhg-font'));
 app.use("/swagger",  express.static(__dirname + '/public/components/swagger'));
 app.use("/docs",  express.static(__dirname + '/public/docs'));
+
+app.use("/bower",  express.static(__dirname + '/bower_components'));
+app.use("/node",  express.static(__dirname + '/node_modules'));
 
 app.use('/', index);
 app.use('/cpu', cpuRouter);
@@ -72,12 +82,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Connect to LEP Mongo db on start
-// db.connect('mongodb://localhost:27017/lep', function(err) {
-//     if (err) {
-//         console.log('Unable to connect to LEP Mongo DB.');
-//         process.exit(1)
-//     }
-// });
+// Connect to Mongo on start
+db.connect(properties.local_mongodb_address, function(err) {
+    if (err) {
+        console.log('Unable to connect to Mongo.');
+        process.exit(1)
+    }
+});
+
 
 module.exports = app;

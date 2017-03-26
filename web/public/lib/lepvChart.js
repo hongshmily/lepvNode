@@ -10,6 +10,10 @@ var LepvChart = function(divName) {
   if (this.chartDivName != '') {
     this.chartDiv = $('#' + this.chartDivName);
   }
+
+  this.socket = null;
+  this.socketMessageToSend = null;  // the message name to be sent to server, like "perf.cpuclock".
+  this.socketEventToListen = null;    // the event to listen, like "perf.cpuclock.ret", which should be triggered by LEPV server.
   
   this.charts = null;
   this.chart = null;
@@ -210,7 +214,7 @@ LepvChart.prototype.createControlElements = function() {
 
 };
 
-LepvChart.prototype.start = function(serverToMonitor) {
+LepvChart.prototype.start = function(serverToMonitor, socket) {
   if (!serverToMonitor) {
     console.log("Please specify the server to cpuMonitor for " + this.chartDivName);
     return;
@@ -218,6 +222,8 @@ LepvChart.prototype.start = function(serverToMonitor) {
   if (serverToMonitor == this.server) {
     return;
   }
+
+  this.socket = socket;
 
   this.server = serverToMonitor;
   this.requestId = 0;
@@ -289,12 +295,15 @@ LepvChart.prototype.refresh = function() {
   this.requestId += 1;
   //var startTime= new Date().getTime();
 
-  //this.controlElements.configLink.on("click", $.proxy(this.onConfig, this));
-  var thisChart = this;
-  var url = thisChart.dataUrlPrefix + thisChart.server; // + "?id=" + thisChart.requestId;
+  const thisChart = this;
 
-  $.get(url).done(
-      function(response, status) {
+  if (this.chartTitle === 'Perf Table' ) {
+
+    // use perf table as a start to use socket.io
+      this.socket.emit(this.socketMessageToSend, {server: thisChart.server, id: thisChart.requestId});
+
+      this.socket.on(this.socketEventToListen, function(response) {
+
           if (thisChart.isChartPaused) {
               return;
           }
@@ -302,23 +311,36 @@ LepvChart.prototype.refresh = function() {
           thisChart.responseId = response['requestId'];
 
           thisChart.updateChartData(response['data']);
-      }
-  ).fail(
-      function(data, status) {
-          console.log(data);
-          console.log(status);
-      }
-  );
 
 
-  // $.get(url, function(responseData, status) {
-  //   if (this.isChartPaused) {
-  //     return;
-  //   }
-  //
-  //   thisChart.responseId = responseData['requestId'];
-  //
-  //   thisChart.updateChartData(responseData['data']);
-  // });
+      });
+
+  } else {
+
+      const url = thisChart.dataUrlPrefix + thisChart.server; // + "?id=" + thisChart.requestId;
+
+      $.get(url).done(
+          function(response, status) {
+              if (thisChart.isChartPaused) {
+                  return;
+              }
+
+              thisChart.responseId = response['requestId'];
+
+              thisChart.updateChartData(response['data']);
+          }
+      ).fail(
+          function(data, status) {
+              console.log(data);
+              console.log(status);
+          }
+      );
+
+  }
+
+
+
+
+
 };
 

@@ -1,7 +1,7 @@
 
 var express = require('express');
 
-var memoryMonitor = require('../models/MemoryMonitor');
+var memoryMonitor = require('../modules/MemoryMonitor');
 
 var router = express.Router();
 

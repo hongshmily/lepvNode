@@ -17,7 +17,10 @@ var LepvPerfCpuTable = function(divName, tableDivName) {
     this.maxDataCount = 25;
     this.refreshInterval = 5;
 
-    this.dataUrlPrefix = "/perfcpu/";
+    this.dataUrlPrefix = "/perf/cpuclock/";
+
+    this.socketMessageToSend = 'perf.cpuclock';  // the message name to be sent to server, like "perf.cpuclock".
+    this.socketEventToListen = this.socketMessageToSend + ".ret";    // the event to listen, like "perf.cpuclock.ret", which should be triggered by LEPV server.
 
     this.updateChartHeader();
     this.initialize();

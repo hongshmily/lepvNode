@@ -1,6 +1,6 @@
 var express = require('express');
 
-var cpuMonitor = require('../models/CpuMonitor');
+var cpuMonitor = require('../modules/CpuMonitor');
 
 var router = express.Router();
 

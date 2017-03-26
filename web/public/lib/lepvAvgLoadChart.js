@@ -37,6 +37,20 @@ LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 
 LepvAvgLoadChart.prototype.initialize = function(callback) {
 
+    const socket = io.connect('http://localhost:8889');
+    socket.on('connect', function () {
+        console.log('connected confirmed on client side');
+    });
+
+    socket.on('newProfile', function(profileData) {
+        console.log("new profile data received from server");
+        console.log(profileData);
+    });
+
+    var fetch = {server: "www.linuxxueyuan.com", command: "avg load"};
+    socket.emit("fetch", fetch);
+
+
     if (!this.server) {
         // console.log('server not specified for average load chart');
         return;

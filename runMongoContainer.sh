@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/bash  
 
-echo "create mongo data directory on host if not yet"
+echo "running containers:"
+docker ps
+echo ""
+
 mkdir -p ~/mongodata
 
-echo "stop and remove existing dragonmongo container"
-docker rm -f dragonmongo
+echo ""
+echo "Run LEPV Mongo in container with port 28018"
 
-echo "Run Mongo in container"
-docker run --name dragonmongo -it -p 27017:27017 -v ~/mongodata:/data/db mongo mongod
+docker run -v ~/mongodata:/data/db -t -p 28018:27017 linuxep/lepvmongo

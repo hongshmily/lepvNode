@@ -1,4 +1,4 @@
 {
-  "qa_code_root": "/Users/mxu/workspace/qa/int",
-  "qa_code_branch": "prototyping-for-test-manager"
+  "local_mongodb_address": "mongodb://localhost:28018/lepv",
+  "remote_mongodb_address": "mongodb://www.linuxxueyuan.com:28018/lepv"
 }

@@ -519,6 +519,82 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /ping/{server}:
+    get:
+      summary: Ping the server
+      description: |
+        - ping the server with SayHello command
+
+      parameters:
+        - name: server
+          in: path
+          description: the IP or domain of the server to ping
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Utils
+      responses:
+        "200":
+          description: Ping status
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/Ping'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /command/{command}/{server}:
+    get:
+      summary: call a LEPD command agains the server
+      description: |
+        - call a LEPD command agains the server, and get the raw response without LEPV parsing
+        - we can specify the command as "list" to list all the supported commands.
+
+      parameters:
+        - name: command
+          in: path
+          description: the command to LEPD
+          required: true
+          type: string
+          format: string
+          default: list
+        - name: server
+          in: path
+          description: the IP or domain of the server to ping
+          required: true
+          type: string
+          format: string
+          default: www.linuxxueyuan.com
+        - name: debug
+          in: query
+          description: flag indicating whether to run the command in debug mode, the raw response from LEPD is included in the returning JSON if true.
+          required: false
+          type: boolean
+          format: boolean
+          default: true
+      tags:
+        - Utils
+      responses:
+        "200":
+          description: run a LEPD command
+          schema:
+            type: json
+            items:
+              $ref: '#/definitions/command'
+        "default":
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Average Load:
     type: object

@@ -25,8 +25,6 @@ var CapacityLoader = (function(){
     }
 
     function loadMemoryCapacityInfo(data, divName) {
-        Cookies.set('memory.total.' + server, data['capacity']);
-        Cookies.set('memory.unit.' + server, data['unit']);
 
         $(divName).empty();
 
@@ -39,8 +37,6 @@ var CapacityLoader = (function(){
     
     function loadCpuCapacityInfo(data, divName) {
 
-        Cookies.set('cpu.cores.' + server, data['coresCount']);
-
         $(divName).empty();
 
         var ulElement = $("<ul></ul>").addClass('list-group');
@@ -48,14 +44,14 @@ var CapacityLoader = (function(){
         
         var imgElement = $("<img></img>").addClass("logo-icon");
         if (data['architecture'] == "ARM") {
-            imgElement.attr("src", "/static/images/arm.jpg");
+            imgElement.attr("src", "/images/arm.jpg");
         } else {
-            imgElement.attr("src", "/static/images/x86.png");
+            imgElement.attr("src", "/images/x86.png");
         }
         liElement1.append(imgElement);
         
-        var liElement2 =  $("<li></li>").addClass('list-group-item').text('Model: ' + data['model']);
-        var liElement3 =  $("<li></li>").addClass('list-group-item').text("bogoMIPS: " + data['bogomips']);
+        var liElement2 =  $("<li></li>").addClass('list-group-item').text('Model: ' + (data['model'] || ''));
+        var liElement3 =  $("<li></li>").addClass('list-group-item').text("bogoMIPS: " + (data['bogomips'] || ''));
         ulElement.append(liElement1, liElement2, liElement3);
 
         $(divName).append(ulElement);
@@ -66,8 +62,8 @@ var CapacityLoader = (function(){
         $(divName).empty();
 
         var ulElement = $("<ul></ul>").addClass('list-group');
-        var liElement1 =  $("<li></li>").addClass('list-group-item').text('磁盘总容量: ' + data['diskTotal']);
-        var liElement2 =  $("<li></li>").addClass('list-group-item').text('空闲磁盘空间: ' + data['diskUsed']);
+        var liElement1 =  $("<li></li>").addClass('list-group-item').text('磁盘总容量: ' + (data['diskTotal'] || ''));
+        var liElement2 =  $("<li></li>").addClass('list-group-item').text('空闲磁盘空间: ' + (data['diskUsed'] || ''));
         ulElement.append(liElement1, liElement2);
 
         $(divName).append(ulElement);
@@ -87,7 +83,7 @@ var CapacityLoader = (function(){
 
         // calculate the ratio of each type.
         $.each( componentDivMap, function( component, divName ) {
-            var url = "/capacity/" + component + "/" + server;
+            var url = "/" + component + "/capacity/" + server;
 
             $(divName).empty();
             

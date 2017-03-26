@@ -35,6 +35,21 @@ swagger.configure('http://localhost:' + port, '1.0.0');
 console.log("website is running at: localhost:" + port);
 var server = http.createServer(app);
 
+// socket.io initialization
+// var io = require("socket.io")(server.listener);
+var socketIOEventer = require('../modules/SocketIOEventer');
+socketIOEventer.setup(server);
+
+// var io = require('socket.io').listen(server);
+// io.on("connection", function (socket) {
+//     // we've got a client connection
+//     socket.emit("newProfile", {user: "nodesource", text: "Hello, world!"});
+// });
+//
+// io.on("fetch", function (fetchParams) {
+//     console.log(fetchParams);
+// });
+
 /**
  * Listen on provided port, on all network interfaces.
  */

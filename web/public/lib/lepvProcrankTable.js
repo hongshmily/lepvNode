@@ -16,7 +16,7 @@ var LepvProcrankTable = function(divName, tableDivName, pssPieDivName, freeVsPss
     this.maxDataCount = 25;
     this.refreshInterval = 5;
 
-    this.dataUrlPrefix = "/procrank/";
+    this.dataUrlPrefix = "/memory/procrank/";
     
     this.updateChartHeader();
     this.initialize();
@@ -77,22 +77,22 @@ LepvProcrankTable.prototype.updateStatTableData = function(procranks) {
             }
 
             thisChart.table.row.add([
-                dataItem.pid,
-                dataItem.vss,
-                dataItem.rss,
-                dataItem.pss,
-                dataItem.uss,
+                dataItem.pid || dataItem.PID,
+                dataItem.vss || dataItem.Vss,
+                dataItem.rss || dataItem.Rss,
+                dataItem.pss || dataItem.Pss,
+                dataItem.uss || dataItem.Uss,
                 dataItem.cmdline
             ]);
             
-            if (dataItem.pss > thisChart.pssBenchmark) {
-                thisChart.pssData.push([dataItem.cmdline, dataItem.pss]);
+            if ((dataItem.pss || dataItem.Pss) > thisChart.pssBenchmark) {
+                thisChart.pssData.push([dataItem.cmdline, dataItem.pss || dataItem.Pss]);
             }
             
             index = index + 1;
         });
     } else {
-        while(index < maxDataCount) {
+        while(index < thisChart.maxDataCount) {
             thisChart.table.row.add([
                 "--",
                 "--",

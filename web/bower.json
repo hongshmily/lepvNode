@@ -1,0 +1,28 @@
+{
+  "name": "lepv",
+  "description": "lepv frontend packages",
+  "main": "bower.json",
+  "authors": [
+    "Mac Xu <shinyxxn@hotmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "LEPV"
+  ],
+  "homepage": "https://github.com/linuxep/lepvNode",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "*",
+    "c3": "*",
+    "datatables": "*",
+    "bootstrap-social": "*",
+    "font-awesome"
+  }
+}
