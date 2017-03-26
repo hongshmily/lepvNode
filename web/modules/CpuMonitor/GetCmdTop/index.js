@@ -53,10 +53,6 @@ GetCmdTopCommander.prototype.parse = function(lines, maxDataCount) {
                 }
             }
 
-            console.log(headerLine);
-            console.log(lines[rowIndex]);
-            console.log(rowData);
-
             parsedData['parsed']['rows'].push(rowData);
         }
 

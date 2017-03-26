@@ -4,7 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
+
+const properties = require('./properties.json');
+
+var db = require('./db');
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -77,8 +80,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-mongoose.connect('mongodb://localhost:28018/lepv');
-console.log("Connected to Mongo");
+// Connect to Mongo on start
+db.connect(properties.local_mongodb_address, function(err) {
+    if (err) {
+        console.log('Unable to connect to Mongo.');
+        process.exit(1)
+    }
+});
 
 
 module.exports = app;
