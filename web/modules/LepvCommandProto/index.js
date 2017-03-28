@@ -1,10 +1,11 @@
 
 const lepdCaller = require('../LepdCaller');
+var pt = require('promise-timeout');
 
 var LepvCommandProto = function(command) {
     this.command = command;
 
-    this.unittestFilePath = null;
+    this.lepdResponseTimeoutInSeconds = 5;
 };
 
 LepvCommandProto.prototype.parse = function(resultLines) {
@@ -15,11 +16,13 @@ LepvCommandProto.prototype.parse = function(resultLines) {
 
 LepvCommandProto.prototype.run = function(options, callback) {
 
-    var thisProto = this;
+    const thisProto = this;
 
-    var response = {};
+    const response = {};
     response['data'] = {};
-    lepdCaller.callCommand(options.server, thisProto.command, options.mockData)
+
+    const callerPromise = lepdCaller.callCommand(options.server, thisProto.command, options.mockData);
+    pt.timeout(callerPromise, thisProto.lepdResponseTimeoutInSeconds * 1000)
         .then (function(lines) {
 
             if (options.debug == true || options.debug == 'true') {
@@ -27,16 +30,23 @@ LepvCommandProto.prototype.run = function(options, callback) {
                 response['command'] = thisProto.command;
             }
 
-            var parsedData = thisProto.parse(lines);
+            const parsedData = thisProto.parse(lines);
             response['data'] = parsedData['parsed'];
             response['error'] = parsedData['error'];
 
             callback(response);
         })
         .catch(function(error) {
-            response['error'] = error.message || error.error;
+
+            if (error instanceof pt.TimeoutError) {
+                response['error'] = "timeout";
+            } else {
+                response['error'] = error.message || error.error;
+            }
+
             callback(response);
         });
+
 };
 
 module.exports = LepvCommandProto;

@@ -1,6 +1,4 @@
 
-var lepdCaller = require('../LepdCaller');
-
 var PerfMonitor = function() {
 };
 

@@ -327,12 +327,30 @@ LepvChart.prototype.refresh = function() {
 
               thisChart.responseId = response['requestId'];
 
-              thisChart.updateChartData(response['data']);
+              if (response.error) {
+
+                if (response.error === 'timeout') {
+
+                    // timeout when requesting data from LEPD.
+                    // TODO: how to handle it in a good practice?
+                    console.log('Accessing URl timed out: ' + url);
+
+                } else {
+
+                  console.log(response.error);
+                }
+
+
+
+              } else {
+                  thisChart.updateChartData(response['data']);
+              }
           }
       ).fail(
           function(data, status) {
-              console.log(data);
-              console.log(status);
+            console.log("Accessing URL failed: " + url);
+            console.log(data);
+            console.log(status);
           }
       );
 

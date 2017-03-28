@@ -25,6 +25,7 @@
     "deep-diff": "*",
     "bower": "*",
     "mongodb": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "promise-timeout": "*"
   }
 }
