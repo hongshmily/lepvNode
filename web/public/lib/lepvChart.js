@@ -275,7 +275,7 @@ LepvChart.prototype.updateChartData = function(responseData) {
 LepvChart.prototype.refresh = function() {
 
   if (!this.initialized) {
-    console.log("Chart not initialized yet, refresh will start after initialization");
+    console.log( this.chartTitle + " not initialized yet, refresh will start after initialization");
     return;
   }
 
