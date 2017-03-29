@@ -337,10 +337,8 @@ LepvChart.prototype.refresh = function() {
 
                 } else {
 
-                  console.log(response.error);
+                  console.log("error in getting data for " + thisChart.chartTitle + ": " + response.error);
                 }
-
-
 
               } else {
                   thisChart.updateChartData(response['data']);
