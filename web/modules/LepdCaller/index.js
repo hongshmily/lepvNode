@@ -37,8 +37,12 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
     return new Promise(function(resolve, reject){
 
         const client = new net.Socket();
-        var charsReceived = [];
+
         var resultLines;
+
+        // caches all the uint8arrays received here.
+        var dataArraysReceived = [];
+        var charCountsReceived = 0;
 
         if(!server) {
             reject({error: 'server not specified!'});
@@ -60,44 +64,43 @@ LepdCaller.prototype.callCommand = function(server, command, mockData) {
             // what happens for large array in JS
             // http://stackoverflow.com/questions/1374126/how-to-extend-an-existing-javascript-array-with-another-array-without-creating
 
-            try {
+            dataArraysReceived.push(dataArray);
+            charCountsReceived += dataArray.length;
 
-                charsReceived = charsReceived.concat(dataArray);
+            // the string should end with '"\n}', whose ASCII codes are "34, 10, 125"
+            // BUT, sometimes there is an additional "\n" after }, so it ends with "34, 10, 125, 10"
+            const lastCharsReceived = dataArray.slice(-4).join('-');
+            if (/34-10-125[-10]?/.test(lastCharsReceived)) {
 
-                // the string should end with '"\n}', whose ASCII codes are "34, 10, 125"
-                // BUT, sometimes there is an additional "\n" after }, so it ends with "34, 10, 125, 10"
-                const lastCharsReceived = dataArray.slice(-4).join('-');
-                if (/34-10-125[-10]?/.test(lastCharsReceived)) {
+                var charsReceived = new (dataArray.constructor)(charCountsReceived);
 
-                    // console.log("Data received " + charsReceived.toString());
+                var appendIndex = 0;
+
+                for (var arrayIndex = 0; arrayIndex < dataArraysReceived.length; arrayIndex++) {
+
+                    charsReceived.set(dataArraysReceived[arrayIndex], appendIndex);
+                    appendIndex += dataArraysReceived[arrayIndex].length;
+                }
+
+                try {
                     const resultInJson = JSON.parse(charsReceived.toString()).result.replace(thisClass.END_STRING, '');
-
                     resultLines = resultInJson.split(/\n|\\n/);
 
-                    // Close the connection, or the connection will never be closed
-                    try {
-                        client.destroy();
-                    } catch (err) {
-                        console.log(err);
-                    }
-                }
-
-            } catch( err ) {
-                if (err.message != 'Unexpected end of JSON input') {
-                    console.log("The data received is invalid " + err);
-                    console.log("Data received " + charsReceived.toString());
-                } else {
-                    console.log("The data received is invalid " + err);
-                    reject({error: err.message, rawResponse: dataArray.toString()});
                     client.destroy();
+
+                } catch( err ) {
+
+                    console.log("The data received is invalid " + err);
+                    reject({error: err.message, rawResponse: charsReceived.toString()});
                 }
             }
-
         });
+
         client.on('close', function() {
             resolve(resultLines);
             // console.log("Connection closed to " + server + " with command: " + command);
         });
+
         client.on('error', function(err) {
             reject({error: err.message});
             // console.log("Connection error: " + err + " for server " + server+ " with command: " + command);
