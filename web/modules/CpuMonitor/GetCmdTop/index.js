@@ -38,7 +38,18 @@ GetCmdTopCommander.prototype.parse = function(lines, maxDataCount) {
         var headerColumns = headerLine.trim().split(/\s+/);
 
         for (var rowIndex = 0; rowIndex < maxDataCount && rowIndex < lines.length; rowIndex++) {
-            var columnValues = lines[rowIndex].trim().split(/\s+/);
+
+            var line = lines[rowIndex].trim();
+            if (line === '') {
+                continue;
+            }
+
+            if (/,/.test(line)) {
+                // There is "," happens, thus deserves special handling.
+                line = line.replace(',', '');
+            }
+
+            var columnValues = line.split(/\s+/);
 
             var rowData = {};
             rowData['ranking'] = rowIndex; // this is how keep the ordering of the rows
