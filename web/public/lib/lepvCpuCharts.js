@@ -22,6 +22,8 @@ var LepvCpuCharts = function(chartDivNames) {
     this.irqGroupChart = new LepvCpuLineChart(chartDivNames.irqGroupDivName, 'CPU Stat: IRQ + SoftIRQ');
     
     this.gaugeChart = new LepvGaugeChart(chartDivNames.gaugeDivName);
+
+    this.summaryLoader = new SummaryLoader('div_summary_cpu_gauges', 'div_summary_cpu_details');
 };
 
 LepvCpuCharts.prototype = Object.create(LepvChart.prototype);
@@ -53,6 +55,11 @@ LepvCpuCharts.prototype.initialize = function() {
 LepvCpuCharts.prototype.updateChartData = function(data) {
     
     this.donutChart.updateChartData(data['all']);
+
+    if (!this.summaryLoader.initialized) {
+        this.summaryLoader.initialize(data);
+    }
+
 
     // keep three digits, including the ones after dot.
     var cpuOccupationRatio = (100 - data['all']['idle']).toPrecision(3);
