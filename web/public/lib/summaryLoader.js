@@ -19,13 +19,66 @@ var SummaryLoader = function(gaugesDivName, detailDivName) {
 
 SummaryLoader.prototype.initialize = function(processorDatas, callback) {
 
-    this.createGaugeForProcessor(0);
-    this.createGaugeForProcessor(1);
-    this.createGaugeForProcessor(2);
-    this.createGaugeForProcessor(3);
+    for (var processorName in processorDatas) {
+        // skip loop if the property is from prototype
+        if (!processorDatas.hasOwnProperty(processorName)) {
+            continue;
+        }
+
+        if (processorName == 'all') {
+            continue;
+        }
+
+        var processorData = processorDatas[processorName];
+
+        this.createGaugeForProcessor(processorName);
+    }
 
     this.initialized = true;
 };
+
+
+SummaryLoader.prototype.refresh = function(processorDatas, callback) {
+
+    for (var processorName in processorDatas) {
+        // skip loop if the property is from prototype
+        if (!processorDatas.hasOwnProperty(processorName)) {
+            continue;
+        }
+
+        if (processorName == 'all') {
+            continue;
+        }
+
+        var chart = this.gaugeMap[processorName];
+        this.reloadChart(chart, processorDatas[processorName]);
+    }
+
+    this.initialized = true;
+};
+
+SummaryLoader.prototype.reloadChart = function(chart, data, callback) {
+
+    if (!chart) {
+        return;
+    }
+
+    if (!data) {
+        return;
+    }
+
+    data['ratio'] = 100 - data.idle;
+
+    chart.load({
+        json: [
+            data
+        ],
+        keys: {
+            value: ['ratio']
+        }
+    });
+};
+
 
 SummaryLoader.prototype.createGaugeForProcessor = function(processorId, callback) {
 
@@ -42,7 +95,7 @@ SummaryLoader.prototype.createGaugeForProcessor = function(processorId, callback
     var gaugeDiv = $('<div></div>').attr('id',gaugeId);
     panelDiv.append(gaugeDiv);
 
-    var footerDiv = $('<div></div>').addClass('panel-footer text-center').text(' Processor ' + processorId);
+    var footerDiv = $('<div></div>').addClass('panel-footer text-center').text(' processor: ' + processorId);
     panelDiv.append(footerDiv);
 
     // create gauge.

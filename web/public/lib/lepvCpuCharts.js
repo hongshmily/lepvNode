@@ -58,6 +58,8 @@ LepvCpuCharts.prototype.updateChartData = function(data) {
 
     if (!this.summaryLoader.initialized) {
         this.summaryLoader.initialize(data);
+    } else {
+        this.summaryLoader.refresh(data);
     }
 
 
