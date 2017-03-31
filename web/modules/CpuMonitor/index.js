@@ -6,42 +6,69 @@ const CpuMonitor = function() {
 
 CpuMonitor.prototype.getProcessorCount = function(options, callback) {
 
-    const commander = require('./GetCpuInfo');
+    return new Promise( (resolve, reject) => {
 
-    const commanderPromise = commander.run(options);
-    commanderPromise.then(function(response) {
+        const commander = require('./GetCpuInfo');
+        const commanderPromise = commander.run(options);
 
-        if ('cpunr' in response.data) {
-            response['data']['count'] = response['data']['cpunr'];
+        commanderPromise.then(function(response) {
 
-            resolve(response);
-        } else {
-            response['error'] = 'Failed to locate "cpunr" in the response';
+            if ('cpunr' in response.data) {
+                response['data']['count'] = response['data']['cpunr'];
 
-            reject(response);
-        }
+                resolve(response);
+            } else {
+                response['error'] = 'Failed to locate "cpunr" in the response';
+
+                reject(response);
+            }
+        });
 
     });
 
 };
 
-CpuMonitor.prototype.GetCmdTop = function(options, callback) {
+CpuMonitor.prototype.GetCmdTop = function(options) {
 
-    const commander = require('./GetCmdTop');
-    commander.run(options, callback);
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetCmdTop');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
 };
 
-CpuMonitor.prototype.GetAverageLoad = function(options, callback) {
+CpuMonitor.prototype.GetAverageLoad = function(options) {
 
-    const commander = require('./GetProcLoadavg');
-    commander.run(options, callback);
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetProcLoadavg');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
+
 };
 
 CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
 
-    const commander = require('./GetProcCpuinfo');
-    commander.run(options, callback);
+    return new Promise( (resolve, reject) => {
 
+        const commander = require('./GetProcCpuinfo');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
 };
 
 CpuMonitor.prototype.GetCapacity = function(options, callback) {
@@ -62,8 +89,16 @@ CpuMonitor.prototype.GetCapacity = function(options, callback) {
 
 CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
 
-    const commander = require('./GetCmdMpstat');
-    commander.run(options, callback);
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetCmdMpstat');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
 };
 
 

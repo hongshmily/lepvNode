@@ -56,7 +56,8 @@ router.get('/avgload/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    cpuMonitor.GetAverageLoad({server: server, debug: debug}, function(response) {
+    const promise = cpuMonitor.GetAverageLoad({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });
@@ -71,22 +72,24 @@ router.get('/capacity/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    cpuMonitor.GetProcCpuinfo({server: server, debug: debug}, function(response) {
+    const promise = cpuMonitor.GetProcCpuinfo({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });
 
 router.get('/status/:server', function(req, res, next) {
 
-    var server = req.params.server;
-    var debug = req.query.debug;
-    var reqid = req.query.reqid;
+    const server = req.params.server;
+    const debug = req.query.debug;
+    const reqid = req.query.reqid;
 
     if (!server) {
         res.json({error: 'server not specified'});
     }
 
-    cpuMonitor.GetCmdMpstat({server: server, debug: debug}, function(response) {
+    const promise = cpuMonitor.GetCmdMpstat({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });
