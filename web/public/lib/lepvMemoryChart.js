@@ -20,6 +20,8 @@ var LepvMemoryChart = function(divName, gaugeDivName) {
     this.updateChartHeader();
     this.initialize();
 
+    this.summaryLoader = new MemorySummaryLoader('div_summary_memory_gauges', 'div_summary_memory_details');
+
     this.gaugeChart = null;
     if (gaugeDivName) {
         this.gaugeChart = new LepvGaugeChart(gaugeDivName);
@@ -108,6 +110,13 @@ LepvMemoryChart.prototype.initialize = function(callback) {
 };
 
 LepvMemoryChart.prototype.updateChartData = function(data) {
+
+    if (!this.summaryLoader.initialized) {
+        this.summaryLoader.initialize(data);
+    } else {
+        this.summaryLoader.refresh(data);
+    }
+
     if (this.timeData.length > this.maxDataCount) {
         this.timeData.splice(1, 1);
         this.chartData['Free'].splice(1, 1);

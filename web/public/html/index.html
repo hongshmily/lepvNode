@@ -167,6 +167,97 @@
                     </div>
                 </div>
 
+                <div id='SummaryMemory' class="row anchor_div">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-fw fa-dashboard"></i> 系统概况: 内存
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div id="div_summary_memory" class="panel-body">
+
+                                <div class="col-lg-2">
+                                    <div class="panel panel-primary">
+                                        <div id='div_summary_memory_gauges'>
+                                        </div>
+
+                                        <div class="panel-footer text-center">
+                                            处理器
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-10">
+                                    <div class="input-group summary-group">
+                                        <span class="input-group-addon">Total</span>
+                                        <input type="text" class="form-control" name="msg" placeholder="237.9 MB">
+                                    </div>
+
+                                    <div class="input-group summary-group">
+                                        <span class="input-group-addon">Free</span>
+                                        <input type="text" class="form-control" name="msg" placeholder="19.2 MB">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                </div>
+
+                <div id='SummaryIO' class="row anchor_div">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-fw fa-dashboard"></i> 系统概况: 磁盘
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div id="div_summary_io" class="panel-body">
+
+                                <div id='div_io_gauges' class="row">
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-6">
+
+                                        <div class="input-group summary-group">
+                                            <span class="input-group-addon">/dev</span>
+                                            <input type="text" class="form-control" name="msg" placeholder="114.1M">
+                                        </div>
+
+                                        <div class="input-group summary-group">
+                                            <span class="input-group-addon">/run</span>
+                                            <input type="text" class="form-control" name="msg" placeholder="23.5M">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="input-group summary-group">
+                                            <span class="input-group-addon">/</span>
+                                            <input type="text" class="form-control" name="msg" placeholder="1.2G">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">/run/user</span>
+                                            <input type="text" class="form-control" name="msg" placeholder="100 MB">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                </div>
+
                 <div id='Summary' class="row anchor_div">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
@@ -598,7 +689,8 @@
 
     <script src="/lib/summaryLoader.js"></script>
     <script src="/lib/cpuSummaryLoader.js"></script>
-    
+    <script src="/lib/memorySummaryLoader.js"></script>
+    <script src="/lib/ioSummaryLoader.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -652,13 +744,6 @@
         }
         
         function loadCapacityData(server, socket) {
-
-//            var cpuSummaryLoader = new SummaryLoader('');
-//            cpuSummaryLoader.initialize();
-
-//            const cpuCapacityLoader = new CpuCapacityLoader('div-cpu-capacity-summary');
-//            cpuCapacityLoader.start(server);
-
 
             CapacityLoader.setComponent('memory', 'div-memory-summary');
             CapacityLoader.setComponent('cpu', 'div-cpu-summary');
