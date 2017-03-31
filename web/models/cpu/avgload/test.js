@@ -8,6 +8,7 @@ db.connect();
 const CpuAvgLoad = require('./index');
 
 let avgLoad = new CpuAvgLoad();
+
 avgLoad.last1 = 1;
 avgLoad.last5 = 5;
 avgLoad.last15 = 2;

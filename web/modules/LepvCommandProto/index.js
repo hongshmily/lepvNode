@@ -1,6 +1,8 @@
 
+const Promise = require('bluebird');
+
 const lepdCaller = require('../LepdCaller');
-var pt = require('promise-timeout');
+const pt = require('promise-timeout');
 
 var LepvCommandProto = function(command) {
     this.command = command;
@@ -14,38 +16,43 @@ LepvCommandProto.prototype.parse = function(resultLines) {
     throw new Error('Each subtype of LepvCommandProto has to override the parse() method');
 };
 
-LepvCommandProto.prototype.run = function(options, callback) {
+LepvCommandProto.prototype.run = function(options) {
 
     const thisProto = this;
 
     const response = {};
     response['data'] = {};
 
-    const callerPromise = lepdCaller.callCommand(options.server, thisProto.command, options.mockData);
-    pt.timeout(callerPromise, thisProto.lepdResponseTimeoutInSeconds * 1000)
-        .then (function(lines) {
+    return new Promise(function(resolve, reject){
 
-            if (options.debug == true || options.debug == 'true') {
-                response['rawLines'] = lines.slice();
-                response['command'] = thisProto.command;
-            }
+        const callerPromise = lepdCaller.callCommand(options.server, thisProto.command, options.mockData);
 
-            const parsedData = thisProto.parse(lines);
-            response['data'] = parsedData['parsed'];
-            response['error'] = parsedData['error'];
+        pt.timeout(callerPromise, thisProto.lepdResponseTimeoutInSeconds * 1000)
+            .then (function(lines) {
 
-            callback(response);
-        })
-        .catch(function(error) {
+                if (options.debug == true || options.debug == 'true') {
+                    response['rawLines'] = lines.slice();
+                    response['command'] = thisProto.command;
+                }
 
-            if (error instanceof pt.TimeoutError) {
-                response['error'] = "timeout";
-            } else {
-                response['error'] = error.message || error.error;
-            }
+                const parsedData = thisProto.parse(lines);
+                response['data'] = parsedData['parsed'];
+                response['error'] = parsedData['error'];
 
-            callback(response);
-        });
+                resolve(response);
+            })
+            .catch(function(error) {
+
+                if (error instanceof pt.TimeoutError) {
+                    response['error'] = "timeout";
+                } else {
+                    response['error'] = error.message || error.error;
+                }
+
+                reject(response);
+            });
+
+    });
 
 };
 

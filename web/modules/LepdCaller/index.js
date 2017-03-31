@@ -1,5 +1,6 @@
 
 const net = require('net');
+const Promise = require('bluebird');
 
 const LepdCaller = function() {
 

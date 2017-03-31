@@ -8,9 +8,11 @@ var unitTester = require('../UnitTester');
 
 var server = 'www.linuxxueyuan.com';
 
-monitor.getProcessorCount({server: server, debug: true}, function(resultData) {
+var promise = monitor.getProcessorCount({server: server, debug: true});
+promise.then( function(resultData) {
     util.printJson(resultData);
 });
+
 //
 // cpuMonitor.GetProcCpuinfo({server: server, debug: true}, function(resultData) {
 //     util.printJson(resultData);

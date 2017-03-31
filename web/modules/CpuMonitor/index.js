@@ -1,21 +1,28 @@
 
+const Promise = require('bluebird');
+
 const CpuMonitor = function() {
 };
 
 CpuMonitor.prototype.getProcessorCount = function(options, callback) {
 
     const commander = require('./GetCpuInfo');
-    commander.run(options, function(response) {
+
+    const commanderPromise = commander.run(options);
+    commanderPromise.then(function(response) {
 
         if ('cpunr' in response.data) {
             response['data']['count'] = response['data']['cpunr'];
+
+            resolve(response);
         } else {
             response['error'] = 'Failed to locate "cpunr" in the response';
+
+            reject(response);
         }
 
-        callback(response);
-
     });
+
 };
 
 CpuMonitor.prototype.GetCmdTop = function(options, callback) {

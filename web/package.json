@@ -25,6 +25,7 @@
     "deep-diff": "*",
     "bower": "*",
     "mongoose": "*",
+    "bluebird": "*",
     "socket.io": "*",
     "promise-timeout": "*"
   }

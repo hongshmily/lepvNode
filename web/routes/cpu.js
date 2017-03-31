@@ -8,14 +8,15 @@ const router = express.Router();
 router.get('/count/:server', function(req, res, next) {
 
     var server = req.params.server;
-    var debug = req.query.debug;
-    var reqid = req.query.reqid;
+    var debug = req.query.debug || false;
+    var reqid = req.query.reqid || 0;
 
     if (!server) {
         res.json({error: 'server not specified'});
     }
 
-    cpuMonitor.getProcessorCount({server: server, debug: debug}, function(response) {
+    const promise = cpuMonitor.getProcessorCount({server: server, debug: debug});
+    promise.then(function(response) {
         if (response) {
             response['reqid'] = reqid;
         }
