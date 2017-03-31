@@ -24,7 +24,7 @@
     "async": "*",
     "deep-diff": "*",
     "bower": "*",
-    "mongodb": "*",
+    "mongoose": "*",
     "socket.io": "*",
     "promise-timeout": "*"
   }

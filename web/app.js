@@ -20,8 +20,6 @@ var perfRouter = require('./routes/perf');
 var commandRouter = require('./routes/command');
 var testerRouter = require('./routes/test');
 
-var db = require('./db');
-
 var app = express();
 
 // view engine setup
@@ -83,12 +81,7 @@ app.use(function(err, req, res, next) {
 });
 
 // Connect to Mongo on start
-db.connect(properties.local_mongodb_address, function(err) {
-    if (err) {
-        console.log('Unable to connect to Mongo.');
-        process.exit(1)
-    }
-});
-
+db.connect(properties.local_mongodb_address);
+console.log("Mongo connected");
 
 module.exports = app;
