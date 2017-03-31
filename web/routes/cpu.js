@@ -35,7 +35,12 @@ router.get('/top/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    cpuMonitor.GetCmdTop({server: server, debug: debug}, function(response) {
+    const promise = cpuMonitor.GetCmdTop({server: server, debug: debug});
+    promise.then(function(response) {
+        if (response) {
+            response['reqid'] = reqid;
+        }
+
         res.json(response);
     });
 });
