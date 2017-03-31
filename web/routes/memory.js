@@ -1,7 +1,7 @@
 
 var express = require('express');
 
-var memoryMonitor = require('../modules/MemoryMonitor');
+var monitor = require('../modules/MemoryMonitor');
 
 var router = express.Router();
 
@@ -11,7 +11,8 @@ router.get('/procrank/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    memoryMonitor.GetCmdProcrank({server: server, debug: debug}, function(response) {
+    const promise = monitor.GetCmdProcrank({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });
@@ -22,7 +23,8 @@ router.get('/status/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    memoryMonitor.GetProcMeminfo({server: server, debug: debug}, function(response) {
+    const promise = monitor.GetProcMeminfo({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });
@@ -33,7 +35,8 @@ router.get('/capacity/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    memoryMonitor.GetCapacity({server: server, debug: debug}, function(response) {
+    const promise = monitor.GetCapacity({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });

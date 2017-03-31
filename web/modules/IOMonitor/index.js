@@ -2,33 +2,51 @@
 var IOMonitor = function() {
 };
 
-IOMonitor.prototype.GetCmdIotop = function(options, callback) {
+IOMonitor.prototype.GetCmdIotop = function(options) {
 
-    const commander = require('./GetCmdIotop');
-    commander.run(options, callback);
-};
+    return new Promise( (resolve, reject) => {
 
-IOMonitor.prototype.GetCmdIostat = function(options, callback) {
+        const commander = require('./GetCmdIotop');
+        const commanderPromise = commander.run(options);
 
-    const commander = require('./GetCmdIostat');
-    commander.run(options, callback);
-};
-
-IOMonitor.prototype.GetCmdDf = function(options, callback) {
-
-    const commander = require('./GetCmdDf');
-    commander.run(options, callback);
-};
-
-IOMonitor.prototype.GetCapacity = function(options, callback) {
-
-    this.GetCmdDf(options, function(response) {
-
-
-
-        callback(response);
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
 
     });
+};
+
+IOMonitor.prototype.GetCmdIostat = function(options) {
+
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetCmdIostat');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
+};
+
+IOMonitor.prototype.GetCmdDf = function(options) {
+
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetCmdDf');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
+};
+
+IOMonitor.prototype.GetCapacity = function(options) {
+
+    return this.GetCmdDf(options);
 };
 
 

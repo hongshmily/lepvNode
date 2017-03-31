@@ -1,7 +1,7 @@
 
 const express = require('express');
 
-const cpuMonitor = require('../modules/CpuMonitor');
+const monitor = require('../modules/CpuMonitor');
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/count/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    const promise = cpuMonitor.getProcessorCount({server: server, debug: debug});
+    const promise = monitor.getProcessorCount({server: server, debug: debug});
     promise.then(function(response) {
         if (response) {
             response['reqid'] = reqid;
@@ -35,7 +35,7 @@ router.get('/top/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    const promise = cpuMonitor.GetCmdTop({server: server, debug: debug});
+    const promise = monitor.GetCmdTop({server: server, debug: debug});
     promise.then(function(response) {
         if (response) {
             response['reqid'] = reqid;
@@ -56,7 +56,7 @@ router.get('/avgload/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    const promise = cpuMonitor.GetAverageLoad({server: server, debug: debug});
+    const promise = monitor.GetAverageLoad({server: server, debug: debug});
     promise.then(function(response) {
         res.json(response);
     });
@@ -72,7 +72,7 @@ router.get('/capacity/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    const promise = cpuMonitor.GetProcCpuinfo({server: server, debug: debug});
+    const promise = monitor.GetProcCpuinfo({server: server, debug: debug});
     promise.then(function(response) {
         res.json(response);
     });
@@ -88,7 +88,7 @@ router.get('/status/:server', function(req, res, next) {
         res.json({error: 'server not specified'});
     }
 
-    const promise = cpuMonitor.GetCmdMpstat({server: server, debug: debug});
+    const promise = monitor.GetCmdMpstat({server: server, debug: debug});
     promise.then(function(response) {
         res.json(response);
     });

@@ -2,10 +2,18 @@
 var PerfMonitor = function() {
 };
 
-PerfMonitor.prototype.GetCmdPerfCpuclock = function(options, callback) {
+PerfMonitor.prototype.GetCmdPerfCpuclock = function(options) {
 
-    const commander = require('./GetCmdPerfCpuclock');
-    commander.run(options, callback);
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetCmdPerfCpuclock');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
 };
 
 

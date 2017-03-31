@@ -4,29 +4,38 @@ var lepdCaller = require('../LepdCaller');
 var MemoryMonitor = function() {
 };
 
-MemoryMonitor.prototype.GetCmdProcrank = function(options, callback) {
+MemoryMonitor.prototype.GetCmdProcrank = function(options) {
 
-    const commander = require('./GetCmdProcrank');
-    commander.run(options, callback);
+    return new Promise( (resolve, reject) => {
 
-};
+        const commander = require('./GetCmdProcrank');
+        const commanderPromise = commander.run(options);
 
-MemoryMonitor.prototype.GetProcMeminfo = function(options, callback) {
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
 
-    const commander = require('./GetProcMeminfo');
-    commander.run(options, callback);
-
-};
-
-MemoryMonitor.prototype.GetCapacity = function(options, callback) {
-
-    this.GetProcMeminfo(options, function(response) {
-
-        // extract the data of interest.
-
-
-        callback(response);
     });
+};
+
+MemoryMonitor.prototype.GetProcMeminfo = function(options) {
+
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetProcMeminfo');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
+};
+
+MemoryMonitor.prototype.GetCapacity = function(options) {
+
+    return this.GetProcMeminfo(options);
+
 };
 
 

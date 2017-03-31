@@ -10,7 +10,8 @@ router.get('/cpuclock/:server', function(req, res, next) {
     var debug = req.query.debug;
     var id = req.query.id;
 
-    monitor.GetCmdPerfCpuclock({server: server, debug: debug}, function(response) {
+    const promise = monitor.GetCmdPerfCpuclock({server: server, debug: debug});
+    promise.then(function(response) {
         res.json(response);
     });
 });

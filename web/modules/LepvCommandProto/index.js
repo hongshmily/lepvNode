@@ -49,7 +49,7 @@ LepvCommandProto.prototype.run = function(options) {
                     response['error'] = error.message || error.error;
                 }
 
-                reject(response);
+                resolve(response);
             });
 
     });

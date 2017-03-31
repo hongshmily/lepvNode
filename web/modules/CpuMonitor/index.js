@@ -57,7 +57,7 @@ CpuMonitor.prototype.GetAverageLoad = function(options) {
 
 };
 
-CpuMonitor.prototype.GetProcCpuinfo = function(options, callback) {
+CpuMonitor.prototype.GetProcCpuinfo = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -87,7 +87,7 @@ CpuMonitor.prototype.GetCapacity = function(options, callback) {
     })
 };
 
-CpuMonitor.prototype.GetCmdMpstat = function(options, callback) {
+CpuMonitor.prototype.GetCmdMpstat = function(options) {
 
     return new Promise( (resolve, reject) => {
 
