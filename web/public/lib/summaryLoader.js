@@ -3,17 +3,14 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var SummaryLoader = function(gaugesDivName, detailDivName) {
-
-    // this.gaugesDiv = $('#div_summary_cpu_gauges');
-    // this.detailDiv = $('#div_summary_cpu_details');
+var SummaryLoader = function(gaugesDivName, capacityDivName) {
 
     this.gaugesDiv = $('#' + gaugesDivName);
-    this.detailDiv = $('#' + detailDivName);
+    this.capacityDiv = $('#' + capacityDivName);
 
     this.initialized = false;
 
-    // map from processor id to its gauge.
+    // map from processor id to its gauge chart.
     this.gaugeMap = {};
 };
 
@@ -28,8 +25,6 @@ SummaryLoader.prototype.initialize = function(processorDatas, callback) {
         if (processorName == 'all') {
             continue;
         }
-
-        var processorData = processorDatas[processorName];
 
         this.createGaugeForProcessor(processorName);
     }

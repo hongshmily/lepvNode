@@ -23,7 +23,7 @@ var LepvCpuCharts = function(chartDivNames) {
     
     this.gaugeChart = new LepvGaugeChart(chartDivNames.gaugeDivName);
 
-    this.summaryLoader = new SummaryLoader('div_summary_cpu_gauges', 'div_summary_cpu_details');
+    this.summaryLoader = new CpuSummaryLoader('div_summary_cpu_gauges', 'div_summary_cpu_details');
 };
 
 LepvCpuCharts.prototype = Object.create(LepvChart.prototype);
