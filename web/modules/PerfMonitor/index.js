@@ -16,5 +16,4 @@ PerfMonitor.prototype.GetCmdPerfCpuclock = function(options) {
     });
 };
 
-
 module.exports = new PerfMonitor();
