@@ -12,6 +12,10 @@ var IOSummaryLoader = function(gaugesDivName, capacityDivName) {
     this.gaugesDivName = gaugesDivName;
     this.server = null;
 
+    this.intervalId = null;
+    this.refreshInterval = 10;  // refresh every 10 seconds.
+
+
 };
 
 IOSummaryLoader.prototype = Object.create(SummaryLoader.prototype);
@@ -24,7 +28,11 @@ IOSummaryLoader.prototype.initialize = function(server) {
     this.server = server;
 
     this.loadCapacity();
-    this.initialized = true;
+
+    const thisLoader = this;
+    this.intervalId = setInterval(function () {
+        thisLoader.loadCapacity();
+    }, this.refreshInterval * 1000);
 };
 
 IOSummaryLoader.prototype.loadCapacity = function() {
