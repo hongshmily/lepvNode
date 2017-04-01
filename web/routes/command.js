@@ -19,6 +19,11 @@ router.get('/:command/:server', function(req, res, next) {
             var response = {};
             response['rawLines'] = lines;
 
+            if (command === 'ListAllMethod') {
+                lines = lines[0].split(/\s+/);
+                response = lines;
+            }
+
             res.json(response);
         })
         .catch(function(errors) {

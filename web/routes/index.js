@@ -39,5 +39,4 @@ router.get('/ping/:server', function(req, res, next) {
 });
 
 
-
 module.exports = router;
