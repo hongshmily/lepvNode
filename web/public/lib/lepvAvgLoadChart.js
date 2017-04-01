@@ -8,7 +8,7 @@ var LepvAvgLoadChart = function(divName) {
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
     LepvChart.call(this, divName);
-    
+
     this.chartTitle = "Average Load Chart";
     this.chartHeaderColor = 'orange';
     
@@ -29,7 +29,7 @@ var LepvAvgLoadChart = function(divName) {
     this.maxValues = [1];
 
     this.updateChartHeader();
-    this.initialize();
+    // this.initialize();
 };
 
 LepvAvgLoadChart.prototype = Object.create(LepvChart.prototype);
@@ -49,7 +49,6 @@ LepvAvgLoadChart.prototype.initialize = function(callback) {
 
     var fetch = {server: "www.linuxxueyuan.com", command: "avg load"};
     socket.emit("fetch", fetch);
-
 
     if (!this.server) {
         // console.log('server not specified for average load chart');
