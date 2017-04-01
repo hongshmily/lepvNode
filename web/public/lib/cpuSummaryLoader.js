@@ -26,7 +26,7 @@ CpuSummaryLoader.prototype.initialize = function(data, callback) {
             continue;
         }
 
-        this.createGaugeForProcessor(processorName);
+        this.createGaugeDivForProcessor(processorName);
     }
 
     this.initialized = true;
@@ -74,7 +74,7 @@ CpuSummaryLoader.prototype.reloadChart = function(chart, data, callback) {
     });
 };
 
-CpuSummaryLoader.prototype.createGaugeForProcessor = function(processorId, callback) {
+CpuSummaryLoader.prototype.createGaugeDivForProcessor = function(processorId, callback) {
 
     var thisLoader = this;
 

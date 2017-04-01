@@ -24,6 +24,8 @@ var LepvIOStatChart = function(divName, gaugeDivName) {
     if (gaugeDivName) {
         this.gaugeChart = new LepvGaugeChart(gaugeDivName);
     }
+
+    this.summaryLoader = new IOSummaryLoader('div_io_gauges', 'div_io_details');
 };
 
 LepvIOStatChart.prototype = Object.create(LepvChart.prototype);
@@ -77,6 +79,9 @@ LepvIOStatChart.prototype.initialize = function(callback) {
 };
 
 LepvIOStatChart.prototype.updateChartData = function(data) {
+
+    this.summaryLoader.initialize(this.server);
+
     var diskDatas = data['disks'];
     
     var thisChart = this;

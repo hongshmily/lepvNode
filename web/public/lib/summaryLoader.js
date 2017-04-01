@@ -31,7 +31,7 @@ SummaryLoader.prototype.reloadChart = function(chart, data, callback) {
 };
 
 
-SummaryLoader.prototype.createGaugeForProcessor = function(processorId, callback) {
+SummaryLoader.prototype.createGaugeDivForProcessor = function(processorId, callback) {
 
     // TODO
 

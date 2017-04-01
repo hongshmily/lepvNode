@@ -8,48 +8,90 @@ var IOSummaryLoader = function(gaugesDivName, capacityDivName) {
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
     SummaryLoader.call(this, gaugesDivName, capacityDivName);
+
+    this.gaugesDivName = gaugesDivName;
+    this.server = null;
+
 };
 
 IOSummaryLoader.prototype = Object.create(SummaryLoader.prototype);
 IOSummaryLoader.prototype.constructor = IOSummaryLoader;
 
 
-IOSummaryLoader.prototype.initialize = function(data, callback) {
+IOSummaryLoader.prototype.initialize = function(server) {
 
-    for (var processorName in data) {
-        // skip loop if the property is from prototype
-        if (!data.hasOwnProperty(processorName)) {
-            continue;
+    // call get capacity data
+    this.server = server;
+
+    var thisLoader = this;
+
+    thisLoader.getCapacity(function(capacityData) {
+
+        var disks = capacityData.disks;
+        for (var diskMountPoint in disks) {
+            // skip loop if the property is from prototype
+            if (!disks.hasOwnProperty(diskMountPoint)) {
+                continue;
+            }
+
+            var diskInfo = disks[diskMountPoint];
+
+            thisLoader.createGaugeDiv(diskInfo);
         }
 
-        if (processorName == 'all') {
-            continue;
+
+        this.initialized = true;
+    });
+};
+
+IOSummaryLoader.prototype.createGaugeDiv = function(diskInfo, callback) {
+
+    var thisLoader = this;
+
+    var colDiv = $('<div></div>').addClass('col-lg-2');
+    this.gaugesDiv.append(colDiv);
+
+    var panelDiv = $('<div></div>').addClass('panel panel-primary');
+    colDiv.append(panelDiv);
+
+    var randomString = Math.random().toString().substr(2, 8);
+    var gaugeId = 'gauge' + randomString;
+    var gaugeDiv = $('<div></div>').attr('id',gaugeId);
+    panelDiv.append(gaugeDiv);
+
+    var footerDiv = $('<div></div>').addClass('panel-footer text-center').text(diskInfo.mountPoint);
+    panelDiv.append(footerDiv);
+
+    // create gauge.
+    this.createGauge(gaugeId, function(chart) {
+        thisLoader.gaugeMap[diskInfo.mountPoint] = chart;
+        thisLoader.reloadChart(chart, diskInfo);
+    })
+
+};
+
+IOSummaryLoader.prototype.getCapacity = function(callback) {
+
+    // call get capacity data
+
+    var url = '/io/capacity/' + this.server;
+    $.get(url).done(
+        function(response, status) {
+            callback(response.data);
         }
-
-        this.createGaugeForProcessor(processorName);
-    }
-
-    this.initialized = true;
+    ).fail(
+        function(data, status) {
+            console.log("Accessing URL failed: " + url);
+            console.log(data);
+            console.log(status);
+        }
+    );
 };
 
 
 IOSummaryLoader.prototype.refresh = function(data, callback) {
 
-    for (var processorName in data) {
-        // skip loop if the property is from prototype
-        if (!data.hasOwnProperty(processorName)) {
-            continue;
-        }
 
-        if (processorName == 'all') {
-            continue;
-        }
-
-        var chart = this.gaugeMap[processorName];
-        this.reloadChart(chart, data[processorName]);
-    }
-
-    this.initialized = true;
 };
 
 IOSummaryLoader.prototype.reloadChart = function(chart, data, callback) {
@@ -69,12 +111,12 @@ IOSummaryLoader.prototype.reloadChart = function(chart, data, callback) {
             data
         ],
         keys: {
-            value: ['ratio']
+            value: ['Use%']
         }
     });
 };
 
-IOSummaryLoader.prototype.createGaugeForProcessor = function(processorId, callback) {
+IOSummaryLoader.prototype.createGaugeDivForProcessor = function(processorId, callback) {
 
     var thisLoader = this;
 
