@@ -57,7 +57,7 @@ LepvCpuCharts.prototype.updateChartData = function(data) {
     this.donutChart.updateChartData(data['all']);
 
     if (!this.summaryLoader.initialized) {
-        this.summaryLoader.initialize(data);
+        this.summaryLoader.initialize(data, this.server);
     } else {
         this.summaryLoader.refresh(data);
     }

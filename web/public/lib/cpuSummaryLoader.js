@@ -8,13 +8,18 @@ var CpuSummaryLoader = function(gaugesDivName, capacityDivName) {
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
     SummaryLoader.call(this, gaugesDivName, capacityDivName);
+
+    this.server = null;
+    this.capacityDatas = null;
 };
 
 CpuSummaryLoader.prototype = Object.create(SummaryLoader.prototype);
 CpuSummaryLoader.prototype.constructor = CpuSummaryLoader;
 
 
-CpuSummaryLoader.prototype.initialize = function(data, callback) {
+CpuSummaryLoader.prototype.initialize = function(data, server) {
+
+    this.server = server;
 
     for (var processorName in data) {
         // skip loop if the property is from prototype
@@ -32,8 +37,50 @@ CpuSummaryLoader.prototype.initialize = function(data, callback) {
     this.initialized = true;
 };
 
+CpuSummaryLoader.prototype.fetchCapacityData = function() {
+
+    const thisLoader = this;
+
+    const url = '/cpu/capacity/' + this.server;
+    $.get(url).done(
+        function(response, status) {
+
+            thisLoader.capacityDatas = response.data.processors;
+
+            thisLoader.displayCapacity('0');
+        }
+    ).fail(
+        function(data, status) {
+            console.log("Accessing URL failed: " + url);
+            console.log(data);
+            console.log(status);
+        }
+    );
+};
+
+CpuSummaryLoader.prototype.displayCapacity = function(processorId) {
+
+    const capacityData = this.capacityDatas[processorId];
+
+    console.log(capacityData);
+
+    $('#input-cpu-core-id').attr('placeholder', processorId);
+    $('#input-cpu-model').attr('placeholder', capacityData['model name']);
+
+    $('#input-cpu-speed').attr('placeholder', capacityData['cpu MHz'] + "MHz");
+    $('#input-cpu-cache-size').attr('placeholder', capacityData['cache size']);
+    $('#input-cpu-bogomips').attr('placeholder', capacityData['bogomips']);
+    $('#input-cpu-vendor').attr('placeholder', capacityData['vendor_id']);
+    $('#input-cpu-family').attr('placeholder', capacityData['cpu family']);
+
+};
+
 
 CpuSummaryLoader.prototype.refresh = function(data, callback) {
+
+    if (!this.capacityDatas) {
+        this.fetchCapacityData();
+    }
 
     for (var processorName in data) {
         // skip loop if the property is from prototype
