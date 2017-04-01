@@ -42,7 +42,7 @@ LepvCpuCharts.prototype.initialize = function() {
         // console.log('server not specified for average load chart');
         return;
     }
-    this.gaugeChart.initialize();
+    // this.gaugeChart.initialize();
     
     this.donutChart.initialize();
     this.idleChart.initialize();
@@ -64,8 +64,8 @@ LepvCpuCharts.prototype.updateChartData = function(data) {
 
 
     // keep three digits, including the ones after dot.
-    var cpuOccupationRatio = (100 - data['all']['idle']).toPrecision(3);
-    this.gaugeChart.updateChartData({'ratio': cpuOccupationRatio});
+    // var cpuOccupationRatio = (100 - data['all']['idle']).toPrecision(3);
+    // this.gaugeChart.updateChartData({'ratio': cpuOccupationRatio});
     
     delete data['all'];
 

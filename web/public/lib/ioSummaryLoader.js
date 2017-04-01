@@ -48,6 +48,11 @@ IOSummaryLoader.prototype.loadCapacity = function() {
                 continue;
             }
 
+            // skip /sys/fs/cgroup for now
+            if (diskMountPoint === '/sys/fs/cgroup') {
+                continue;
+            }
+
             var diskInfo = disks[diskMountPoint];
             var diskMountPoint = diskInfo.mountPoint;
 
@@ -90,7 +95,7 @@ IOSummaryLoader.prototype.createGaugeDiv = function(diskInfo, callback) {
 
     var thisLoader = this;
 
-    var colDiv = $('<div></div>').addClass('col-lg-2');
+    var colDiv = $('<div></div>').addClass('col-lg-2').addClass('gauge-div');
     this.gaugesDiv.append(colDiv);
 
     var panelDiv = $('<div></div>').addClass('panel panel-primary');

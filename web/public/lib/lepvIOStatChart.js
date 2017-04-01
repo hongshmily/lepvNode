@@ -19,12 +19,6 @@ var LepvIOStatChart = function(divName, gaugeDivName) {
 
     this.updateChartHeader();
     this.initialize();
-
-    this.gaugeChart = null;
-    if (gaugeDivName) {
-        this.gaugeChart = new LepvGaugeChart(gaugeDivName);
-    }
-
 };
 
 LepvIOStatChart.prototype = Object.create(LepvChart.prototype);
@@ -116,9 +110,4 @@ LepvIOStatChart.prototype.updateChartData = function(data) {
             value: ['']
         }
     });
-
-    // update gauge
-    if (this.gaugeChart) {
-        this.gaugeChart.updateChartData(data);
-    }
 };
