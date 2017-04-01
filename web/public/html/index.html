@@ -763,6 +763,11 @@
             });
             cpuCharts.start(server, socket);
         }
+
+        function loadSummaryLoaders(server, socket) {
+            var ioSummaryLoader = new IOSummaryLoader('div_io_gauges', 'div_io_details');
+            ioSummaryLoader.initialize(server);
+        }
         
         
     </script>
@@ -777,6 +782,9 @@
 
         const lepvServerUrl = window.location.origin;  // something like 'http://localhost:8889'
         const socket = io.connect(lepvServerUrl);
+
+
+        loadSummaryLoaders(server, socket);
 
         loadCpuCharts(server, socket);
         loadCapacityData(server, socket);

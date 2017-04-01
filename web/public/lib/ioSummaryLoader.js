@@ -23,7 +23,13 @@ IOSummaryLoader.prototype.initialize = function(server) {
     // call get capacity data
     this.server = server;
 
-    var thisLoader = this;
+    this.loadCapacity();
+    this.initialized = true;
+};
+
+IOSummaryLoader.prototype.loadCapacity = function() {
+
+    const thisLoader = this;
 
     thisLoader.getCapacity(function(capacityData) {
 
@@ -35,37 +41,20 @@ IOSummaryLoader.prototype.initialize = function(server) {
             }
 
             var diskInfo = disks[diskMountPoint];
+            var diskMountPoint = diskInfo.mountPoint;
 
-            thisLoader.createGaugeDiv(diskInfo);
+            if (diskMountPoint in thisLoader.gaugeMap) {
+
+                // the chart for this disk/mountpoint is already there, just load/refresh data for it
+                thisLoader.loadChartData(thisLoader.gaugeMap[diskMountPoint], diskInfo);
+
+            } else {
+
+                thisLoader.createGaugeDiv(diskInfo,  function(gaugeChart) {
+                    thisLoader.loadChartData(thisLoader.gaugeMap[diskMountPoint], diskInfo);
+                })
+            }
         }
-
-
-        this.initialized = true;
-    });
-};
-
-IOSummaryLoader.prototype.createGaugeDiv = function(diskInfo, callback) {
-
-    var thisLoader = this;
-
-    var colDiv = $('<div></div>').addClass('col-lg-2');
-    this.gaugesDiv.append(colDiv);
-
-    var panelDiv = $('<div></div>').addClass('panel panel-primary');
-    colDiv.append(panelDiv);
-
-    var randomString = Math.random().toString().substr(2, 8);
-    var gaugeId = 'gauge' + randomString;
-    var gaugeDiv = $('<div></div>').attr('id',gaugeId);
-    panelDiv.append(gaugeDiv);
-
-    var footerDiv = $('<div></div>').addClass('panel-footer text-center').text(diskInfo.mountPoint);
-    panelDiv.append(footerDiv);
-
-    // create gauge.
-    this.createGauge(gaugeId, function(chart) {
-        thisLoader.gaugeMap[diskInfo.mountPoint] = chart;
-        thisLoader.reloadChart(chart, diskInfo);
     })
 
 };
@@ -89,34 +78,7 @@ IOSummaryLoader.prototype.getCapacity = function(callback) {
 };
 
 
-IOSummaryLoader.prototype.refresh = function(data, callback) {
-
-
-};
-
-IOSummaryLoader.prototype.reloadChart = function(chart, data, callback) {
-
-    if (!chart) {
-        return;
-    }
-
-    if (!data) {
-        return;
-    }
-
-    data['ratio'] = 100 - data.idle;
-
-    chart.load({
-        json: [
-            data
-        ],
-        keys: {
-            value: ['Use%']
-        }
-    });
-};
-
-IOSummaryLoader.prototype.createGaugeDivForProcessor = function(processorId, callback) {
+IOSummaryLoader.prototype.createGaugeDiv = function(diskInfo, callback) {
 
     var thisLoader = this;
 
@@ -131,16 +93,39 @@ IOSummaryLoader.prototype.createGaugeDivForProcessor = function(processorId, cal
     var gaugeDiv = $('<div></div>').attr('id',gaugeId);
     panelDiv.append(gaugeDiv);
 
-    var footerDiv = $('<div></div>').addClass('panel-footer text-center').text(' processor: ' + processorId);
+    var footerDiv = $('<div></div>').addClass('panel-footer text-center').text(diskInfo.mountPoint);
     panelDiv.append(footerDiv);
 
     // create gauge.
     this.createGauge(gaugeId, function(chart) {
-        thisLoader.gaugeMap[processorId] = chart;
+        thisLoader.gaugeMap[diskInfo.mountPoint] = chart;
+
+        callback(chart);
     })
 
 };
 
+IOSummaryLoader.prototype.loadChartData = function(gaugeChart, data) {
+
+    if (!gaugeChart) {
+        return;
+    }
+
+    if (!data) {
+        return;
+    }
+
+    data['ratio'] = 100 - data.idle;
+
+    gaugeChart.load({
+        json: [
+            data
+        ],
+        keys: {
+            value: ['Use%']
+        }
+    });
+};
 
 IOSummaryLoader.prototype.createGauge = function(gaugeDivId, callback) {
 
