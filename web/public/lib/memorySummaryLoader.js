@@ -12,6 +12,8 @@ var MemorySummaryLoader = function(gaugesDivName, capacityDivName) {
     this.gaugeDivName = gaugesDivName;
 
     this.chart = null;
+
+    this.initialized = false;
 };
 
 MemorySummaryLoader.prototype = Object.create(SummaryLoader.prototype);
@@ -49,26 +51,29 @@ MemorySummaryLoader.prototype.initialize = function(data, callback) {
             height: 100
         }
     });
+
+    this.initialized = true;
 };
 
 
 MemorySummaryLoader.prototype.refresh = function(data, callback) {
 
-    // for (var processorName in data) {
-    //     // skip loop if the property is from prototype
-    //     if (!data.hasOwnProperty(processorName)) {
-    //         continue;
-    //     }
-    //
-    //     if (processorName == 'all') {
-    //         continue;
-    //     }
-    //
-    //     var chart = this.gaugeMap[processorName];
-    //     this.reloadChart(chart, data[processorName]);
-    // }
+    if (!this.chart) {
+        return;
+    }
 
-    this.initialized = true;
+    if (!data) {
+        return;
+    }
+
+    this.chart.load({
+        json: [
+            data
+        ],
+        keys: {
+            value: ['ratio']
+        }
+    });
 };
 
 MemorySummaryLoader.prototype.reloadChart = function(chart, data, callback) {
