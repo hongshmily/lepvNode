@@ -29,7 +29,8 @@
     <!-- DataTable -->
     <link href="/components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <link href="/components/c3/c3.min.css" rel="stylesheet" type="text/css">
+    <script src="/components/c3/d3.min.js" charset="utf-8"></script>
+    <script src="/components/c3/c3.min.js"></script>
 
     <link href="/css/lepv.css" rel="stylesheet" type="text/css">
 
@@ -76,17 +77,69 @@
     </script>
 
     <script>
+        function initializeChart(callback) {
+
+            this.timeData = ['x'];
+            var chart = c3.generate({
+                bindto: '#divResultChart',
+                data: {
+                    x: 'x',
+                    columns: [['x']]
+                },
+                legend: {
+                    show: true,
+                    position: 'bottom',
+                    inset: {
+                        anchor: 'top-right',
+                        x: 20,
+                        y: 10,
+                        step: 2
+                    }
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%H:%M:%S'
+                        }
+                    },
+                    y: {
+                        label: {
+                            position: "inner-middle"
+                        },
+                        min: 0,
+                        max: 100,
+                        padding: {top:0, bottom:0}
+                    }
+                },
+                tooltip: {
+                    format: {
+                        value: function (value, ratio, id) {
+                            return value + " %";
+                        }
+                    }
+                }
+            });
+
+            callback(chart);
+        }
+    </script>
+
+    <script>
         function testing() {
             var server = $('#txtServer').val();
             var command = $('#methodSelect').val();
 
             $("#divResultChart").empty();
 
-            var commandUrl = '/command/' + server + '/' + command;
-            $.get(commandUrl, function(responseData, status) {
-                var xxx = 1;
-                console.log(responseData);
-                createProgressBar(responseData);
+            initializeChart(function(chart) {
+
+                const commandUrl = '/command/' + command + '/' + server;
+                $.get(commandUrl, function(responseData, status) {
+                    console.log(responseData);
+                });
+
+
             });
         }
     </script>
@@ -132,9 +185,23 @@
                 </div>
             </div>
 
-            <div id="divResultChart">
 
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        </div>
+                        <div class="panel-body">
+
+                            <div id="divResultChart">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
         </div>
 
