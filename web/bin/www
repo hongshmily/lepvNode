@@ -42,14 +42,23 @@ var server = http.createServer(app);
 
 var io = require('socket.io').listen(server);
 io.on("connection", function (socket) {
+
     // we've got a client connection
-    socket.emit("perf.cpuclock.ret", {user: "nodesource", text: "connected"});
+    console.log("Client connected!!!!!");
+
+    socket.on('avgload.req', function(data) {
+        console.log("Received client message for avgload.req");
+        console.log(data);
+
+        socket.emit("avgload.res", {user: "nodesource", text: "hahaha"});
+    });
+    //
 });
 
-io.on("perf.cpuclock", function (socket) {
-    // we've got a client connection
-    socket.emit("perf.cpuclock.ret", {user: "nodesource", text: "perf.cpuclock message received"});
-});
+// io.on("perf.cpuclock", function (socket) {
+//     // we've got a client connection
+//     socket.emit("perf.cpuclock.ret", {user: "nodesource", text: "perf.cpuclock message received"});
+// });
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -11,6 +11,9 @@ var LepvAvgLoadChart = function(divName) {
 
     this.chartTitle = "Average Load Chart";
     this.chartHeaderColor = 'orange';
+
+    this.messageRequest = 'avgload.req';
+    this.messageResponse = 'avgload.res';
     
     this.maxDataCount = 150;
     this.refreshInterval = 2;
@@ -37,25 +40,27 @@ LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 
 LepvAvgLoadChart.prototype.initialize = function(callback) {
 
+    var thisChart = this;
+
     const socket = io.connect('http://localhost:8889');
+
+    // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
     socket.on('connect', function () {
-        console.log('connected confirmed on client side');
+        socket.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
+
+        socket.emit(thisChart.messageRequest, {server: thisChart.server});
     });
 
-    socket.on('newProfile', function(profileData) {
-        console.log("new profile data received from server");
+    socket.on(thisChart.messageResponse, function(profileData) {
+        console.log("response from server by message for " + thisChart.chartTitle);
         console.log(profileData);
     });
-
-    var fetch = {server: "www.linuxxueyuan.com", command: "avg load"};
-    socket.emit("fetch", fetch);
 
     if (!this.server) {
         // console.log('server not specified for average load chart');
         return;
     }
 
-    var thisChart = this;
     $.get('cpu/count/' + thisChart.server, function(responseData, status) {
         thisChart.cpuCoreCount = responseData.data.count;
 

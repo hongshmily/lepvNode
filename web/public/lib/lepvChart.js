@@ -40,6 +40,7 @@ var LepvChart = function(divName) {
   this.initialized = false;
   
   this.executionConfig = 'release';
+  this.messageJoin = 'join';
   
   this.chartData = {};
   this.timeData = ['x'];

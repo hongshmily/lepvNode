@@ -62,7 +62,7 @@ CpuSummaryLoader.prototype.displayCapacity = function(processorId) {
 
     const capacityData = this.capacityDatas[processorId];
 
-    console.log(capacityData);
+    // console.log(capacityData);
 
     $('#input-cpu-core-id').attr('placeholder', processorId);
     $('#input-cpu-model').attr('placeholder', capacityData['model name']);
