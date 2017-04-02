@@ -11,7 +11,7 @@ var LepvChart = function(divName) {
     this.chartDiv = $('#' + this.chartDivName);
   }
 
-  this.socket = null;
+  this.socketIO = null;
   this.socketMessageToSend = null;  // the message name to be sent to server, like "perf.cpuclock".
   this.socketEventToListen = null;    // the event to listen, like "perf.cpuclock.ret", which should be triggered by LEPV server.
   
