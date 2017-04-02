@@ -8,8 +8,6 @@ var app = require('../app');
 var debug = require('debug')('myapp:server');
 var http = require('http');
 
-const cpuMonitor = require('../modules/CpuMonitor');
-
 var swagger = require('swagger-node-express').createNew(app);
 swagger.setApiInfo({
     title: "example API",
@@ -35,28 +33,24 @@ swagger.configureSwaggerPaths('', 'api-docs', '');
 swagger.configure('http://localhost:' + port, '1.0.0');
 
 console.log("website is running at: localhost:" + port);
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 // socket.io initialization
 // var io = require("socket.io")(server.listener);
 // var socketIOEventer = require('../modules/SocketIOEventer');
 // socketIOEventer.setup(server);
 
-var io = require('socket.io').listen(server);
+const io = require('socket.io').listen(server);
+
+const SocketIOEventer = require('../modules/SocketIOEventer');
+
 io.on("connection", function (socket) {
 
-    // we've got a client connection
-    console.log("Client connected!!!!!");
+    console.log("Client connected by Socket.IO");
 
-    socket.on('avgload.req', function(params) {
-        console.log("Received client message for avgload.req");
-        console.log(params);
+    const socketIOEventer = new SocketIOEventer(socket);
+    socketIOEventer.setup();
 
-        const promise = cpuMonitor.GetAverageLoad(params);
-        promise.then(function(response) {
-            socket.emit("avgload.res", response.data);
-        })
-    });
 });
 
 // io.on("perf.cpuclock", function (socket) {

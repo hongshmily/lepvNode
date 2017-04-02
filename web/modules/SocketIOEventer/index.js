@@ -1,20 +1,29 @@
 
-const SocketIOEventer = function() {
+const cpuMonitor = require('../CpuMonitor');
 
-    this.socketIO = null;
+const SocketIOEventer = function(socket) {
+
+    this.socketIO = socket;
 
     this.socketedModles = [
-        '../PerfMonitor'
+        '../CpuMonitor'
     ];
 };
 
-SocketIOEventer.prototype.setup = function(socketIO) {
+SocketIOEventer.prototype.setup = function() {
 
-    for (var i = 0; i < this.socketedModles.length; i++) {
+    const thisEventer = this;
 
-        var socketedModule = require(this.socketedModles[i]);
-        // socketedModule.setupSocketIo(socketIO);
-    }
+    cpuMonitor.setupSocketEvents(this.socketIO);
+
+
+
+
+    // for (var i = 0; i < this.socketedModles.length; i++) {
+    //
+    //     var socketedModule = require(this.socketedModles[i]);
+    //     // socketedModule.setupSocketIo(socketIO);
+    // }
 };
 
-module.exports = new SocketIOEventer();
+module.exports = SocketIOEventer;

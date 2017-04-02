@@ -14,8 +14,8 @@ var LepvAvgLoadChart = function(divName, socket) {
     this.chartTitle = "Average Load Chart";
     this.chartHeaderColor = 'orange';
 
-    this.messageRequest = 'avgload.req';
-    this.messageResponse = 'avgload.res';
+    this.messageRequest = 'cpu.avgload.req';
+    this.messageResponse = 'cpu.avgload.res';
     
     this.maxDataCount = 150;
     this.refreshInterval = 2;
