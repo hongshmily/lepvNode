@@ -215,7 +215,7 @@ LepvChart.prototype.createControlElements = function() {
 
 };
 
-LepvChart.prototype.start = function(serverToMonitor, socket) {
+LepvChart.prototype.start = function(serverToMonitor) {
   if (!serverToMonitor) {
     console.log("Please specify the server to cpuMonitor for " + this.chartDivName);
     return;
@@ -223,8 +223,6 @@ LepvChart.prototype.start = function(serverToMonitor, socket) {
   if (serverToMonitor == this.server) {
     return;
   }
-
-  this.socket = socket;
 
   this.server = serverToMonitor;
   this.requestId = 0;
@@ -294,66 +292,51 @@ LepvChart.prototype.refresh = function() {
   }
 
   this.requestId += 1;
-  //var startTime= new Date().getTime();
 
   const thisChart = this;
+  const url = thisChart.dataUrlPrefix + thisChart.server; // + "?reqId=" + thisChart.requestId;
 
-  if (this.chartTitle === 'Perf Table' ) {
+  if (thisChart.socketIO) {
+      thisChart.socketIO.emit(thisChart.messageRequest,
+          {
+              server: thisChart.server,
+              reqId: thisChart.requestId
+          }
+      );
+  }
 
-    // use perf table as a start to use socket.io
-      this.socket.emit(thisChart.socketMessageToSend, {server: thisChart.server, id: thisChart.requestId});
-
-      this.socket.on(thisChart.socketEventToListen, function(response) {
-
+  $.get(url).done(
+      function(response, status) {
           if (thisChart.isChartPaused) {
               return;
           }
 
           thisChart.responseId = response['requestId'];
 
-          thisChart.updateChartData(response['data']);
+          if (response.error) {
 
+              if (response.error === 'timeout') {
 
-      });
-
-  } else {
-
-      const url = thisChart.dataUrlPrefix + thisChart.server; // + "?id=" + thisChart.requestId;
-
-      $.get(url).done(
-          function(response, status) {
-              if (thisChart.isChartPaused) {
-                  return;
-              }
-
-              thisChart.responseId = response['requestId'];
-
-              if (response.error) {
-
-                if (response.error === 'timeout') {
-
-                    // timeout when requesting data from LEPD.
-                    // TODO: how to handle it in a good practice?
-                    console.log('Accessing URl timed out: ' + url);
-
-                } else {
-
-                  console.log("error in getting data for " + thisChart.chartTitle + ": " + response.error);
-                }
+                  // timeout when requesting data from LEPD.
+                  // TODO: how to handle it in a good practice?
+                  console.log('Accessing URl timed out: ' + url);
 
               } else {
-                  thisChart.updateChartData(response['data']);
-              }
-          }
-      ).fail(
-          function(data, status) {
-            console.log("Accessing URL failed: " + url);
-            console.log(data);
-            console.log(status);
-          }
-      );
 
-  }
+                  console.log("error in getting data for " + thisChart.chartTitle + ": " + response.error);
+              }
+
+          } else {
+              thisChart.updateChartData(response['data']);
+          }
+      }
+  ).fail(
+      function(data, status) {
+          console.log("Accessing URL failed: " + url);
+          console.log(data);
+          console.log(status);
+      }
+  );
 
 
 

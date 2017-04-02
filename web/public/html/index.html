@@ -628,8 +628,8 @@
         
         function loadAverageLoadChart(server, socket) {
 
-            var avgLoadChart = new LepvAvgLoadChart('div-system-load');
-            avgLoadChart.start(server, socket);
+            var avgLoadChart = new LepvAvgLoadChart('div-system-load', socket);
+            avgLoadChart.start(server);
         }
         
         function loadPerfCpuTable(server, socket) {
@@ -688,18 +688,18 @@
         const lepvServerUrl = window.location.origin;  // something like 'http://localhost:8889'
         const socket = io.connect(lepvServerUrl);
 
-        loadSummaryLoaders(server, socket);
-
-        loadCpuCharts(server, socket);
-        loadCapacityData(server, socket);
-        loadCpuTopTable(server, socket);
-
-        loadIoChart(server, socket);
-        loadIoTopTable(server, socket);
-        loadMemoryChart(server, socket);
+//        loadSummaryLoaders(server, socket);
+//
+//        loadCpuCharts(server, socket);
+//        loadCapacityData(server, socket);
+//        loadCpuTopTable(server, socket);
+//
+//        loadIoChart(server, socket);
+//        loadIoTopTable(server, socket);
+//        loadMemoryChart(server, socket);
         loadAverageLoadChart(server, socket);
-        loadPerfCpuTable(server, socket);
-        loadProcrankCharts(server, socket);
+//        loadPerfCpuTable(server, socket);
+//        loadProcrankCharts(server, socket);
 
         $('[data-toggle="tooltip"]').tooltip();
 

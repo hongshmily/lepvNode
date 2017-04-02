@@ -3,11 +3,13 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvAvgLoadChart = function(divName) {
+var LepvAvgLoadChart = function(divName, socket) {
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
     LepvChart.call(this, divName);
+
+    this.socketIO = socket;
 
     this.chartTitle = "Average Load Chart";
     this.chartHeaderColor = 'orange';
@@ -42,7 +44,7 @@ LepvAvgLoadChart.prototype.initialize = function(callback) {
 
     var thisChart = this;
 
-    this.socketIO = io.connect('http://localhost:8889');
+    // this.socketIO = io.connect('http://localhost:8889');
 
     // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
     thisChart.socketIO.on('connect', function () {
@@ -52,8 +54,10 @@ LepvAvgLoadChart.prototype.initialize = function(callback) {
     });
 
     thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
-        console.log("response from server by message for " + thisChart.chartTitle);
-        console.log(profileData);
+
+        thisChart.updateChartData(profileData);
+        // console.log("response from server by message for " + thisChart.chartTitle);
+        // console.log(profileData);
     });
 
     if (!this.server) {

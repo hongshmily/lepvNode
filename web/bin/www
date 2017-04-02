@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('myapp:server');
 var http = require('http');
 
+const cpuMonitor = require('../modules/CpuMonitor');
+
 var swagger = require('swagger-node-express').createNew(app);
 swagger.setApiInfo({
     title: "example API",
@@ -46,13 +48,15 @@ io.on("connection", function (socket) {
     // we've got a client connection
     console.log("Client connected!!!!!");
 
-    socket.on('avgload.req', function(data) {
+    socket.on('avgload.req', function(params) {
         console.log("Received client message for avgload.req");
-        console.log(data);
+        console.log(params);
 
-        socket.emit("avgload.res", {user: "nodesource", text: "hahaha"});
+        const promise = cpuMonitor.GetAverageLoad(params);
+        promise.then(function(response) {
+            socket.emit("avgload.res", response.data);
+        })
     });
-    //
 });
 
 // io.on("perf.cpuclock", function (socket) {
