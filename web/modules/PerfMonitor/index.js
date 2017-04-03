@@ -1,5 +1,9 @@
 
 var PerfMonitor = function() {
+
+    this.socketMessages = {
+        'perf.cpuclock': this.GetCmdPerfCpuclock,
+    };
 };
 
 PerfMonitor.prototype.GetCmdPerfCpuclock = function(options) {

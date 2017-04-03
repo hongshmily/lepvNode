@@ -1,5 +1,11 @@
 
 var IOMonitor = function() {
+
+    this.socketMessages = {
+        'io.top': this.GetCmdIotop,
+        'io.status': this.GetCmdIostat,
+        'io.capacity': this.GetCapacity,
+    };
 };
 
 IOMonitor.prototype.GetCmdIotop = function(options) {

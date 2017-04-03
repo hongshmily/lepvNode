@@ -3,7 +3,9 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var IOSummaryLoader = function(gaugesDivName, capacityDivName) {
+var IOSummaryLoader = function(gaugesDivName, capacityDivName, socket) {
+
+    this.socketIO = socket;
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call

@@ -3,11 +3,13 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvIOStatChart = function(divName, gaugeDivName) {
+var LepvIOStatChart = function(divName, gaugeDivName, socket) {
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
     LepvChart.call(this, divName);
+
+    this.socketIO = socket;
     
     this.chartTitle = "IO Stat Chart";
     this.chartHeaderColor = 'yellow';

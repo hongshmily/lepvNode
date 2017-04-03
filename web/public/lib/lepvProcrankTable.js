@@ -3,7 +3,9 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvProcrankTable = function(divName, tableDivName, pssPieDivName, freeVsPssDivName) {
+var LepvProcrankTable = function(divName, tableDivName, pssPieDivName, freeVsPssDivName, socket) {
+
+    this.socketIO = socket;
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call

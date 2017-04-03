@@ -612,17 +612,17 @@
     
     <script>
         function loadIoChart(server, socket) {
-            var ioChart = new LepvIOStatChart('div-io-stat', 'div-io-gauge');
+            var ioChart = new LepvIOStatChart('div-io-stat', 'div-io-gauge', socket);
             ioChart.start(server, socket);
         }
         
         function loadIoTopTable(server, socket) {
-            var ioTopTable = new LepvIOTopTable('div-io-top', 'io-top-table');
+            var ioTopTable = new LepvIOTopTable('div-io-top', 'io-top-table', socket);
             ioTopTable.start(server, socket);
         }
 
         function loadMemoryChart(server, socket) {
-            var memChart = new LepvMemoryChart('div-memory-chart', 'div-memory-gauge');
+            var memChart = new LepvMemoryChart('div-memory-chart', 'div-memory-gauge', socket);
             memChart.start(server, socket);
         }
         
@@ -633,30 +633,30 @@
         }
         
         function loadPerfCpuTable(server, socket) {
-            var perfCpuTable = new LepvPerfCpuTable('div-perf-cpu', 'perf-cpu-table');
+            var perfCpuTable = new LepvPerfCpuTable('div-perf-cpu', 'perf-cpu-table', socket);
             perfCpuTable.start(server, socket);
         }
         
         function loadCpuTopTable(server, socket) {
-            var cpuTopTable = new LepvCpuTopTable('div-cpu-top', 'cpu-top-table');
+            var cpuTopTable = new LepvCpuTopTable('div-cpu-top', 'cpu-top-table', socket);
             cpuTopTable.start(server, socket);
         }
         
         function loadProcrankCharts(server, socket) {
             var procrankTable = new LepvProcrankTable('div-memory-stat',
-                    'memory-stat-table', 'div-memory-pss-stat', 'div-memory-free-pss-stat');
+                    'memory-stat-table', 'div-memory-pss-stat', 'div-memory-free-pss-stat', socket);
             procrankTable.start(server, socket);
         }
         
-        function loadCapacityData(server, socket) {
-
-            CapacityLoader.setComponent('memory', 'div-memory-summary');
-            CapacityLoader.setComponent('cpu', 'div-cpu-summary');
-            CapacityLoader.setComponent('io', 'div-io-summary');
-            CapacityLoader.setRunConfig( '{{config}}' );
-
-            CapacityLoader.start(server, socket);
-        }
+//        function loadCapacityData(server, socket) {
+//
+//            CapacityLoader.setComponent('memory', 'div-memory-summary');
+//            CapacityLoader.setComponent('cpu', 'div-cpu-summary');
+//            CapacityLoader.setComponent('io', 'div-io-summary');
+//            CapacityLoader.setRunConfig( '{{config}}' );
+//
+//            CapacityLoader.start(server, socket);
+//        }
         
         function loadCpuCharts(server, socket) {
             var cpuCharts = new LepvCpuCharts({
@@ -665,12 +665,13 @@
                 'idleDivName': 'div-cpu-stat-idle',
                 'userGroupDivName': 'div-cpu-stat-userGroup',
                 'irqGroupDivName': 'div-cpu-stat-irqGroup'
-            });
-            cpuCharts.start(server, socket);
+            }, socket
+            );
+            cpuCharts.start(server);
         }
 
         function loadSummaryLoaders(server, socket) {
-            var ioSummaryLoader = new IOSummaryLoader('div_io_gauges', 'div_io_details');
+            var ioSummaryLoader = new IOSummaryLoader('div_io_gauges', 'div_io_details', socket);
             ioSummaryLoader.initialize(server);
         }
         

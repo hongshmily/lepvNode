@@ -3,7 +3,10 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvCpuCharts = function(chartDivNames) {
+var LepvCpuCharts = function(chartDivNames, socket) {
+
+
+    this.socketIO = socket;
 
     this.chartHeaderColor = 'orange';
     

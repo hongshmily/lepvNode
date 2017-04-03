@@ -2,6 +2,13 @@
 var lepdCaller = require('../LepdCaller');
 
 var MemoryMonitor = function() {
+
+    this.socketMessages = {
+        'memory.procrank': this.GetCmdProcrank,
+        'memory.status': this.GetProcMeminfo,
+        'memory.capacity': this.GetCapacity,
+    };
+
 };
 
 MemoryMonitor.prototype.GetCmdProcrank = function(options) {

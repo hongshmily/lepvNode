@@ -3,10 +3,13 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvIOTopTable = function(divName, tableDivName) {
+var LepvIOTopTable = function(divName, tableDivName, socket) {
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
+
+    this.socketIO = socket;
+
     LepvChart.call(this, divName);
     this.setTableDivName(tableDivName);
     

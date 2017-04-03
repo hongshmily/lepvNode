@@ -3,7 +3,9 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvPerfCpuTable = function(divName, tableDivName) {
+var LepvPerfCpuTable = function(divName, tableDivName, socket) {
+
+    this.socketIO = socket;
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call

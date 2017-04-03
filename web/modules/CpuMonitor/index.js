@@ -2,6 +2,13 @@
 const Promise = require('bluebird');
 
 const CpuMonitor = function() {
+
+    this.socketMessages = {
+        'cpu.avgload': this.GetAverageLoad,
+        'cpu.count': this.getProcessorCount,
+        'cpu.top': this.GetCmdTop,
+        'cpu.status': this.GetCmdMpstat
+    };
 };
 
 CpuMonitor.prototype.getProcessorCount = function(options, callback) {
@@ -101,22 +108,6 @@ CpuMonitor.prototype.GetCmdMpstat = function(options) {
     });
 };
 
-CpuMonitor.prototype.setupSocketEvents = function(socketIO) {
-
-    const thisMonitor = this;
-    let message = 'cpu.avgload';
-    let messageReq = message + '.req';
-    let messageRes = message + ".res";
-
-    socketIO.on(messageReq, function(params) {
-        console.log("Received client message for " + messageReq);
-
-        let promise = thisMonitor.GetAverageLoad(params);
-        promise.then(function(response) {
-            socketIO.emit(messageRes, response.data);
-        })
-    });
-};
 
 
 module.exports = new CpuMonitor();
