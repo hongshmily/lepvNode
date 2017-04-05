@@ -27,6 +27,8 @@
     "mongoose": "*",
     "bluebird": "*",
     "socket.io": "*",
-    "promise-timeout": "*"
+    "promise-timeout": "*",
+    "mocha": "*",
+    "chai": "*"
   }
 }
