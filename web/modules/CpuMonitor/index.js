@@ -11,7 +11,7 @@ const CpuMonitor = function() {
     };
 };
 
-CpuMonitor.prototype.getProcessorCount = function(options, callback) {
+CpuMonitor.prototype.getProcessorCount = function(options) {
 
     return new Promise( (resolve, reject) => {
 

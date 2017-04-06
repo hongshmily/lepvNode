@@ -1,4 +1,6 @@
 {
   "local_mongodb_address": "mongodb://localhost:28018/lepv",
-  "remote_mongodb_address": "mongodb://www.linuxxueyuan.com:28018/lepv"
+  "remote_mongodb_address": "mongodb://www.linuxxueyuan.com:28018/lepv",
+
+  "remote_lepd_server": "www.linuxxueyuan.com"
 }

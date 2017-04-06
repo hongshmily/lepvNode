@@ -23,6 +23,6 @@
     "c3": "*",
     "datatables": "*",
     "bootstrap-social": "*",
-    "font-awesome"
+    "font-awesome": "*"
   }
 }
