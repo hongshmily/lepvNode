@@ -5,6 +5,9 @@ const async = require('async');
 const diff = require('deep-diff').diff;
 const Promise = require('bluebird');
 
+const chai = require('chai');
+const expect = chai.expect;
+
 var UnitTester = function() {
 };
 
@@ -12,42 +15,60 @@ var UnitTester = function() {
 // with "INCLUDE", we can just specify the key data in the "expected" without having to
 // put the complete result there.
 // both objects should have the root as "data"
-UnitTester.prototype.validate = function(expected, response) {
 
-    const validationResults = [];
+UnitTester.prototype.compare = function(expectedObject, actualObject) {
+
+    for (var key in expectedObject) {
+        if (!expectedObject.hasOwnProperty(key)) {
+            continue;
+        }
+
+        expect(actualObject).have.property(key);
+
+        // make sure the response has same field.
+        expect(actualObject).have.property(key);
+
+        if (expectedObject[key] instanceof Object) {
+
+            this.compare(expectedObject[key], actualObject[key]);
+
+        } else {
+
+            // TODO:
+            // Implement a logic to collect ALL assert failures before finish.
+            // so we don't stop on the first failure, we stop on all failures are caught.
+
+            // TODO:
+            // custom message for the assertion failures.
+
+            // TODO:
+            // Need a way to show the "path" of a property being validated, rather than just a key
+            // because it is hard to tell which data does not match from just the "key".
+            expect(expectedObject[key], key + " should exit in actual response and be equal").to.equal(actualObject[key]);
+
+        }
+    }
+};
+
+UnitTester.prototype.runTestCase = function(commander, testCase) {
+
+    const thisTester = this;
 
     return new Promise(function(resolve, reject){
 
-        if (!expected) {
-            validationResults.push("'expected' not specified in the test data");
-            resolve(validationResults);
+        if (!testCase) {
+            reject('test case is not null');
         }
 
-        if (!('data' in expected)) {
-            validationResults.push("'data' is not in the expected object");
-            resolve(validationResults);
+        if (!testCase.lepdResult) {
+            reject('lepdResult is not provided');
         }
 
-        if (!('data' in response)) {
-            validationResults.push("'data' is not in the expected object");
-            resolve(validationResults);
-        }
+        const runPromise = commander.run({debug: true, mockData: testCase.lepdResult});
 
-        async.forEach(Object.keys(expected.data), function (item, callback){
-            const diffResult = diff(expected.data[item], response.data[item]);
-            if (diffResult) {
-
-                // TODO: revise the result so it's more readable:
-
-                validationResults.push(diffResult);
-            }
-
-            // tell async that that particular element of the iterator is done
-            callback();
-
-        }, function(err) {
-            resolve(validationResults);
-
+        runPromise.then(function(response) {
+            thisTester.compare(testCase.expected, response);
+            resolve(testCase);
         });
 
     });
@@ -64,29 +85,15 @@ UnitTester.prototype.run = function(commander, testDataFile) {
                 reject({error: err.message});
             }
 
-            var testCases = JSON.parse(testDataContent).cases;
-
+            const testCases = JSON.parse(testDataContent).cases;
             async.forEach(testCases, function (testCase, callback){
 
-                if (testCase.lepdResult) {
+                const testCasePromise = thisTester.runTestCase(commander, testCase);
+                testCasePromise.then(function(testCaseResult) {
+                    testCase = testCaseResult;
 
-                    const runPromise = commander.run({debug: true, mockData: testCase.lepdResult});
-
-                    runPromise.then(function(response) {
-                        testCase['data'] = response.data;
-                        testCase['rawLines'] = response.rawLines;
-
-                        // this callback() is required for async to work properly.
-                        const validatePromise = thisTester.validate(testCase.expected, response);
-                        validatePromise.then(function(validationResults) {
-                            testCase['validationResults'] = validationResults;
-                            callback();
-                        });
-                    });
-                } else {
-                    testCase['error'] = 'lepdResult not provided!';
                     callback();
-                }
+                })
 
             }, function(err) {
                 // callback when all the cases are done.
