@@ -24,7 +24,7 @@ describe('CpuMonitor', function() {
         done();
     });
 
-    it('getProcessorCount should get the processor count info', function(done) {
+    it('getProcessorCount', function(done) {
 
         const promise = monitor.getProcessorCount(options);
         promise.then( function(response) {
@@ -42,9 +42,67 @@ describe('CpuMonitor', function() {
 
     });
 
-    it('GetCmdTop');
-    it('GetAverageLoad');
-    it('GetProcCpuinfo');
-    it('GetCapacity');
-    it('GetCmdMpstat');
+    it('GetCmdTop', function(done) {
+        const promise = monitor.GetCmdTop(options);
+        promise.then( function(response) {
+
+            // example: http://chaijs.com/guide/styles/
+            response.should.be.an('object');
+            response.should.have.property("data");
+
+            done();
+        })
+    });
+
+
+    it('GetAverageLoad', function(done) {
+        const promise = monitor.GetAverageLoad(options);
+        promise.then( function(response) {
+
+            // example: http://chaijs.com/guide/styles/
+            response.should.be.an('object');
+            response.should.have.property("data");
+
+            done();
+        })
+    });
+
+
+    it('GetProcCpuinfo', function(done) {
+        const promise = monitor.GetProcCpuinfo(options);
+        promise.then( function(response) {
+
+            // example: http://chaijs.com/guide/styles/
+            response.should.be.an('object');
+            response.should.have.property("data");
+
+            done();
+        })
+    });
+
+
+    it('GetCapacity', function(done) {
+        const promise = monitor.GetCapacity(options);
+        promise.then( function(response) {
+
+            // example: http://chaijs.com/guide/styles/
+            response.should.be.an('object');
+            response.should.have.property("data");
+
+            done();
+        })
+    });
+
+
+    it('GetCmdMpstat', function(done) {
+        const promise = monitor.GetCmdMpstat(options);
+        promise.then( function(response) {
+
+            // example: http://chaijs.com/guide/styles/
+            response.should.be.an('object');
+            response.should.have.property("data");
+
+            done();
+        })
+    });
 });
