@@ -68,6 +68,9 @@ UnitTester.prototype.runTestCase = function(commander, testCase) {
 
         runPromise.then(function(response) {
             thisTester.compare(testCase.expected, response);
+
+            testCase['data'] = response.data;
+            testCase['rawLines'] = response.rawLines;
             resolve(testCase);
         });
 
