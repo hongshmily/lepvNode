@@ -73,10 +73,11 @@ UnitTester.prototype.run = function(commander, testDataFile) {
                 const runPromise = commander.run(options);
                 runPromise.then(function(actual) {
 
+                    console.log(actual);
                     const expected = testCase.expected;
 
                     thisTester.validate(expected, actual);
-                    // console.log(response);
+
 
 
                     testCaseDone();
