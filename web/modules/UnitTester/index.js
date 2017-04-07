@@ -11,12 +11,8 @@ const expect = chai.expect;
 var UnitTester = function() {
 };
 
-// a method to tell if the "expected" object is "INCLUDED" in the response object.
-// with "INCLUDE", we can just specify the key data in the "expected" without having to
-// put the complete result there.
-// both objects should have the root as "data"
 
-UnitTester.prototype.compare = function(expectedObject, actualObject) {
+UnitTester.prototype.validate = function(expectedObject, actualObject) {
 
     for (var key in expectedObject) {
         if (!expectedObject.hasOwnProperty(key)) {
@@ -30,7 +26,7 @@ UnitTester.prototype.compare = function(expectedObject, actualObject) {
 
         if (expectedObject[key] instanceof Object) {
 
-            this.compare(expectedObject[key], actualObject[key]);
+            this.validate(expectedObject[key], actualObject[key]);
 
         } else {
 
@@ -50,64 +46,47 @@ UnitTester.prototype.compare = function(expectedObject, actualObject) {
     }
 };
 
-UnitTester.prototype.runTestCase = function(commander, testCase) {
-
-    const thisTester = this;
-
-    return new Promise(function(resolve, reject){
-
-        if (!testCase) {
-            reject('test case is not null');
-        }
-
-        if (!testCase.lepdResult) {
-            reject('lepdResult is not provided');
-        }
-
-        const runPromise = commander.run({debug: true, mockData: testCase.lepdResult});
-
-        runPromise.then(function(response) {
-            thisTester.compare(testCase.expected, response);
-
-            testCase['data'] = response.data;
-            testCase['rawLines'] = response.rawLines;
-            resolve(testCase);
-        });
-
-    });
-};
-
 UnitTester.prototype.run = function(commander, testDataFile) {
 
     const thisTester = this;
 
-    return new Promise(function(resolve, reject){
+    const commandName = commander.command;
 
-        fs.readFile(testDataFile, 'utf8', function (err,testDataContent) {
-            if (err) {
-                reject({error: err.message});
-            }
+    let fileContents = fs.readFileSync(testDataFile, 'utf8');
+    const testCases = JSON.parse(fileContents).cases;
 
-            const testCases = JSON.parse(testDataContent).cases;
-            async.forEach(testCases, function (testCase, callback){
+    describe(commandName, function() {
 
-                const testCasePromise = thisTester.runTestCase(commander, testCase);
-                testCasePromise.then(function(testCaseResult) {
-                    testCase = testCaseResult;
+        for (let i = 0; i < testCases.length; i++ ) {
 
-                    callback();
-                })
+            const testCase = testCases[i];
 
-            }, function(err) {
-                // callback when all the cases are done.
-                resolve(testCases);
-            });
+            const testCaseName = testCase.cpu + " " + testCase.os + "; " + testCase.note;
 
-        });
+            it(testCaseName, function(testCaseDone) {
+
+                const options = {
+                    debug: true,
+                    mockData: testCase.lepdResult
+                };
+
+                const runPromise = commander.run(options);
+                runPromise.then(function(actual) {
+
+                    const expected = testCase.expected;
+
+                    thisTester.validate(expected, actual);
+                    // console.log(response);
+
+
+                    testCaseDone();
+                });
+
+            })
+        }
+
 
     });
-
-
 
 };
 

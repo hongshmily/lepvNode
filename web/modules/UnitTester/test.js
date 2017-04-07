@@ -4,7 +4,3 @@
 var util = require('../Utility');
 var unitTester = require('./index');
 
-
-unitTester.test(functor, testDFile, function(resultData) {
-    util.printJson(resultData);
-});

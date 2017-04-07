@@ -12,38 +12,17 @@
       "expected": {
         "data": {
           "0": {
-            "usr": 0,
-            "nice": 0,
             "sys": 1.98,
             "iowait": 0,
-            "irq": 0,
-            "soft": 0.99,
-            "steal": 0,
-            "guest": 0,
-            "gnice": 0,
             "idle": 97.03
           },
           "1": {
             "usr": 0.98,
-            "nice": 0,
             "sys": 0.98,
-            "iowait": 0,
             "irq": 0,
-            "soft": 0,
-            "steal": 0,
-            "guest": 0,
-            "gnice": 0,
             "idle": 98.04
           },
           "all": {
-            "usr": 0,
-            "nice": 0,
-            "sys": 1,
-            "iowait": 0,
-            "irq": 0,
-            "soft": 0.5,
-            "steal": 0,
-            "guest": 0,
             "gnice": 0,
             "idle": 98.5
           }
