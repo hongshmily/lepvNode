@@ -5,6 +5,7 @@ const async = require('async');
 const diff = require('deep-diff').diff;
 const Promise = require('bluebird');
 
+const lepUtil = require('../../modules/Utility');
 const chai = require('chai');
 const expect = chai.expect;
 
@@ -40,7 +41,7 @@ UnitTester.prototype.validate = function(expectedObject, actualObject) {
             // TODO:
             // Need a way to show the "path" of a property being validated, rather than just a key
             // because it is hard to tell which data does not match from just the "key".
-            expect(expectedObject[key], key + " should exit in actual response and be equal").to.equal(actualObject[key]);
+            expect(expectedObject[key]).to.equal(actualObject[key]);
 
         }
     }
@@ -73,7 +74,7 @@ UnitTester.prototype.run = function(commander, testDataFile) {
                 const runPromise = commander.run(options);
                 runPromise.then(function(actual) {
 
-                    console.log(actual);
+                    lepUtil.printJson(actual);
                     const expected = testCase.expected;
 
                     thisTester.validate(expected, actual);
