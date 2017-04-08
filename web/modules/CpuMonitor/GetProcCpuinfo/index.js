@@ -4,50 +4,122 @@ const LepvCommandProto = require('../../LepvCommandProto');
 
 var GetProCpuinfoCommander = function() {
     LepvCommandProto.call(this, 'GetProcCpuinfo');
+
+    this.parsedData = {
+        parsed: {
+            processors: {
+            },
+            count: 0
+        }
+    };
 };
 
 GetProCpuinfoCommander.prototype = Object.create(LepvCommandProto.prototype);
 GetProCpuinfoCommander.prototype.constructor = GetProCpuinfoCommander;
 
+
+GetProCpuinfoCommander.prototype.parseForArm = function(lines) {
+
+    let processorId = null;
+
+    lines.shift();
+
+    while(lines.length > 0) {
+        let line = lines.shift().trim();
+
+        if (line == '') {
+            continue;
+        }
+
+        if (/Features\s?:/.test(line)) {
+
+            var pairs = line.split(':');
+            var featuresString = pairs[1].trim();
+            var features = featuresString.split(/\s+/);
+
+            this.parsedData.parsed.features = features;
+
+            break;
+        }
+
+        if (line.match(/processor\s?:\s?\d/)) {
+            var reg = line.match(/processor\s?:\s?(\d+)/);
+            processorId = reg[1].trim();
+
+            this.parsedData.parsed['processors'][processorId] = {};
+            this.parsedData.parsed.count++;
+            continue;
+        }
+
+        let keyValuePair = line.split(':');
+        if (keyValuePair.length == 2) {
+            this.parsedData.parsed['processors'][processorId][keyValuePair[0].trim()] = keyValuePair[1].trim();
+        }
+    }
+
+    while(lines.length > 0) {
+        let line = lines.shift().trim();
+
+        if (line == '') {
+            continue;
+        }
+
+        var reg = line.match(/CPU architecture:\s+(.*)/);
+        if (reg) {
+            this.parsedData.parsed.architecture = 'ARM v' + reg[1];
+            continue;
+        }
+    }
+};
+
+GetProCpuinfoCommander.prototype.parseForX86 = function(lines) {
+
+    let processorId = null;
+
+    while(lines.length > 0) {
+        let line = lines.shift().trim();
+
+        if (line == '') {
+            continue;
+        }
+
+        if (line.match(/processor\s?:\s?\d/)) {
+            var reg = line.match(/processor\s?:\s?(\d+)/);
+            processorId = reg[1].trim();
+
+            this.parsedData.parsed['processors'][processorId] = {};
+            this.parsedData.parsed.count++;
+            continue;
+        }
+
+        let keyValuePair = line.split(':');
+        if (keyValuePair.length == 2) {
+            this.parsedData.parsed['processors'][processorId][keyValuePair[0].trim()] = keyValuePair[1].trim();
+        }
+    }
+};
+
+
 GetProCpuinfoCommander.prototype.parse = function(lines) {
 
-    var parsedData = {parsed: {}};
+    const thisCommander = this;
 
     try {
 
-        parsedData.parsed['processors'] = {};
-        parsedData.parsed['count'] = 0;
+        const firstLine = lines[0];
 
-        var processorId = null;
-        while(lines.length > 0) {
-            var line = lines.shift().trim();
+        if (/Processor\s?:\s?ARM/.test(firstLine)) {
 
-            if (line == '') {
-                continue;
-            }
-
-            if (line.match(/processor\s?:\s?\d/)) {
-                var reg = line.match(/processor\s?:\s?(\d+)/);
-                processorId = reg[1].trim();
-
-                parsedData.parsed['processors'][processorId] = {};
-                parsedData.parsed.count += parsedData.parsed.count;
-                continue;
-            }
-
-            var keyValuePair = line.split(':');
-            if (keyValuePair.length == 2) {
-                parsedData.parsed['processors'][processorId][keyValuePair[0].trim()] = keyValuePair[1].trim();
-            }
+            this.parseForArm(lines);
+        } else {
+            this.parseForX86(lines);
         }
 
-        parsedData.parsed['summary'] = parsedData.parsed.count + " processors";
-
     } catch( exception ) {
-        parsedData['error'] = exception.message;
+        thisCommander.parsedData['error'] = exception.message;
     }
 
-    return parsedData;
+    return thisCommander.parsedData;
 };
 
 module.exports = new GetProCpuinfoCommander();

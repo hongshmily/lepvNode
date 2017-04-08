@@ -41,7 +41,7 @@ UnitTester.prototype.validate = function(expectedObject, actualObject) {
             // TODO:
             // Need a way to show the "path" of a property being validated, rather than just a key
             // because it is hard to tell which data does not match from just the "key".
-            expect(expectedObject[key]).to.equal(actualObject[key]);
+            expect(expectedObject[key], '"' + key + '" validation failed').to.equal(actualObject[key]);
 
         }
     }

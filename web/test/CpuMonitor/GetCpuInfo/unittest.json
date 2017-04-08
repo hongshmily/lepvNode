@@ -10,9 +10,9 @@
       "note": "data from www.linuxxueyuan.com",
       "lepdResult":	"cpunr: 2\ncpu_name: AuthenticAMD\nlepdendstring",
       "expected": {
-        "description": "TODO: Need to think through how to do the validation",
         "data": {
-          "cpunr": 2
+          "cpunr": 2,
+          "cpu_name": "AuthenticAMD"
         }
       }
     },
@@ -24,9 +24,9 @@
       "note": "data from www.linuxep.com",
       "lepdResult":	"cpunr: 4\ncpu_name: AuthenticAMD\nlepdendstring",
       "expected": {
-        "description": "TODO: Need to think through how to do the validation",
         "data": {
-          "cpunr": 4
+          "cpunr": 4,
+          "cpu_name": "AuthenticAMD"
         }
       }
     }

@@ -32,8 +32,8 @@
             },
 
             {
-              "ranking": 5,
-              "PID": "8",
+              "ranking": 1,
+              "PID": "2",
               "USER": "0",
               "PRI": "19",
               "NI": "0",
@@ -43,22 +43,7 @@
               "%CPU": "0.0",
               "%MEM": "0.0",
               "TIME": "00:00:00",
-              "CMD": "rcu_bh"
-            },
-
-            {
-              "ranking": 11,
-              "PID": "14",
-              "USER": "0",
-              "PRI": "139",
-              "NI": "-",
-              "VSZ": "0",
-              "RSS": "0",
-              "S": "S",
-              "%CPU": "0.0",
-              "%MEM": "0.0",
-              "TIME": "00:00:04",
-              "CMD": "migration/1"
+              "CMD": "kthreadd"
             }
           ]
         }
@@ -81,6 +66,20 @@
           "rows": [
 
             {
+              "ranking": 0,
+              "PID": "11858",
+              "USER": "root",
+              "PR": "20",
+              "NI": "0",
+              "CPU%": "75%",
+              "S": "R",
+              "#THR": "1",
+              "VSS": "9096K",
+              "RSS": "1868K",
+              "PCY": "fg",
+              "Name": "/system/bin/top"
+            },
+            {
               "ranking": 1,
               "PID": "2",
               "USER": "root",
@@ -93,21 +92,6 @@
               "RSS": "0K",
               "PCY": "fg",
               "Name": "kthreadd"
-            },
-
-            {
-              "ranking": 5,
-              "PID": "8",
-              "USER": "root",
-              "PR": "20",
-              "NI": "0",
-              "CPU%": "0%",
-              "S": "S",
-              "#THR": "1",
-              "VSS": "0K",
-              "RSS": "0K",
-              "PCY": "fg",
-              "Name": "rcu_preempt"
             }
           ]
         }
