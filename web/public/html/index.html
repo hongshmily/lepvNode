@@ -613,7 +613,7 @@
     <script>
         function loadIoChart(server, socket) {
             var ioChart = new LepvIOStatChart('div-io-stat', 'div-io-gauge', socket);
-            ioChart.start(server, socket);
+            ioChart.start(server);
         }
         
         function loadIoTopTable(server, socket) {
@@ -665,8 +665,8 @@
                 'idleDivName': 'div-cpu-stat-idle',
                 'userGroupDivName': 'div-cpu-stat-userGroup',
                 'irqGroupDivName': 'div-cpu-stat-irqGroup'
-            }, socket
-            );
+            }, socket);
+
             cpuCharts.start(server);
         }
 
@@ -691,9 +691,9 @@
 
 //        loadSummaryLoaders(server, socket);
 //
-//        loadCpuCharts(server, socket);
+        loadCpuCharts(server, socket);
 //        loadCapacityData(server, socket);
-        loadCpuTopTable(server, socket);
+//        loadCpuTopTable(server, socket);
 //
 //        loadIoChart(server, socket);
 //        loadIoTopTable(server, socket);

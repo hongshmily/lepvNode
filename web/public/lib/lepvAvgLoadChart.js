@@ -7,9 +7,7 @@ var LepvAvgLoadChart = function(divName, socket) {
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
-    LepvChart.call(this, divName);
-
-    this.socketIO = socket;
+    LepvChart.call(this, divName, socket);
 
     this.chartTitle = "Average Load Chart";
     this.chartHeaderColor = 'orange';

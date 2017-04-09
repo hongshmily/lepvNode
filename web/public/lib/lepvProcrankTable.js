@@ -5,11 +5,9 @@
 
 var LepvProcrankTable = function(divName, tableDivName, pssPieDivName, freeVsPssDivName, socket) {
 
-    this.socketIO = socket;
-
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
-    LepvChart.call(this, divName);
+    LepvChart.call(this, divName, socket);
     this.setTableDivName(tableDivName);
     
     this.chartTitle = "Memory Stat Table";
@@ -36,6 +34,8 @@ LepvProcrankTable.prototype = Object.create(LepvChart.prototype);
 LepvProcrankTable.prototype.constructor = LepvProcrankTable;
 
 LepvProcrankTable.prototype.initialize = function(callback) {
+
+    this.setupSocketIO();
 
     this.table = $(this.tableDivName).DataTable( {
         destroy: true,

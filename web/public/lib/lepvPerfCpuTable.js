@@ -5,11 +5,9 @@
 
 var LepvPerfCpuTable = function(divName, tableDivName, socket) {
 
-    this.socketIO = socket;
-
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
-    LepvChart.call(this, divName);
+    LepvChart.call(this, divName, socket);
 
     this.setTableDivName(tableDivName);
     
@@ -32,6 +30,8 @@ LepvPerfCpuTable.prototype = Object.create(LepvChart.prototype);
 LepvPerfCpuTable.prototype.constructor = LepvPerfCpuTable;
 
 LepvPerfCpuTable.prototype.initialize = function(callback) {
+
+    this.setupSocketIO();
 
     if (!this.tableDivName) {
         console.log("The table div name was not specified for " + this.chartDivName);

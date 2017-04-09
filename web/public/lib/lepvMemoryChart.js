@@ -5,11 +5,9 @@
 
 var LepvMemoryChart = function(divName, gaugeDivName, socket) {
 
-    this.socketIO = socket;
-
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
-    LepvChart.call(this, divName);
+    LepvChart.call(this, divName, socket);
 
     this.chartTitle = "RAM Chart";
     this.chartHeaderColor = 'green';
@@ -37,6 +35,8 @@ LepvMemoryChart.prototype = Object.create(LepvChart.prototype);
 LepvMemoryChart.prototype.constructor = LepvMemoryChart;
 
 LepvMemoryChart.prototype.initialize = function(callback) {
+
+    this.setupSocketIO();
     
     this.chartData['Free'] = ['Free'];
     this.chartData['Cached'] = ['Cached'];

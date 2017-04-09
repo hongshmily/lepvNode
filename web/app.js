@@ -82,6 +82,6 @@ app.use(function(err, req, res, next) {
 
 // Connect to Mongo on start
 db.connect(properties.local_mongodb_address);
-console.log("Mongo connected");
+// console.log("Mongo connected");
 
 module.exports = app;

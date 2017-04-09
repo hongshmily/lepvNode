@@ -5,7 +5,6 @@
 
 var LepvCpuCharts = function(chartDivNames, socket) {
 
-
     this.socketIO = socket;
 
     this.chartHeaderColor = 'orange';
@@ -16,7 +15,7 @@ var LepvCpuCharts = function(chartDivNames, socket) {
     this.proactive = true;
     this.maxRequestIdGap = 2;
 
-    this.dataUrlPrefix = "/cpu/status/";
+    // this.dataUrlPrefix = "/cpu/status/";
 
     this.messageRequest = 'cpu.status.req';
     this.messageResponse = 'cpu.status.res';
@@ -27,7 +26,7 @@ var LepvCpuCharts = function(chartDivNames, socket) {
     this.userGroupChart = new LepvCpuLineChart(chartDivNames.userGroupDivName, 'CPU Stat: User+Sys+Nice');
     this.irqGroupChart = new LepvCpuLineChart(chartDivNames.irqGroupDivName, 'CPU Stat: IRQ + SoftIRQ');
     
-    this.gaugeChart = new LepvGaugeChart(chartDivNames.gaugeDivName);
+    // this.gaugeChart = new LepvGaugeChart(chartDivNames.gaugeDivName);
 
     this.summaryLoader = new CpuSummaryLoader('div_summary_cpu_gauges', 'div_summary_cpu_details');
 };
@@ -51,20 +50,8 @@ LepvCpuCharts.prototype.initialize = function() {
         return;
     }
 
-    // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
-    thisChart.socketIO.on('connect', function () {
-        thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
+    this.setupSocketIO();
 
-        thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
-    });
-
-    thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
-
-        thisChart.updateChartData(profileData);
-        // console.log("response from server by message for " + thisChart.chartTitle);
-        // console.log(profileData);
-    });
-    
     this.donutChart.initialize();
     this.idleChart.initialize();
     this.userGroupChart.initialize();

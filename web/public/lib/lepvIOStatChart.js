@@ -7,17 +7,15 @@ var LepvIOStatChart = function(divName, gaugeDivName, socket) {
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
-    LepvChart.call(this, divName);
+    LepvChart.call(this, divName, socket);
 
-    this.socketIO = socket;
-    
     this.chartTitle = "IO Stat Chart";
     this.chartHeaderColor = 'yellow';
     
     this.maxDataCount = 150;
     this.refreshInterval = 2;
 
-    this.dataUrlPrefix = "/io/status/";
+    // this.dataUrlPrefix = "/io/status/";
 
     this.messageRequest = 'io.status.req';
     this.messageResponse = 'io.status.res';

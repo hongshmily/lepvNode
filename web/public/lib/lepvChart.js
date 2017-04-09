@@ -76,14 +76,15 @@ LepvChart.prototype.setupSocketIO = function() {
 
     // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
     thisChart.socketIO.on('connect', function () {
-        thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
 
-        thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
+      thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
+      thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
     });
 
     thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
 
-        thisChart.updateChartData(profileData);
+      thisChart.responseId++;
+      thisChart.updateChartData(profileData);
     });
 };
 

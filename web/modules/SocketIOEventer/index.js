@@ -55,7 +55,7 @@ SocketIOEventer.prototype.setupSocketEventByMessage = function(socketIO, socketM
 
         let promise = functor(params);
         promise.then(function(response) {
-            console.log("emitting message: " + messageRes);
+            console.log("emitting message: " + messageRes + " : RedID=" + params.reqId);
             socketIO.emit(messageRes, response.data);
         },
         function(err) {

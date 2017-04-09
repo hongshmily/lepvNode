@@ -7,10 +7,8 @@ var LepvIOTopTable = function(divName, tableDivName, socket) {
 
     // Call the base constructor, making sure (using call)
     // that "this" is set correctly during the call
+    LepvChart.call(this, divName, socket);
 
-    this.socketIO = socket;
-
-    LepvChart.call(this, divName);
     this.setTableDivName(tableDivName);
     
     this.chartTitle = "IO Top Table";
@@ -31,6 +29,8 @@ LepvIOTopTable.prototype = Object.create(LepvChart.prototype);
 LepvIOTopTable.prototype.constructor = LepvIOTopTable;
 
 LepvIOTopTable.prototype.initialize = function(callback) {
+
+    this.setupSocketIO();
 
     this.table = $(this.tableDivName).DataTable( {
         destroy: true,
