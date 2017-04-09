@@ -19,7 +19,9 @@ var LepvIOTopTable = function(divName, tableDivName, socket) {
     this.maxDataCount = 150;
     this.refreshInterval = 2;
 
-    this.dataUrlPrefix = "/io/top/";
+    // this.dataUrlPrefix = "/io/top/";
+    this.messageRequest = 'io.top.req';
+    this.messageResponse = 'io.top.res';
 
     this.updateChartHeader();
     this.initialize();

@@ -20,7 +20,7 @@ var LepvAvgLoadChart = function(divName, socket) {
     this.maxDataCount = 150;
     this.refreshInterval = 2;
 
-    this.dataUrlPrefix = "cpu/avgload/";
+    // this.dataUrlPrefix = "cpu/avgload/";
 
     this.chartData['last1'] = ['Last minute'];
     this.chartData['last5'] = ['Last 5 minutes'];
@@ -34,7 +34,7 @@ var LepvAvgLoadChart = function(divName, socket) {
     this.maxValues = [1];
 
     this.updateChartHeader();
-    // this.initialize();
+    this.initialize();
 };
 
 LepvAvgLoadChart.prototype = Object.create(LepvChart.prototype);
@@ -42,23 +42,9 @@ LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 
 LepvAvgLoadChart.prototype.initialize = function(callback) {
 
-    var thisChart = this;
+    const thisChart = this;
 
-    // this.socketIO = io.connect('http://localhost:8889');
-
-    // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
-    thisChart.socketIO.on('connect', function () {
-        thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
-
-        thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
-    });
-
-    thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
-
-        thisChart.updateChartData(profileData);
-        // console.log("response from server by message for " + thisChart.chartTitle);
-        // console.log(profileData);
-    });
+    thisChart.setupSocketIO();
 
     if (!this.server) {
         // console.log('server not specified for average load chart');

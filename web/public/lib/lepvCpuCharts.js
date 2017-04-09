@@ -18,6 +18,9 @@ var LepvCpuCharts = function(chartDivNames, socket) {
 
     this.dataUrlPrefix = "/cpu/status/";
 
+    this.messageRequest = 'cpu.status.req';
+    this.messageResponse = 'cpu.status.res';
+
     this.donutChart = new LepvCpuDonutChart(chartDivNames.donutChartDivName);
     
     this.idleChart = new LepvCpuLineChart(chartDivNames.idleDivName, 'CPU Stat; Idle');
@@ -41,11 +44,26 @@ LepvCpuCharts.prototype.initializeControlElements = function() {
 
 LepvCpuCharts.prototype.initialize = function() {
 
+    const thisChart = this;
+
     if (!this.server) {
         // console.log('server not specified for average load chart');
         return;
     }
-    // this.gaugeChart.initialize();
+
+    // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
+    thisChart.socketIO.on('connect', function () {
+        thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
+
+        thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
+    });
+
+    thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
+
+        thisChart.updateChartData(profileData);
+        // console.log("response from server by message for " + thisChart.chartTitle);
+        // console.log(profileData);
+    });
     
     this.donutChart.initialize();
     this.idleChart.initialize();

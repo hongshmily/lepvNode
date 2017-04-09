@@ -639,7 +639,7 @@
         
         function loadCpuTopTable(server, socket) {
             var cpuTopTable = new LepvCpuTopTable('div-cpu-top', 'cpu-top-table', socket);
-            cpuTopTable.start(server, socket);
+            cpuTopTable.start(server);
         }
         
         function loadProcrankCharts(server, socket) {
@@ -693,12 +693,12 @@
 //
 //        loadCpuCharts(server, socket);
 //        loadCapacityData(server, socket);
-//        loadCpuTopTable(server, socket);
+        loadCpuTopTable(server, socket);
 //
 //        loadIoChart(server, socket);
 //        loadIoTopTable(server, socket);
 //        loadMemoryChart(server, socket);
-        loadAverageLoadChart(server, socket);
+//        loadAverageLoadChart(server, socket);
 //        loadPerfCpuTable(server, socket);
 //        loadProcrankCharts(server, socket);
 

@@ -19,6 +19,9 @@ var LepvIOStatChart = function(divName, gaugeDivName, socket) {
 
     this.dataUrlPrefix = "/io/status/";
 
+    this.messageRequest = 'io.status.req';
+    this.messageResponse = 'io.status.res';
+
     this.updateChartHeader();
     this.initialize();
 };

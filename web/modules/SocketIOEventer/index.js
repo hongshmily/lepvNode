@@ -55,6 +55,7 @@ SocketIOEventer.prototype.setupSocketEventByMessage = function(socketIO, socketM
 
         let promise = functor(params);
         promise.then(function(response) {
+            console.log("emitting message: " + messageRes);
             socketIO.emit(messageRes, response.data);
         },
         function(err) {

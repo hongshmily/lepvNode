@@ -3,7 +3,7 @@
  * Copyright (c) 2016, Mac Xu <shinyxxn@hotmail.com>.
  */
 
-var LepvChart = function(divName) {
+var LepvChart = function(divName, socket) {
   this.setDivName(divName);
   this.tableDivName = null;
   this.chartDiv = null;
@@ -11,9 +11,9 @@ var LepvChart = function(divName) {
     this.chartDiv = $('#' + this.chartDivName);
   }
 
-  this.socketIO = null;
-  this.socketMessageToSend = null;  // the message name to be sent to server, like "perf.cpuclock".
-  this.socketEventToListen = null;    // the event to listen, like "perf.cpuclock.ret", which should be triggered by LEPV server.
+  this.socketIO = socket;
+  this.messageRequest = null;  // the message name to be sent to server, like "perf.cpuclock".
+  this.messageResponse = null;    // the event to listen, like "perf.cpuclock.ret", which should be triggered by LEPV server.
   
   this.charts = null;
   this.chart = null;
@@ -68,6 +68,23 @@ LepvChart.prototype.setTableDivName = function(tableDivName) {
   } else {
     this.tableDivName = '#' + tableDivName;
   }
+};
+
+LepvChart.prototype.setupSocketIO = function() {
+
+    const thisChart = this;
+
+    // The socket.on('connect') is an event which is fired upon a successful connection from the web browser
+    thisChart.socketIO.on('connect', function () {
+        thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
+
+        thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
+    });
+
+    thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
+
+        thisChart.updateChartData(profileData);
+    });
 };
 
 LepvChart.prototype.updateChartHeader = function() {
@@ -294,7 +311,7 @@ LepvChart.prototype.refresh = function() {
   this.requestId += 1;
 
   const thisChart = this;
-  const url = thisChart.dataUrlPrefix + thisChart.server; // + "?reqId=" + thisChart.requestId;
+  // const url = thisChart.dataUrlPrefix + thisChart.server; // + "?reqId=" + thisChart.requestId;
 
   if (thisChart.socketIO) {
       thisChart.socketIO.emit(thisChart.messageRequest,
@@ -305,41 +322,38 @@ LepvChart.prototype.refresh = function() {
       );
   }
 
-  $.get(url).done(
-      function(response, status) {
-          if (thisChart.isChartPaused) {
-              return;
-          }
-
-          thisChart.responseId = response['requestId'];
-
-          if (response.error) {
-
-              if (response.error === 'timeout') {
-
-                  // timeout when requesting data from LEPD.
-                  // TODO: how to handle it in a good practice?
-                  console.log('Accessing URl timed out: ' + url);
-
-              } else {
-
-                  console.log("error in getting data for " + thisChart.chartTitle + ": " + response.error);
-              }
-
-          } else {
-              thisChart.updateChartData(response['data']);
-          }
-      }
-  ).fail(
-      function(data, status) {
-          console.log("Accessing URL failed: " + url);
-          console.log(data);
-          console.log(status);
-      }
-  );
-
-
-
+  // $.get(url).done(
+  //     function(response, status) {
+  //         if (thisChart.isChartPaused) {
+  //             return;
+  //         }
+  //
+  //         thisChart.responseId = response['requestId'];
+  //
+  //         if (response.error) {
+  //
+  //             if (response.error === 'timeout') {
+  //
+  //                 // timeout when requesting data from LEPD.
+  //                 // TODO: how to handle it in a good practice?
+  //                 console.log('Accessing URl timed out: ' + url);
+  //
+  //             } else {
+  //
+  //                 console.log("error in getting data for " + thisChart.chartTitle + ": " + response.error);
+  //             }
+  //
+  //         } else {
+  //             thisChart.updateChartData(response['data']);
+  //         }
+  //     }
+  // ).fail(
+  //     function(data, status) {
+  //         console.log("Accessing URL failed: " + url);
+  //         console.log(data);
+  //         console.log(status);
+  //     }
+  // );
 
 
 };
