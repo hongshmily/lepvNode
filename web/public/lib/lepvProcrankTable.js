@@ -20,6 +20,7 @@ var LepvProcrankTable = function(divName, tableDivName, pssPieDivName, freeVsPss
 
     this.messageRequest = 'memory.procrank.req';
     this.messageResponse = 'memory.procrank.res';
+    this.setupSocketIO();
     
     this.updateChartHeader();
     this.initialize();
@@ -34,8 +35,6 @@ LepvProcrankTable.prototype = Object.create(LepvChart.prototype);
 LepvProcrankTable.prototype.constructor = LepvProcrankTable;
 
 LepvProcrankTable.prototype.initialize = function(callback) {
-
-    this.setupSocketIO();
 
     this.table = $(this.tableDivName).DataTable( {
         destroy: true,

@@ -23,6 +23,7 @@ var LepvCpuTopTable = function(divName, tableDivName, socket) {
 
     this.messageRequest = 'cpu.top.req';
     this.messageResponse = 'cpu.top.res';
+    this.setupSocketIO();
 
     this.updateChartHeader();
     this.initialize();
@@ -32,8 +33,6 @@ LepvCpuTopTable.prototype = Object.create(LepvChart.prototype);
 LepvCpuTopTable.prototype.constructor = LepvCpuTopTable;
 
 LepvCpuTopTable.prototype.initialize = function() {
-
-    this.setupSocketIO();
 
     if (!this.tableDivName) {
         console.log("The table div name was not specified for " + this.chartDivName);

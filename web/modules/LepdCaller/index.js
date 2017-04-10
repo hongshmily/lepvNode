@@ -126,19 +126,32 @@ LepdCaller.prototype.ping = function(server, callback) {
         });
 };
 
-LepdCaller.prototype.ListAllMethod = function(server, callback) {
+LepdCaller.prototype.ListAllMethod = function(server) {
 
-    const command = 'ListAllMethod';
-    this.callCommand(server, command)
-        .then (function(lines) {
+    const thisClass = this;
+    return new Promise(function(resolve, reject){
 
-            var line = lines[0].trim();
-            var methods = line.split(' ');
-            callback({data: methods});
-        })
-        .catch(function(errors) {
-            callback({error: errors});
-        });
+        try {
+
+            const command = 'ListAllMethod';
+            thisClass.callCommand(server, command)
+                .then (function(lines) {
+
+                    var line = lines[0].trim();
+                    var methods = line.split(' ');
+                    resolve({data: methods});
+                })
+                .catch(function(errors) {
+                    resolve({error: errors});
+                });
+
+
+        } catch( err ) {
+            reject({error: err.message});
+        }
+
+    });
+
 };
 
 module.exports = new LepdCaller();

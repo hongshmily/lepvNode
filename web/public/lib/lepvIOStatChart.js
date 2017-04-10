@@ -19,6 +19,7 @@ var LepvIOStatChart = function(divName, gaugeDivName, socket) {
 
     this.messageRequest = 'io.status.req';
     this.messageResponse = 'io.status.res';
+    this.setupSocketIO();
 
     this.updateChartHeader();
     this.initialize();
@@ -28,7 +29,7 @@ LepvIOStatChart.prototype = Object.create(LepvChart.prototype);
 LepvIOStatChart.prototype.constructor = LepvIOStatChart;
 
 LepvIOStatChart.prototype.initialize = function(callback) {
-    
+
     this.chart = c3.generate({
         bindto: '#' + this.chartDivName,
         data: {

@@ -19,6 +19,7 @@ var LepvCpuCharts = function(chartDivNames, socket) {
 
     this.messageRequest = 'cpu.status.req';
     this.messageResponse = 'cpu.status.res';
+    this.setupSocketIO();
 
     this.donutChart = new LepvCpuDonutChart(chartDivNames.donutChartDivName);
     
@@ -49,8 +50,6 @@ LepvCpuCharts.prototype.initialize = function() {
         // console.log('server not specified for average load chart');
         return;
     }
-
-    this.setupSocketIO();
 
     this.donutChart.initialize();
     this.idleChart.initialize();

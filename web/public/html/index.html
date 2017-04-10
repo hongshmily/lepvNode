@@ -618,12 +618,12 @@
         
         function loadIoTopTable(server, socket) {
             var ioTopTable = new LepvIOTopTable('div-io-top', 'io-top-table', socket);
-            ioTopTable.start(server, socket);
+            ioTopTable.start(server);
         }
 
         function loadMemoryChart(server, socket) {
             var memChart = new LepvMemoryChart('div-memory-chart', 'div-memory-gauge', socket);
-            memChart.start(server, socket);
+            memChart.start(server);
         }
         
         function loadAverageLoadChart(server, socket) {
@@ -634,7 +634,7 @@
         
         function loadPerfCpuTable(server, socket) {
             var perfCpuTable = new LepvPerfCpuTable('div-perf-cpu', 'perf-cpu-table', socket);
-            perfCpuTable.start(server, socket);
+            perfCpuTable.start(server);
         }
         
         function loadCpuTopTable(server, socket) {
@@ -645,7 +645,7 @@
         function loadProcrankCharts(server, socket) {
             var procrankTable = new LepvProcrankTable('div-memory-stat',
                     'memory-stat-table', 'div-memory-pss-stat', 'div-memory-free-pss-stat', socket);
-            procrankTable.start(server, socket);
+            procrankTable.start(server);
         }
         
 //        function loadCapacityData(server, socket) {
@@ -692,15 +692,18 @@
 //        loadSummaryLoaders(server, socket);
 //
         loadCpuCharts(server, socket);
+
+            // TODO
 //        loadCapacityData(server, socket);
-//        loadCpuTopTable(server, socket);
-//
-//        loadIoChart(server, socket);
-//        loadIoTopTable(server, socket);
-//        loadMemoryChart(server, socket);
-//        loadAverageLoadChart(server, socket);
-//        loadPerfCpuTable(server, socket);
-//        loadProcrankCharts(server, socket);
+
+
+        loadCpuTopTable(server, socket);
+        loadIoChart(server, socket);
+        loadIoTopTable(server, socket);
+        loadMemoryChart(server, socket);
+        loadAverageLoadChart(server, socket);
+        loadPerfCpuTable(server, socket);
+        loadProcrankCharts(server, socket);
 
         $('[data-toggle="tooltip"]').tooltip();
 

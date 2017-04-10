@@ -20,6 +20,7 @@ var LepvIOTopTable = function(divName, tableDivName, socket) {
     // this.dataUrlPrefix = "/io/top/";
     this.messageRequest = 'io.top.req';
     this.messageResponse = 'io.top.res';
+    this.setupSocketIO();
 
     this.updateChartHeader();
     this.initialize();
@@ -29,8 +30,6 @@ LepvIOTopTable.prototype = Object.create(LepvChart.prototype);
 LepvIOTopTable.prototype.constructor = LepvIOTopTable;
 
 LepvIOTopTable.prototype.initialize = function(callback) {
-
-    this.setupSocketIO();
 
     this.table = $(this.tableDivName).DataTable( {
         destroy: true,

@@ -4,12 +4,18 @@
 
 var lepdCaller = require('./index');
 
-var server = 'www.linuxep.com';
+var server = 'www.linuxxueyuan.com';
 var commands = [
     'SayHello',
     'GetProcCpuinfo'
 ];
 
-lepdCaller.ListAllMethod(server, function(data) {
+let promise = lepdCaller.ListAllMethod(server);
+// promise.then(function(data) {
+//     console.log(data);
+// });
+
+promise = lepdCaller.callCommand(server, 'GetCmdProcrank');
+promise.then(function(data) {
     console.log(data);
-});
+})

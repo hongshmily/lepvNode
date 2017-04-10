@@ -19,6 +19,7 @@ var LepvMemoryChart = function(divName, gaugeDivName, socket) {
 
     this.messageRequest = 'memory.status.req';
     this.messageResponse = 'memory.status.res';
+    this.setupSocketIO();
     
     this.updateChartHeader();
     this.initialize();
@@ -36,8 +37,6 @@ LepvMemoryChart.prototype.constructor = LepvMemoryChart;
 
 LepvMemoryChart.prototype.initialize = function(callback) {
 
-    this.setupSocketIO();
-    
     this.chartData['Free'] = ['Free'];
     this.chartData['Cached'] = ['Cached'];
     this.chartData['Buffers'] = ['Buffers'];

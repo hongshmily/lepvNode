@@ -2,7 +2,7 @@
 const LepvCommandProto = require('../../LepvCommandProto');
 
 var GetCmdProcrankCommander = function() {
-    LepvCommandProto.call(this, 'GetCmdProcrank');
+    LepvCommandProto.call(this, 'GetCmdProcrank', 30);
 };
 
 GetCmdProcrankCommander.prototype = Object.create(LepvCommandProto.prototype);

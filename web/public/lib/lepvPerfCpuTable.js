@@ -21,6 +21,7 @@ var LepvPerfCpuTable = function(divName, tableDivName, socket) {
 
     this.messageRequest = 'perf.cpuclock.req';
     this.messageResponse = 'perf.cpuclock.res';
+    this.setupSocketIO();
 
     this.updateChartHeader();
     this.initialize();
@@ -30,8 +31,6 @@ LepvPerfCpuTable.prototype = Object.create(LepvChart.prototype);
 LepvPerfCpuTable.prototype.constructor = LepvPerfCpuTable;
 
 LepvPerfCpuTable.prototype.initialize = function(callback) {
-
-    this.setupSocketIO();
 
     if (!this.tableDivName) {
         console.log("The table div name was not specified for " + this.chartDivName);

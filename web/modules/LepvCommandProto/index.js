@@ -4,10 +4,10 @@ const Promise = require('bluebird');
 const lepdCaller = require('../LepdCaller');
 const pt = require('promise-timeout');
 
-var LepvCommandProto = function(command) {
+var LepvCommandProto = function(command, timeout) {
     this.command = command;
 
-    this.lepdResponseTimeoutInSeconds = 5;
+    this.lepdResponseTimeoutInSeconds = timeout || 10;
 };
 
 LepvCommandProto.prototype.parse = function(resultLines) {
@@ -44,7 +44,7 @@ LepvCommandProto.prototype.run = function(options) {
             .catch(function(error) {
 
                 if (error instanceof pt.TimeoutError) {
-                    response['error'] = "timeout";
+                    response['error'] = "timeout after " + thisProto.lepdResponseTimeoutInSeconds + " seconds";
                 } else {
                     response['error'] = error.message || error.error;
                 }

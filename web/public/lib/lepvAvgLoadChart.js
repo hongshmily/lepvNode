@@ -14,6 +14,7 @@ var LepvAvgLoadChart = function(divName, socket) {
 
     this.messageRequest = 'cpu.avgload.req';
     this.messageResponse = 'cpu.avgload.res';
+    this.setupSocketIO();
     
     this.maxDataCount = 150;
     this.refreshInterval = 2;
@@ -41,8 +42,6 @@ LepvAvgLoadChart.prototype.constructor = LepvAvgLoadChart;
 LepvAvgLoadChart.prototype.initialize = function(callback) {
 
     const thisChart = this;
-
-    thisChart.setupSocketIO();
 
     if (!this.server) {
         // console.log('server not specified for average load chart');
