@@ -8,6 +8,7 @@ var LepvCpuCharts = function(chartDivNames, socket) {
     this.socketIO = socket;
 
     this.chartHeaderColor = 'orange';
+    this.chartTitle = "CPU Status Charts";
     
     this.maxDataCount = 150;
     this.refreshInterval = 2;

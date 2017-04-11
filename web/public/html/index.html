@@ -26,8 +26,8 @@
     <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/whhg-font/css/whhg.css" rel="stylesheet">
 
-    <link href="/js/jquery-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/language/languages.min.css" rel="stylesheet" type="text/css">
+    <link href="/js/jquery-ui.min.css" rel="stylesheet">
+    <link href="/css/language/languages.min.css" rel="stylesheet">
 
     <!-- DataTable -->
     <link href="/components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -606,7 +606,6 @@
     <script>
         $( document ).ready(function() {
 
-
             showConfigPage();
         });
     </script>
@@ -690,11 +689,14 @@
         const lepvServerUrl = window.location.origin;  // something like 'http://localhost:8889'
         const socket = io.connect(lepvServerUrl);
 
-//        loadCpuCharts(server, socket);
-//        loadAverageLoadChart(server, socket);
-
-            loadCpuTopTable(server, socket);
-
+        loadCpuCharts(server, socket);
+        loadAverageLoadChart(server, socket);
+        loadCpuTopTable(server, socket);
+        loadIoChart(server, socket);
+        loadIoTopTable(server, socket);
+        loadMemoryChart(server, socket);
+        loadProcrankCharts(server, socket);
+        loadPerfCpuTable(server, socket);
 
 
 //        loadSummaryLoaders(server, socket);
@@ -706,12 +708,12 @@
 
 
 //
-//        loadIoChart(server, socket);
-//        loadIoTopTable(server, socket);
-//        loadMemoryChart(server, socket);
+//
+//
+//
 
-//        loadPerfCpuTable(server, socket);
-//        loadProcrankCharts(server, socket);
+//
+//
 
         $('[data-toggle="tooltip"]').tooltip();
 

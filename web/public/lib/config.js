@@ -239,6 +239,7 @@ function onPingButtonClicked(callbackFunctor) {
 
     $('#divPingResult').empty();
 
+    console.log("Pinging server: " + server);
     $.get("/ping/" + server).done(
         function(data, status) {
             if (data['data']['connected']) {

@@ -1,6 +1,19 @@
 
 const Promise = require('bluebird');
 
+const winston = require('winston');
+const tsFormat = () => (new Date()).toLocaleTimeString();
+const logger = new (winston.Logger)({
+    transports: [
+        // colorize the output to the console
+        new (winston.transports.Console)({
+            timestamp: tsFormat,
+            colorize: true
+        })
+    ]
+});
+logger.level = 'debug';
+
 const lepdCaller = require('../LepdCaller');
 const pt = require('promise-timeout');
 
@@ -25,6 +38,7 @@ LepvCommandProto.prototype.run = function(options) {
 
     return new Promise(function(resolve, reject){
 
+        logger.debug("Calling: '" + thisProto.command + "'...");
         const callerPromise = lepdCaller.callCommand(options.server, thisProto.command, options.mockData);
 
         pt.timeout(callerPromise, thisProto.lepdResponseTimeoutInSeconds * 1000)
@@ -43,6 +57,7 @@ LepvCommandProto.prototype.run = function(options) {
             })
             .catch(function(error) {
 
+                logger.debug("Timeout: '" + thisProto.command + "'...");
                 if (error instanceof pt.TimeoutError) {
                     response['error'] = "timeout after " + thisProto.lepdResponseTimeoutInSeconds + " seconds";
                 } else {
