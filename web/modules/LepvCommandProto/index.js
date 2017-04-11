@@ -39,6 +39,7 @@ LepvCommandProto.prototype.run = function(options) {
     return new Promise(function(resolve, reject){
 
         logger.debug("Calling: '" + thisProto.command + "'...");
+
         const callerPromise = lepdCaller.callCommand(options.server, thisProto.command, options.mockData);
 
         pt.timeout(callerPromise, thisProto.lepdResponseTimeoutInSeconds * 1000)
