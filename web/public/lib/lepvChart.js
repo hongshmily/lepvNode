@@ -78,7 +78,7 @@ LepvChart.prototype.setupSocketIO = function() {
     thisChart.socketIO.on('connect', function () {
 
       thisChart.socketIO.emit(thisChart.messageJoin, 'connection from ' + thisChart.chartTitle);
-      thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
+      thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server, reqId: 0});
     });
 
     thisChart.socketIO.on(thisChart.messageResponse, function(response) {

@@ -690,19 +690,26 @@
         const lepvServerUrl = window.location.origin;  // something like 'http://localhost:8889'
         const socket = io.connect(lepvServerUrl);
 
+//        loadCpuCharts(server, socket);
+//        loadAverageLoadChart(server, socket);
+
+            loadCpuTopTable(server, socket);
+
+
+
 //        loadSummaryLoaders(server, socket);
 //
-        loadCpuCharts(server, socket);
+//
 
             // TODO
 //        loadCapacityData(server, socket);
 
 
-//        loadCpuTopTable(server, socket);
+//
 //        loadIoChart(server, socket);
 //        loadIoTopTable(server, socket);
 //        loadMemoryChart(server, socket);
-//        loadAverageLoadChart(server, socket);
+
 //        loadPerfCpuTable(server, socket);
 //        loadProcrankCharts(server, socket);
 
