@@ -60,7 +60,16 @@ CpuSummaryLoader.prototype.fetchCapacityData = function() {
 
 CpuSummaryLoader.prototype.displayCapacity = function(processorId) {
 
+    if (!this.capacityDatas) {
+        return;
+    }
+
     const capacityData = this.capacityDatas[processorId];
+    if (!capacityData) {
+        console.log(processorId + " was not in the capacity datas");
+        console.log(this.capacityDatas);
+        return;
+    }
 
     // console.log(capacityData);
 

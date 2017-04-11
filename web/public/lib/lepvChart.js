@@ -32,7 +32,7 @@ var LepvChart = function(divName, socket) {
   
   this.server = null;
   
-  this.requestId = null;
+  this.requestId = 0;
   this.responseId = null;
   this.maxRequestIdGap = 2;
 
@@ -81,10 +81,15 @@ LepvChart.prototype.setupSocketIO = function() {
       thisChart.socketIO.emit(thisChart.messageRequest, {server: thisChart.server});
     });
 
-    thisChart.socketIO.on(thisChart.messageResponse, function(profileData) {
+    thisChart.socketIO.on(thisChart.messageResponse, function(response) {
 
       thisChart.responseId++;
-      thisChart.updateChartData(profileData);
+
+      if (response.error) {
+        console.log(response.error + " in getting data for " + thisChart.chartTitle);
+      } else {
+          thisChart.updateChartData(response.data);
+      }
     });
 };
 
@@ -261,7 +266,12 @@ LepvChart.prototype.initialize = function() {
 };
 
 LepvChart.prototype.initializeDataTable = function(headerLine) {
-  
+
+  if (!headerLine) {
+    console.log("NULL header line returned for " + this.chartTitle);
+    return;
+  }
+
   var headerColumns = headerLine.split(/\s+/);
   
   var columns = [];
@@ -322,40 +332,6 @@ LepvChart.prototype.refresh = function() {
           }
       );
   }
-
-  // $.get(url).done(
-  //     function(response, status) {
-  //         if (thisChart.isChartPaused) {
-  //             return;
-  //         }
-  //
-  //         thisChart.responseId = response['requestId'];
-  //
-  //         if (response.error) {
-  //
-  //             if (response.error === 'timeout') {
-  //
-  //                 // timeout when requesting data from LEPD.
-  //                 // TODO: how to handle it in a good practice?
-  //                 console.log('Accessing URl timed out: ' + url);
-  //
-  //             } else {
-  //
-  //                 console.log("error in getting data for " + thisChart.chartTitle + ": " + response.error);
-  //             }
-  //
-  //         } else {
-  //             thisChart.updateChartData(response['data']);
-  //         }
-  //     }
-  // ).fail(
-  //     function(data, status) {
-  //         console.log("Accessing URL failed: " + url);
-  //         console.log(data);
-  //         console.log(status);
-  //     }
-  // );
-
 
 };
 

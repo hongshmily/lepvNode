@@ -51,12 +51,12 @@ SocketIOEventer.prototype.setupSocketEventByMessage = function(socketIO, socketM
 
     console.log("Setting up socket.IO for " + message);
     socketIO.on(messageReq, function(params) {
-        console.log("Received client message for " + messageReq);
+        console.log("-> " + messageReq + ": reqId=" + params.reqId);
 
         let promise = functor(params);
         promise.then(function(response) {
-            console.log("emitting message: " + messageRes + " : ReqID = " + params.reqId);
-            socketIO.emit(messageRes, response.data);
+            console.log("<= " + messageRes + ": reqId=" + params.reqId);
+            socketIO.emit(messageRes, response);
         },
         function(err) {
             console.log(err);

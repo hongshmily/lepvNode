@@ -3,7 +3,7 @@
 const LepvCommandProto = require('../../LepvCommandProto');
 
 var GetCmdIostatCommander = function() {
-    LepvCommandProto.call(this, 'GetCmdIostat');
+    LepvCommandProto.call(this, 'GetCmdIostat', 10);
 };
 
 GetCmdIostatCommander.prototype = Object.create(LepvCommandProto.prototype);

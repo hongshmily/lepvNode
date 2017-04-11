@@ -44,6 +44,12 @@ LepvCpuTopTable.prototype.initialize = function() {
 
 LepvCpuTopTable.prototype.updateChartData = function(data) {
 
+    if (!data || !data.headerline) {
+
+        console.log("NULL data returned for " + this.chartTitle);
+        return;
+    }
+
     var thisChart = this;
     
     if (!this.table) {

@@ -60,6 +60,10 @@ LepvProcrankTable.prototype.initialize = function(callback) {
 
 LepvProcrankTable.prototype.updateChartData = function(data) {
 
+    if (!data || !data.procranks) {
+        return;
+    }
+
     this.updateStatTableData(data.procranks);
     
     this.pssPieChart.updateChartData(this.pssData);
