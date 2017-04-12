@@ -37,9 +37,7 @@ SocketIOEventer.prototype.setup = function() {
             var functor = socketMessages[message];
 
             thisEventer.setupSocketEventByMessage(thisEventer.socketIO, message, functor);
-
         }
-
     }
 };
 
