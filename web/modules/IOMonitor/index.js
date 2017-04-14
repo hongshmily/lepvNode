@@ -46,13 +46,20 @@ IOMonitor.prototype.GetCmdDf = function(options) {
         commanderPromise.then(function(response) {
             resolve(response);
         });
-
     });
 };
 
 IOMonitor.prototype.GetCapacity = function(options) {
 
-    return this.GetCmdDf(options);
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetCmdDf');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+    });
 };
 
 

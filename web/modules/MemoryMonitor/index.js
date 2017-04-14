@@ -41,7 +41,16 @@ MemoryMonitor.prototype.GetProcMeminfo = function(options) {
 
 MemoryMonitor.prototype.GetCapacity = function(options) {
 
-    return this.GetProcMeminfo(options);
+    return new Promise( (resolve, reject) => {
+
+        const commander = require('./GetProcMeminfo');
+        const commanderPromise = commander.run(options);
+
+        commanderPromise.then(function(response) {
+            resolve(response);
+        });
+
+    });
 
 };
 

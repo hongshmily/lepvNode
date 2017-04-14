@@ -38,14 +38,51 @@ let PerformanceTester = function() {
     }
 };
 
-PerformanceTester.prototype.runCommandsAsync = function(commanderNames) {
+PerformanceTester.prototype.runCommandsAsyncRepeatedly = function(commanderNames, repeatTimes, allDoneCallback) {
 
     const thisTester = this;
-    commanderNames.forEach(function(commandName) {
 
-        thisTester.runCommand(commandName);
+    async.series([
 
+        thisTester.runCommandsAsync(commanderNames, function (stat) {
+            console.log("Iteration 1 done!")
+        }),
+
+        thisTester.runCommandsAsync(commanderNames, function (stat) {
+            console.log("Iteration 2 done!")
+        }),
+
+        thisTester.runCommandsAsync(commanderNames, function (stat) {
+            console.log("Iteration 3 done!")
+        })
+
+    ], function(err, results) {
+        console.log('All Done!');
     })
+
+};
+
+PerformanceTester.prototype.runCommandsAsync = function(commanderNames, allDoneCallback) {
+
+    const thisTester = this;
+
+    const commandCount = commanderNames.length;
+
+    let timeHistory = [];
+    let totalTime = 0;
+    let longestTime = 0;
+    let shortestTime = null;
+
+    async.forEachLimit(commanderNames, commandCount, function(commandName, commanderDone) {
+
+        thisTester.runCommand(commandName, function(stat) {
+
+            commanderDone();
+        });
+
+    }, function(err) {
+        logger.log("All done");
+    });
 
 };
 
@@ -63,6 +100,45 @@ PerformanceTester.prototype.runCommandsOneByOne = function(commanderNames) {
 
 };
 
+PerformanceTester.prototype.runAllSupportedCommandsOneByOne = function(callback) {
+
+    const thisTester = this;
+
+    const allSupportedCommands = [
+        'cpu.avgload',
+        'cpu.count',
+        'cpu.top',
+        'cpu.status',
+
+        'io.top',
+        'io.status',
+        'io.capacity',
+
+        'memory.procrank',
+        'memory.status',
+        'memory.capacity',
+
+        'perf.cpuclock'
+    ];
+
+    const timeStats = {};
+    async.forEachLimit(allSupportedCommands, 1, function(commanderName, commanderDone) {
+
+        thisTester.runCommand(commanderName, function(timeUsed) {
+            timeStats[commanderName] = timeUsed;
+            commanderDone();
+        });
+
+    }, function(err) {
+        if (err) {
+            console.log(err);
+        }
+
+        callback(timeStats);
+    });
+
+};
+
 PerformanceTester.prototype.runCommandRepeatedly = function(commanderName, repeatTimes, allDoneCallback) {
 
     const thisTester = this;
@@ -72,13 +148,15 @@ PerformanceTester.prototype.runCommandRepeatedly = function(commanderName, repea
         commanderNames.push(commanderName);
     }
 
-    const timeConsuming = {};
+    let timeHistory = [];
     let totalTime = 0;
     let longestTime = 0;
     let shortestTime = null;
     async.forEachLimit(commanderNames, 1, function(commanderName, commanderDone) {
 
         thisTester.runCommand(commanderName, function(elapsedTime) {
+
+            timeHistory.push(elapsedTime);
 
             totalTime += elapsedTime;
 
@@ -97,11 +175,11 @@ PerformanceTester.prototype.runCommandRepeatedly = function(commanderName, repea
             allDoneCallback(
                 {
                     repeated: commanderNames.length,
-                    timeTotal: totalTime,
-                    timeAverage: totalTime / commanderNames.length,
-                    timeShortest: shortestTime,
-                    timeLongest: longestTime,
-                    timeUnit: 'ms'
+                    history: timeHistory,
+                    average: totalTime / commanderNames.length,
+                    fastest: shortestTime,
+                    slowest: longestTime,
+                    unit: 'ms'
                 }
             );
         }
@@ -116,18 +194,21 @@ PerformanceTester.prototype.runCommand = function(commanderName, callback) {
     const startTime = process.hrtime();
 
     const promise = commander(this.options);
+
     promise.then(function(response) {
 
         let elapsed = (process.hrtime(startTime)[1] / 1000000).toFixed(0); // divide by a million to get nano to milli
         elapsed = parseInt(elapsed);
         logger.debug(commanderName + " = " + elapsed + ' ms');
 
+
         if (callback) {
             callback(elapsed);
         }
 
-    });
+    }).catch(function(err) {
 
+    });
 };
 
 module.exports = new PerformanceTester();
