@@ -1,20 +1,9 @@
 
 const assert = require('assert');
 const async = require('async');
+const convertHrtime = require('convert-hrtime');
 
-const winston = require('winston');
-const tsFormat = () => (new Date()).toLocaleTimeString();
-const logger = new (winston.Logger)({
-    transports: [
-        // colorize the output to the console
-        new (winston.transports.Console)({
-            timestamp: tsFormat,
-            colorize: true
-        })
-    ]
-});
-logger.level = 'debug';
-
+const logger = require('../../modules/Logger');
 
 let PerformanceTester = function() {
 
@@ -179,7 +168,7 @@ PerformanceTester.prototype.runCommandRepeatedly = function(commanderName, repea
                     average: totalTime / commanderNames.length,
                     fastest: shortestTime,
                     slowest: longestTime,
-                    unit: 'ms'
+                    unit: 'seconds'
                 }
             );
         }
@@ -194,20 +183,21 @@ PerformanceTester.prototype.runCommand = function(commanderName, callback) {
     const startTime = process.hrtime();
 
     const promise = commander(this.options);
-
     promise.then(function(response) {
-
-        let elapsed = (process.hrtime(startTime)[1] / 1000000).toFixed(0); // divide by a million to get nano to milli
-        elapsed = parseInt(elapsed);
-        logger.debug(commanderName + " = " + elapsed + ' ms');
-
-
-        if (callback) {
-            callback(elapsed);
-        }
-
+        logger.debug(commanderName + " succeeded.");
     }).catch(function(err) {
 
+        logger.debug(commanderName + " failed.");
+    }).finally(function() {
+        const timeUsed = convertHrtime(process.hrtime(startTime));
+
+        const timeUsedInSecond = timeUsed.s.toFixed(2);
+
+        logger.debug(commanderName + " = " + timeUsedInSecond + ' seconds');
+
+        if (callback) {
+            callback(timeUsedInSecond);
+        }
     });
 };
 

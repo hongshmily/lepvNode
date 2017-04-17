@@ -57,7 +57,9 @@ SocketIOEventer.prototype.setupSocketEventByMessage = function(socketIO, socketM
             socketIO.emit(messageRes, response);
         },
         function(err) {
+            console.log("<= " + messageRes + ": reqId=" + params.reqId + ' FAILED!');
             console.log(err);
+            socketIO.emit(messageRes, {reqId: params.reqId, error: err});
         })
     });
 

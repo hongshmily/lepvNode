@@ -27,7 +27,7 @@ LepvCommandProto.prototype.run = function(options) {
 
     return new Promise(function(resolve, reject){
 
-        logger.debug("Calling: '" + thisProto.command + "'...");
+        logger.debug("Calling '" + thisProto.command + "'...");
 
         const callerPromise = lepdCaller.callCommand(options.server, thisProto.command, options.mockData);
 
@@ -54,7 +54,7 @@ LepvCommandProto.prototype.run = function(options) {
                     response['error'] = error.message || error.error;
                 }
 
-                resolve(response);
+                reject(response);
             });
 
     });

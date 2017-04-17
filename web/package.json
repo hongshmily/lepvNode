@@ -31,6 +31,7 @@
     "promise-timeout": "*",
     "mocha": "*",
     "chai": "*",
-    "winston": "*"
+    "winston": "*",
+    "convert-hrtime": "*"
   }
 }

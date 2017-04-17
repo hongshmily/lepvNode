@@ -35,4 +35,14 @@ router.get('/sanity', function(req, res, next) {
 });
 
 
+router.get('/socket', function(req, res, next) {
+
+    var server = req.params.server;
+    var debug = req.query.debug;
+    var id = req.query.id;
+
+    var htmlFile = path.join(__dirname + '/../public/html/test/socketIO.html');
+    res.sendFile(htmlFile);
+});
+
 module.exports = router;
