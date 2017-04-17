@@ -40,13 +40,6 @@ router.get('/ping/:server', function(req, res, next) {
 
 router.get('/sockets', function(req, res, next) {
 
-    var
-    var messages = [
-        'cpu.'
-    ];
-
-
-
     lepdCaller.ping(server, function(response) {
         try {
             res.json(response);

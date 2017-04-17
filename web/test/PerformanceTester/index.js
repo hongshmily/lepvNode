@@ -13,10 +13,10 @@ let PerformanceTester = function() {
     };
 
     this.monitorLocations = [
-        '../../modules/CpuMonitor',
-        '../../modules/MemoryMonitor',
-        '../../modules/IOMonitor',
-        '../../modules/PerfMonitor'
+        '../../modules/CpuProfiler',
+        '../../modules/MemoryProfiler',
+        '../../modules/IOProfiler',
+        '../../modules/PerfProfiler'
     ];
 
     this.commanders = {};
