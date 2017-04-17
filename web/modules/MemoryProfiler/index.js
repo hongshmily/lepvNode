@@ -1,7 +1,7 @@
 
 var lepdCaller = require('../LepdCaller');
 
-var MemoryMonitor = function() {
+var MemoryProfiler = function() {
 
     this.socketMessages = {
         'memory.procrank': this.GetCmdProcrank,
@@ -11,7 +11,7 @@ var MemoryMonitor = function() {
 
 };
 
-MemoryMonitor.prototype.GetCmdProcrank = function(options) {
+MemoryProfiler.prototype.GetCmdProcrank = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -25,7 +25,7 @@ MemoryMonitor.prototype.GetCmdProcrank = function(options) {
     });
 };
 
-MemoryMonitor.prototype.GetProcMeminfo = function(options) {
+MemoryProfiler.prototype.GetProcMeminfo = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -39,7 +39,7 @@ MemoryMonitor.prototype.GetProcMeminfo = function(options) {
     });
 };
 
-MemoryMonitor.prototype.GetCapacity = function(options) {
+MemoryProfiler.prototype.GetCapacity = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -55,4 +55,4 @@ MemoryMonitor.prototype.GetCapacity = function(options) {
 };
 
 
-module.exports = new MemoryMonitor();
+module.exports = new MemoryProfiler();

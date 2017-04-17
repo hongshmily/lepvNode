@@ -1,7 +1,7 @@
 
 const Promise = require('bluebird');
 
-const CpuMonitor = function() {
+const CpuProfiler = function() {
 
     this.socketMessages = {
         'cpu.avgload': this.GetAverageLoad,
@@ -11,7 +11,7 @@ const CpuMonitor = function() {
     };
 };
 
-CpuMonitor.prototype.getProcessorCount = function(options) {
+CpuProfiler.prototype.getProcessorCount = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -35,7 +35,7 @@ CpuMonitor.prototype.getProcessorCount = function(options) {
 
 };
 
-CpuMonitor.prototype.GetCmdTop = function(options) {
+CpuProfiler.prototype.GetCmdTop = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -49,7 +49,7 @@ CpuMonitor.prototype.GetCmdTop = function(options) {
     });
 };
 
-CpuMonitor.prototype.GetAverageLoad = function(options) {
+CpuProfiler.prototype.GetAverageLoad = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -64,7 +64,7 @@ CpuMonitor.prototype.GetAverageLoad = function(options) {
 
 };
 
-CpuMonitor.prototype.GetProcCpuinfo = function(options) {
+CpuProfiler.prototype.GetProcCpuinfo = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -78,12 +78,12 @@ CpuMonitor.prototype.GetProcCpuinfo = function(options) {
     });
 };
 
-CpuMonitor.prototype.GetCapacity = function(options) {
+CpuProfiler.prototype.GetCapacity = function(options) {
 
     return this.GetProcCpuinfo();
 };
 
-CpuMonitor.prototype.GetCmdMpstat = function(options) {
+CpuProfiler.prototype.GetCmdMpstat = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -99,4 +99,4 @@ CpuMonitor.prototype.GetCmdMpstat = function(options) {
 
 
 
-module.exports = new CpuMonitor();
+module.exports = new CpuProfiler();

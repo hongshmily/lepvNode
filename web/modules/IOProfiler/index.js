@@ -1,5 +1,5 @@
 
-var IOMonitor = function() {
+var IOProfiler = function() {
 
     this.socketMessages = {
         'io.top': this.GetCmdIotop,
@@ -8,7 +8,7 @@ var IOMonitor = function() {
     };
 };
 
-IOMonitor.prototype.GetCmdIotop = function(options) {
+IOProfiler.prototype.GetCmdIotop = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -22,7 +22,7 @@ IOMonitor.prototype.GetCmdIotop = function(options) {
     });
 };
 
-IOMonitor.prototype.GetCmdIostat = function(options) {
+IOProfiler.prototype.GetCmdIostat = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -36,7 +36,7 @@ IOMonitor.prototype.GetCmdIostat = function(options) {
     });
 };
 
-IOMonitor.prototype.GetCmdDf = function(options) {
+IOProfiler.prototype.GetCmdDf = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -49,7 +49,7 @@ IOMonitor.prototype.GetCmdDf = function(options) {
     });
 };
 
-IOMonitor.prototype.GetCapacity = function(options) {
+IOProfiler.prototype.GetCapacity = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -63,4 +63,4 @@ IOMonitor.prototype.GetCapacity = function(options) {
 };
 
 
-module.exports = new IOMonitor();
+module.exports = new IOProfiler();

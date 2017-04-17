@@ -1,15 +1,13 @@
 
-const cpuMonitor = require('../CpuMonitor');
-
 const SocketIOEventer = function(socket) {
 
     this.socketIO = socket;
 
     this.socketedModles = [
-        '../CpuMonitor',
-        '../IOMonitor',
-        '../MemoryMonitor',
-        '../PerfMonitor'
+        '../CpuProfiler',
+        '../IOProfiler',
+        '../MemoryProfiler',
+        '../PerfProfiler'
     ];
 };
 

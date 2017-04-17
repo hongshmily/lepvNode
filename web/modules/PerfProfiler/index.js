@@ -1,12 +1,12 @@
 
-var PerfMonitor = function() {
+var PerfProfiler = function() {
 
     this.socketMessages = {
         'perf.cpuclock': this.GetCmdPerfCpuclock,
     };
 };
 
-PerfMonitor.prototype.GetCmdPerfCpuclock = function(options) {
+PerfProfiler.prototype.GetCmdPerfCpuclock = function(options) {
 
     return new Promise( (resolve, reject) => {
 
@@ -20,4 +20,4 @@ PerfMonitor.prototype.GetCmdPerfCpuclock = function(options) {
     });
 };
 
-module.exports = new PerfMonitor();
+module.exports = new PerfProfiler();

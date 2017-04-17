@@ -5,7 +5,7 @@ const ProfilerManager = function() {
 
 };
 
-ProfilerManager.prototype.getMonitors = function() {
+ProfilerManager.prototype.getProfilers = function() {
 
 
 };

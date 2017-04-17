@@ -12,7 +12,7 @@ let PerformanceTester = function() {
         debug: true
     };
 
-    this.monitorLocations = [
+    this.profilerLocations = [
         '../../modules/CpuProfiler',
         '../../modules/MemoryProfiler',
         '../../modules/IOProfiler',
@@ -20,10 +20,10 @@ let PerformanceTester = function() {
     ];
 
     this.commanders = {};
-    for (let i = 0; i < this.monitorLocations.length; i++) {
-        const monitor = require(this.monitorLocations[i]);
+    for (let i = 0; i < this.profilerLocations.length; i++) {
+        const profiler = require(this.profilerLocations[i]);
 
-        this.commanders = Object.assign(this.commanders, monitor.socketMessages);
+        this.commanders = Object.assign(this.commanders, profiler.socketMessages);
     }
 };
 
